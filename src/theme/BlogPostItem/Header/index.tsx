@@ -19,7 +19,12 @@ export default function BlogPostItemHeader(): JSX.Element {
   }
   else {
     return (
-      <header className='bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 px-4 py-2 rounded-md blog-list-item'>
+      <header className='
+        bg-gradient-to-br 
+        from-gray-50 to-gray-100 hover:to-gray-200 
+        dark:from-gray-800 dark:to-gray-700 dark:hover:to-gray-600 
+        px-4 py-2 rounded-md blog-list-item
+      '>
         <BlogPostItemHeaderInfo />
         <BlogPostItemHeaderTitle />
         <BlogPostItemHeaderAuthors />

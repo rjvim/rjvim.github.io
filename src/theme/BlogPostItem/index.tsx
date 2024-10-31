@@ -10,7 +10,7 @@ import type {Props} from '@theme/BlogPostItem';
 // apply a bottom margin in list view
 function useContainerClassName() {
   const {isBlogPostPage} = useBlogPost();
-  return !isBlogPostPage ? 'mb-2' : undefined;
+  return !isBlogPostPage ? 'mb-3' : undefined;
 }
 
 export default function BlogPostItem({
