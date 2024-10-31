@@ -1,6 +1,7 @@
 ---
 title: "Git Workflow for Versioning & Releases"
 date: "2020-06-03"
+tags: [hola, docusaurus]
 ---
 
 ## About

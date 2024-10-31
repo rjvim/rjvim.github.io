@@ -1,6 +1,7 @@
 ---
 title: "Automating Planetscale Deploy Requests into CI/CD"
 date: "2020-03-16"
+tags: [hola, docusaurus]
 ---
 
 Before I jump into the solution, I want to put forward some context. For the past 4–5 years I have been using Postgres, and we switched one of our crucial microservices to MySQL, solely to reap the benefits of hosted database solutions. I heard about planetscale on a podcast, here is the link: https://founderstalk.fm/85
