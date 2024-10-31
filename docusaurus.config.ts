@@ -102,7 +102,7 @@ const config: Config = {
         //   position: "left",
         //   label: "Tutorial",
         // },
-        // { to: "/blog", label: "Blog", position: "left" },
+        { to: "/about", label: "About", position: "right" },
         // {
         //   href: "https://github.com/facebook/docusaurus",
         //   label: "GitHub",

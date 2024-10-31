@@ -34,29 +34,9 @@
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
-body {
-  /* @apply flex h-full bg-zinc-200 dark:bg-black; */
-}
-
-#__docusaurus {
-  /* @apply flex h-full bg-white mx-auto w-full max-w-7xl lg:px-8; */
-}
-
-body {
-  font-family: ui-monospace,SFMono-Regu lar,SF Mono,Menlo,Consolas,Liberation Mono,monospace;
-  font-size: 16px;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-wrap: pretty
-}
-
 a {
   @apply !no-underline;
 }
-
-/* article h2 {
-  @apply !text-xl;
-} */
 
 .blog-list-item > h2 {
   @apply !text-xl !mb-0;
