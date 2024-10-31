@@ -1,5 +1,5 @@
 # .github/workflows/deploy.yml
-name: Deploy PR previews
+name: Deploy Main
 on:
   push:
     branches:
