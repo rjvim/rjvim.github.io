@@ -85,8 +85,8 @@ const config: Config = {
     navbar: {
       title: "RJV.IM",
       logo: {
-        alt: "My Site Logo",
-        src: "img/logo.svg",
+        alt: "Rajiv I'm",
+        src: "img/logo.png",
       },
       items: [
         // {
