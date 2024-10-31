@@ -2,6 +2,11 @@ import { themes as prismThemes } from "prism-react-renderer";
 import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
 
+const BASE_URL =
+  process.env.PR_NUMBER !== undefined
+    ? `/pr-preview/pr-${process.env.PR_NUMBER}/`
+    : "/";
+
 const config: Config = {
   title: "Rajiv Seelam",
   tagline: "I write on tech and product, entrepreneurship. I work @betalectic",
@@ -11,15 +16,16 @@ const config: Config = {
   url: "https://rjv.im",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: "/",
+  baseUrl: BASE_URL,
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: "rjvim", // Usually your GitHub org/user name.
-  projectName: "landing", // Usually your repo name.
+  projectName: "rjvim.github.io", // Usually your repo name.
+  deploymentBranch: "main",
   trailingSlash: false,
   plugins: ["docusaurus-tailwindcss-loader"],
-  onBrokenLinks: "throw",
+  onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
 
   // Even if you don't use internationalization, you can use this field to set
