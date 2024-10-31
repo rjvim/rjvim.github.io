@@ -54,6 +54,14 @@ a {
   @apply !no-underline;
 }
 
-article h2 {
-  @apply !text-3xl;
+/* article h2 {
+  @apply !text-xl;
+} */
+
+.blog-list-item > h2 {
+  @apply !text-xl !mb-0;
+}
+
+.blog-list-item div:first-child {
+ @apply !my-1;
 }
