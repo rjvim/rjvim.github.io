@@ -1,7 +1,6 @@
 ---
 title: "HTTP APIs Routing Naming Conventions & Response Structures"
 date: "2020-06-03"
-authors: rjvim
 ---
 
 [Phil](https://apisyouwonthate.com/books/build-apis-you-wont-hate) says:

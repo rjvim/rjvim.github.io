@@ -3,8 +3,8 @@ import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
 
 const config: Config = {
-  title: "Site Title 2",
-  tagline: "Dinosaurs are cool - why?",
+  title: "Rajiv Seelam",
+  tagline: "I write on tech and product, entrepreneurship. I work @betalectic",
   favicon: "img/favicon.ico",
 
   // Set the production url of your site here
@@ -43,6 +43,7 @@ const config: Config = {
         //     "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
         // },
         blog: {
+          routeBasePath: "/",
           blogSidebarCount: 0,
           showReadingTime: true,
           feedOptions: {
@@ -94,12 +95,12 @@ const config: Config = {
         //   position: "left",
         //   label: "Tutorial",
         // },
-        { to: "/blog", label: "Blog", position: "left" },
-        {
-          href: "https://github.com/facebook/docusaurus",
-          label: "GitHub",
-          position: "right",
-        },
+        // { to: "/blog", label: "Blog", position: "left" },
+        // {
+        //   href: "https://github.com/facebook/docusaurus",
+        //   label: "GitHub",
+        //   position: "right",
+        // },
       ],
     },
     footer: {
@@ -115,37 +116,41 @@ const config: Config = {
         //   ],
         // },
         {
-          title: "Community",
+          title: "Follow",
           items: [
+            // {
+            //   label: "Github",
+            //   href: "https://github.com/rjvim",
+            // },
             {
-              label: "Stack Overflow",
-              href: "https://stackoverflow.com/questions/tagged/docusaurus",
+              label: "Me",
+              href: "https://twitter.com/rjv_im",
             },
             {
-              label: "Discord",
-              href: "https://discordapp.com/invite/docusaurus",
+              label: "Work",
+              href: "https://twitter.com/betalectic",
             },
             {
-              label: "Twitter",
-              href: "https://twitter.com/docusaurus",
+              label: "LoCoSpec",
+              href: "https://twitter.com/locospec",
             },
           ],
         },
-        {
-          title: "More",
-          items: [
-            {
-              label: "Blog",
-              to: "/blog",
-            },
-            {
-              label: "GitHub",
-              href: "https://github.com/facebook/docusaurus",
-            },
-          ],
-        },
+        // {
+        //   title: "More",
+        //   items: [
+        //     {
+        //       label: "Blog",
+        //       to: "/blog",
+        //     },
+        //     {
+        //       label: "GitHub",
+        //       href: "https://github.com/facebook/docusaurus",
+        //     },
+        //   ],
+        // },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Rajiv Seelam. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,

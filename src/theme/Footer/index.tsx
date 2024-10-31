@@ -1,9 +1,9 @@
 import React from "react";
-// import Footer from "@theme-original/Footer";
+import Footer from "@theme-original/Footer";
 import type FooterType from "@theme/Footer";
 import type { WrapperProps } from "@docusaurus/types";
 import { useThemeConfig } from "@docusaurus/theme-common";
-import { Footer } from "@site/src/components/Footer";
+// import { Footer } from "@site/src/components/Footer";
 
 type Props = WrapperProps<typeof FooterType>;
 
