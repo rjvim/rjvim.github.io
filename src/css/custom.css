@@ -43,5 +43,5 @@ a {
 }
 
 .blog-list-item div:first-child {
- @apply !my-1 !text-sm;
+ @apply !my-0 !text-sm;
 }
