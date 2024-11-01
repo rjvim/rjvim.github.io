@@ -24,7 +24,22 @@ const config: Config = {
   projectName: "rjvim.github.io", // Usually your repo name.
   deploymentBranch: "main",
   trailingSlash: false,
-  plugins: ["docusaurus-tailwindcss-loader"],
+  plugins: [
+    "docusaurus-tailwindcss-loader", 
+    [
+      "docusaurus-og-bolt-cdn-plugin",
+      {
+        // Process only specific plugins
+        enabledPlugins: [
+          'docusaurus-plugin-content-docs',
+          'docusaurus-plugin-content-pages',
+          'docusaurus-plugin-content-blog'
+        ],
+        // Enable debug logging
+        debug: true
+      }
+    ],
+  ],
   onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
 

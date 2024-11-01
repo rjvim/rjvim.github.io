@@ -2,7 +2,7 @@ module.exports = function (context, options) {
   return {
     name: "postcss-tailwindcss-loader",
     // https://github.com/facebook/docusaurus/issues/2961#issuecomment-1531243979
-    injectHtmlTags() {
+    injectHtmlTags({content}) {
       return {
         headTags: [
           {
