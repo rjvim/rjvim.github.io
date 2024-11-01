@@ -72,9 +72,13 @@ module.exports = function(context, options) {
           
           // Remove existing og:image tags
           $('meta[property="og:image"]').remove();
+          $('meta[property="twitter:image"]').remove();
+          $('meta[property="image"]').remove();
           
           // Add new og:image tag
           $('head').append(`<meta property="og:image" content="${ogboltUrl}" data-rh="true">`);
+          $('head').append(`<meta property="twitter:image" content="${ogboltUrl}" data-rh="true">`);
+          $('head').append(`<meta property="image" content="${ogboltUrl}" data-rh="true">`);
           
           // Write the modified HTML back to file
           await fs.writeFile(filePath, $.html());
