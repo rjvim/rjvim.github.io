@@ -68,7 +68,7 @@ module.exports = function(context, options) {
           
           // Construct the full URL for this page
           const pageUrl = `${siteConfig.url}${route.path}`;
-          const ogboltUrl = `https://i.ogbolt.com?url=${encodeURIComponent(pageUrl)}`;
+          const ogboltUrl = `https://og-bolt-image-generator.betalectic.workers.dev?url=${encodeURIComponent(pageUrl)}`;
           
           // Remove existing og:image tags
           $('meta[property="og:image"]').remove();
