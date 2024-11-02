@@ -68,7 +68,7 @@ module.exports = function(context, options) {
           
           // Construct the full URL for this page
           const pageUrl = `${siteConfig.url}${route.path}`;
-          const ogboltUrl = `https://ogbolt.locoworks.org?url=${encodeURIComponent(pageUrl)}`;
+          const ogboltUrl = `https://ogbolt.locoworks.org/api/og?url=${encodeURIComponent(pageUrl)}`;
           
           // Remove existing og:image tags
           $('meta[property="og:image"]').remove();
