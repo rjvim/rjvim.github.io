@@ -1,6 +1,7 @@
 import { themes as prismThemes } from "prism-react-renderer";
 import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
+import 'dotenv/config';
 
 const BASE_URL =
   process.env.PR_NUMBER !== undefined
@@ -36,7 +37,13 @@ const config: Config = {
           'docusaurus-plugin-content-blog'
         ],
         // Enable debug logging
-        debug: true
+        debug: true,
+        publishableKey: process.env.OMG_PUBLISHABLE_KEY,
+        webhookSecret: process.env.OMG_WEBHOOK_SECRET,
+        imageOptions: {
+          "style": "text-bg",
+          "logoSrc": "https://rjv.im/img/logo.png"
+        }
       }
     ],
   ],

@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs').promises;
 const cheerio = require('cheerio');
+import { getOGImageUrl, OhImg } from "@ohimg/ohimg-js";
 
 // Default supported plugins
 const SUPPORTED_PLUGINS = [
@@ -28,35 +29,44 @@ module.exports = function(context, options) {
     async postBuild({ outDir, siteConfig, plugins = [] }) {
       console.log('\n=== OGBolt Plugin: Starting processing ===');
 
+      logDebug('Options:', {
+        options
+      });
+
+      const ohimg = new OhImg({
+        publishableKey: options.publishableKey,
+        webhookSecret: options.webhookSecret,
+      });
+
       // Filter and process routes from enabled plugins
       const processableRoutes = plugins
         .filter(plugin => {
           const isSupported = SUPPORTED_PLUGINS.includes(plugin.name);
           const isEnabled = enabledPlugins.includes(plugin.name);
           
-          logDebug(`Plugin ${plugin.name}:`, {
-            isSupported,
-            isEnabled,
-            routeCount: plugin.routes?.length || 0
-          });
+          // logDebug(`Plugin ${plugin.name}:`, {
+          //   isSupported,
+          //   isEnabled,
+          //   routeCount: plugin.routes?.length || 0
+          // });
 
           return isSupported && isEnabled;
         })
         .flatMap(plugin => {
-          logDebug(`Processing routes for ${plugin.name}`);
+          // logDebug(`Processing routes for ${plugin.name}`);
           return (plugin.routes || []).map(route => ({
             ...route,
             pluginName: plugin.name
           }));
         });
 
-      logDebug('\nProcessable Routes:', 
-        processableRoutes.map(r => ({
-          path: r.path,
-          plugin: r.pluginName,
-          component: r.component
-        }))
-      );
+      // logDebug('\nProcessable Routes:', 
+      //   processableRoutes.map(r => ({
+      //     path: r.path,
+      //     plugin: r.pluginName,
+      //     component: r.component
+      //   }))
+      // );
 
       const processHtmlFile = async (filePath, route) => {
         try {
@@ -68,7 +78,16 @@ module.exports = function(context, options) {
           
           // Construct the full URL for this page
           const pageUrl = `${siteConfig.url}${route.path}`;
-          const ogboltUrl = `https://ogbolt.locoworks.org/api/og?url=${encodeURIComponent(pageUrl)}`;
+
+          const ogImgUrl = await ohimg.getOgImageUrl({
+            pageUrl,
+            imageOptions: options.imageOptions || {}
+          });
+    
+          logDebug(`OG Image URL:`, {
+            pageUrl,
+            ogImgUrl
+          });
           
           // Remove existing og:image tags
           $('meta[property="og:image"]').remove();
@@ -76,16 +95,16 @@ module.exports = function(context, options) {
           $('meta[name="image"]').remove();
           
           // // Add new og:image tag
-          $('head').append(`<meta property="og:image" content="${ogboltUrl}" data-rh="true">`);
-          $('head').append(`<meta name="twitter:image" content="${ogboltUrl}" data-rh="true">`);
-          $('head').append(`<meta name="image" content="${ogboltUrl}" data-rh="true">`);
+          $('head').append(`<meta property="og:image" content="${ogImgUrl}" data-rh="true">`);
+          $('head').append(`<meta name="twitter:image" content="${ogImgUrl}" data-rh="true">`);
+          $('head').append(`<meta name="image" content="${ogImgUrl}" data-rh="true">`);
           
           // Write the modified HTML back to file
           await fs.writeFile(filePath, $.html());
           
-          console.log(`✓ Updated ${route.path}`);
-          console.log(`  Plugin: ${route.pluginName}`);
-          console.log(`  OG Image: ${ogboltUrl}`);
+          // console.log(`✓ Updated ${route.path}`);
+          // console.log(`  Plugin: ${route.pluginName}`);
+          // console.log(`  OG Image: ${ogboltUrl}`);
           
         } catch (error) {
           console.error(`Error processing ${route.path}:`, error);
