@@ -23,6 +23,8 @@ jobs:
         if: github.event.action != 'closed'
         env:
           PR_NUMBER: ${{ github.event.number }}
+          OMG_PUBLISHABLE_KEY: ${{ secrets.OMG_PUBLISHABLE_KEY }}
+          OMG_WEBHOOK_SECRET: ${{ secrets.OMG_WEBHOOK_SECRET }}
         run: |
           npm install
           npm run build
