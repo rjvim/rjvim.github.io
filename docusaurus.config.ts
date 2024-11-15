@@ -28,20 +28,17 @@ const config: Config = {
   plugins: [
     "docusaurus-tailwindcss-loader", 
     [
-      "docusaurus-og-bolt-cdn-plugin",
+      "@ohimg/ohimg-docusaurus-plugin",
       {
-        // Process only specific plugins
         enabledPlugins: [
           'docusaurus-plugin-content-docs',
           'docusaurus-plugin-content-pages',
           'docusaurus-plugin-content-blog'
         ],
-        // Enable debug logging
         debug: true,
         publishableKey: process.env.OMG_PUBLISHABLE_KEY,
         webhookSecret: process.env.OMG_WEBHOOK_SECRET,
         imageOptions: {
-          "style": "text-bg",
           "logoSrc": "https://rjv.im/img/logo.png"
         }
       }
