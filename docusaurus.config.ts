@@ -37,7 +37,7 @@ const config: Config = {
         ],
         debug: true,
         publishableKey: process.env.OMG_PUBLISHABLE_KEY,
-        webhookSecret: process.env.OMG_WEBHOOK_SECRET,
+        signatureSecret: process.env.OMG_SIGNATURE_SECRET,
         imageOptions: {
           "logoSrc": "https://rjv.im/img/logo.png"
         }
