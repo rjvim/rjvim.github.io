@@ -16,8 +16,8 @@
   },
   "dependencies": {
     "@acid-info/docusaurus-og": "^1.0.0-alpha.131",
-    "@docusaurus/core": "3.5.2",
-    "@docusaurus/preset-classic": "3.5.2",
+    "@docusaurus/core": "^3.6.1",
+    "@docusaurus/preset-classic": "^3.6.1",
     "@mdx-js/react": "^3.0.0",
     "@resvg/resvg-js": "^2.6.2",
     "clsx": "^2.0.0",
@@ -30,9 +30,9 @@
     "satori": "^0.11.2"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "3.5.2",
-    "@docusaurus/tsconfig": "3.5.2",
-    "@docusaurus/types": "3.5.2",
+    "@docusaurus/module-type-aliases": "^3.6.1",
+    "@docusaurus/tsconfig": "^3.6.1",
+    "@docusaurus/types": "^3.6.1",
     "@headlessui/react": "^2.1.9",
     "@ohimg/ohimg-docusaurus-plugin": "^1.0.6",
     "@ohimg/ohimg-js": "^1.1.2",
