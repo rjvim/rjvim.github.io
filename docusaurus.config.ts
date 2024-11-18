@@ -9,6 +9,9 @@ const BASE_URL =
     : "/";
 
 const config: Config = {
+  future: {
+    experimental_faster: true,
+  },
   title: "Rajiv Seelam",
   tagline: "I write on tech and product, entrepreneurship. I work @betalectic",
   favicon: "img/favicon.ico",

@@ -17,6 +17,7 @@
   "dependencies": {
     "@acid-info/docusaurus-og": "^1.0.0-alpha.131",
     "@docusaurus/core": "^3.6.1",
+    "@docusaurus/faster": "^3.6.1",
     "@docusaurus/preset-classic": "^3.6.1",
     "@mdx-js/react": "^3.0.0",
     "@resvg/resvg-js": "^2.6.2",
