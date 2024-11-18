@@ -23,7 +23,7 @@ jobs:
         if: github.event.action != 'closed'
         env:
           PR_NUMBER: ${{ github.event.number }}
-          OMG_PUBLISHABLE_KEY: ${{ secrets.OMG_PUBLISHABLE_KEY }}
+          OMG_PUBLISHABLE_KEY: ${{ vars.OMG_PUBLISHABLE_KEY }}
           OMG_SIGNATURE_SECRET: ${{ secrets.OMG_SIGNATURE_SECRET }}
         run: |
           npm install
