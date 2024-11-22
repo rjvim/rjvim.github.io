@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="atom.xsl"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://rjv.im</id>
-    <title>Rajiv Seelam Blog</title>
+    <title>Rajiv I'm Blog</title>
     <updated>2020-06-03T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://rjv.im"/>
-    <subtitle>Rajiv Seelam Blog</subtitle>
+    <subtitle>Rajiv I'm Blog</subtitle>
     <icon>https://rjv.im/img/favicon.ico</icon>
     <entry>
         <title type="html"><![CDATA[HTTP APIs Routing Naming Conventions & Response Structures]]></title>
@@ -79,7 +79,7 @@
         <id>https://rjv.im/git-workflow-for-software-versioning</id>
         <link href="https://rjv.im/git-workflow-for-software-versioning"/>
         <updated>2020-06-03T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[About]]></summary>
+        <summary type="html"><![CDATA[How to use Git to version your codebase and release it to the world]]></summary>
         <content type="html"><![CDATA[<h2 class="anchor anchorWithStickyNavbar_LWe7" id="about">About<a href="https://rjv.im/git-workflow-for-software-versioning#about" class="hash-link" aria-label="Direct link to About" title="Direct link to About">​</a></h2>
 <p>Developers regularly use Git, but also run into the general use-case of how to maintain versioning of their codebase and how to deploy.</p>
 <p>You might have come across the Feature Branch Workflow, which is what the flow I am going to talk about is based on. However, the feature branch workflow didn't entirely solve my problem, so I am writing it down again for reference. This is not just for teams, but also solo developers.</p>
@@ -211,8 +211,7 @@
 <li>Fancy tools read your version from <code>package.json</code> and proudly display it like "Software Version: 1.3.1."</li>
 <li>Your bug trackers and analytics tools high-five the version, making issue hunting a piece of cake.</li>
 </ul>]]></content>
-        <category label="Hola" term="Hola"/>
-        <category label="Docusaurus" term="Docusaurus"/>
+        <category label="git" term="git"/>
     </entry>
     <entry>
         <title type="html"><![CDATA[Automating Planetscale Deploy Requests into CI/CD]]></title>
@@ -259,7 +258,7 @@
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="solution">Solution<a href="https://rjv.im/automating-planetscale-deploy-requests-into-our-ci-cd#solution" class="hash-link" aria-label="Direct link to Solution" title="Direct link to Solution">​</a></h2>
 <p>Now, let's write the solution in points:</p>
 <ul>
-<li>Create a Branch using pscale create branch, My branch name is deploy$<!-- -->1731907696901</li>
+<li>Create a Branch using pscale create branch, My branch name is deploy$<!-- -->1732252380534</li>
 <li>Keep checking the branch status till it becomes true to make sure branch is created</li>
 <li>Once branch is created, create a password using pscale create password(So, that you can access the branch)</li>
 <li>When branch is created, if you opted for planetscale to copy migrations. The migrations table in your branch would be populated. But I didn't, so migrations table in branch is empty. So, I connect to main branch, copy migrations into new branch I just created</li>
