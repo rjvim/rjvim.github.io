@@ -1,0 +1,12 @@
+diff --git a/node_modules/@docusaurus/theme-common/lib/utils/generalUtils.js b/node_modules/@docusaurus/theme-common/lib/utils/generalUtils.js
+index b0ddacc..39505db 100644
+--- a/node_modules/@docusaurus/theme-common/lib/utils/generalUtils.js
++++ b/node_modules/@docusaurus/theme-common/lib/utils/generalUtils.js
+@@ -11,6 +11,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+ export function useTitleFormatter(title) {
+     const { siteConfig } = useDocusaurusContext();
+     const { title: siteTitle, titleDelimiter } = siteConfig;
++    return title;
+     return title?.trim().length
+         ? `${title.trim()} ${titleDelimiter} ${siteTitle}`
+         : siteTitle;
