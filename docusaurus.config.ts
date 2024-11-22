@@ -12,10 +12,10 @@ const config: Config = {
   future: {
     experimental_faster: true,
   },
-  title: "Rajiv Seelam",
+  title: "Rajiv I'm",
   tagline: "I write on tech and product, entrepreneurship. I work @betalectic",
   favicon: "img/favicon.ico",
-
+  titleDelimiter: "-",
   // Set the production url of your site here
   url: "https://rjv.im",
   // Set the /<baseUrl>/ pathname under which your site is served
@@ -38,7 +38,7 @@ const config: Config = {
           'docusaurus-plugin-content-pages',
           'docusaurus-plugin-content-blog'
         ],
-        debug: true,
+        debug: false,
         publishableKey: process.env.OMG_PUBLISHABLE_KEY,
         signatureSecret: process.env.OMG_SIGNATURE_SECRET,
         imageOptions: {

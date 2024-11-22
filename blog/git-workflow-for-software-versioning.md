@@ -1,7 +1,8 @@
 ---
-title: "Git Workflow for Versioning & Releases"
+title: Git Workflow for Versioning & Releases
 date: "2020-06-03"
-tags: [hola, docusaurus]
+tags: [git]
+description: How to use Git to version your codebase and release it to the world
 ---
 
 ## About
