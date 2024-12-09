@@ -1,0 +1,15 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    allow:
+      - dependency-name: "@ohimg/ohimg-docusaurus-plugin"
+        versions: ["1.x"]
+      - dependency-name: "@ohimg/ohimg-js"
+        versions: ["1.x"]
+    commit-message:
+      prefix: "deps"
+      prefix-development: "deps(dev)"
+    open-pull-requests-limit: 10
