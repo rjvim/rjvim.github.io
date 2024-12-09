@@ -36,7 +36,7 @@
     "@docusaurus/module-type-aliases": "^3.6.2",
     "@docusaurus/tsconfig": "^3.6.2",
     "@docusaurus/types": "^3.6.2",
-    "@headlessui/react": "^2.1.9",
+    "@headlessui/react": "^2.2.0",
     "@ohimg/ohimg-docusaurus-plugin": "^1.0.6",
     "@ohimg/ohimg-js": "^1.1.2",
     "@tailwindcss/typography": "^0.5.15",
