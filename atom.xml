@@ -258,7 +258,7 @@
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="solution">Solution<a href="https://rjv.im/automating-planetscale-deploy-requests-into-our-ci-cd#solution" class="hash-link" aria-label="Direct link to Solution" title="Direct link to Solution">​</a></h2>
 <p>Now, let's write the solution in points:</p>
 <ul>
-<li>Create a Branch using pscale create branch, My branch name is deploy$<!-- -->1732252380534</li>
+<li>Create a Branch using pscale create branch, My branch name is deploy$<!-- -->1733736694587</li>
 <li>Keep checking the branch status till it becomes true to make sure branch is created</li>
 <li>Once branch is created, create a password using pscale create password(So, that you can access the branch)</li>
 <li>When branch is created, if you opted for planetscale to copy migrations. The migrations table in your branch would be populated. But I didn't, so migrations table in branch is empty. So, I connect to main branch, copy migrations into new branch I just created</li>
