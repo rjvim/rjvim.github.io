@@ -17,9 +17,9 @@
   },
   "dependencies": {
     "@acid-info/docusaurus-og": "^1.0.0-alpha.131",
-    "@docusaurus/core": "^3.6.3",
-    "@docusaurus/faster": "^3.6.3",
-    "@docusaurus/preset-classic": "^3.6.3",
+    "@docusaurus/core": "^3.7.0",
+    "@docusaurus/faster": "^3.7.0",
+    "@docusaurus/preset-classic": "^3.7.0",
     "@mdx-js/react": "^3.0.0",
     "@resvg/resvg-js": "^2.6.2",
     "clsx": "^2.0.0",
@@ -30,12 +30,14 @@
     "prism-react-renderer": "^2.3.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "satori": "^0.11.2"
+    "satori": "^0.11.2",
+    "tailwindcss-animate": "^1.0.7",
+    "tailwindcss-scoped-preflight": "^3.4.10"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "^3.6.2",
-    "@docusaurus/tsconfig": "^3.6.2",
-    "@docusaurus/types": "^3.6.2",
+    "@docusaurus/module-type-aliases": "^3.7.0",
+    "@docusaurus/tsconfig": "^3.7.0",
+    "@docusaurus/types": "^3.7.0",
     "@headlessui/react": "^2.1.9",
     "@ohimg/ohimg-docusaurus-plugin": "^1.0.6",
     "@ohimg/ohimg-js": "^1.1.2",
