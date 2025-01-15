@@ -1,0 +1,18 @@
+.blog-wrapper {
+  /* Change circular avatar to rounded corners */
+  .avatar__photo {
+    @apply !rounded-md;
+  }
+}
+
+.blog-authors-posts-page,
+.blog-tags-post-list-page,
+.blog-list-page,
+.blog-post-page {
+  article div[class*="authorSocials_"] {
+    @apply hidden;
+  }
+  article .avatar__photo {
+    @apply h-12 w-12;
+  }
+}

@@ -9,9 +9,6 @@ const BASE_URL =
     : "/";
 
 const config: Config = {
-  future: {
-    experimental_faster: true,
-  },
   title: "Rajiv I'm",
   tagline: "I write on tech and product, entrepreneurship. I work @betalectic",
   favicon: "img/favicon.ico",
@@ -58,10 +55,18 @@ const config: Config = {
     locales: ["en"],
   },
 
+  stylesheets: [
+    "https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@300;400;500;600;700;800;900&family=Lexend:wght@100..900&display=swap",
+  ],
+
   presets: [
     [
       "classic",
       {
+        gtag: {
+          trackingID: "G-DDT96EDXKZ",
+          anonymizeIP: true,
+        },
         docs: false,
         // docs: {
         //   sidebarPath: "./sidebars.ts",

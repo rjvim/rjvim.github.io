@@ -1,0 +1,60 @@
+.docs-wrapper {
+  /* Drop font size and adjust alignment to main container */
+  .theme-doc-sidebar-container .menu {
+    @apply pl-0 !pr-1.5 text-sm lg:!pt-[1.25rem];
+  }
+
+  /* Remove borders */
+  .theme-doc-sidebar-container,
+  .table-of-contents__left-border {
+    @apply border-transparent hover:border-gray-200;
+  }
+
+  /* Customize alignment & fonts of items in sidebar */
+  .menu__link {
+    @apply py-2 leading-5 md:pl-0 font-normal;
+  }
+
+  .menu__link--active {
+    @apply font-normal;
+  }
+
+  .theme-doc-sidebar-item-link-level-2 .menu__link {
+    @apply md:pl-3;
+  }
+
+  .theme-doc-sidebar-item-category-level-1 .menu__list {
+    @apply md:!pl-0;
+  }
+
+  .menu__list .menu__list-item:not(:first-child) {
+    @apply md:!mt-0;
+  }
+
+  /* Remove all background for menu items by default and on hover */
+  .menu__list-item-collapsible:hover,
+  .menu__link--active,
+  .menu__link:hover,
+  .menu__list-item-collapsible--active {
+    @apply md:!bg-transparent;
+  }
+
+  .theme-doc-sidebar-item-link-level-2 .menu__link {
+    @apply md:border-0 md:border-l md:border-l-gray-200 md:dark:border-l-gray-600 md:border-solid md:rounded-none;
+  }
+
+  /* Remove all background for menu items */
+  .menu__link--active,
+  .menu__link:hover,
+  .menu__list-item-collapsible--active {
+    @apply md:!border-l-gray-600 md:dark:!border-l-gray-200;
+  }
+
+  .menu__caret:before {
+    background: var(--ifm-menu-link-sublist-icon) 50% / 1.5rem 1.5rem;
+  }
+
+  .menu__link--active {
+    @apply md:!border-l-gray-600 md:dark:!border-l-gray-200 font-medium;
+  }
+}

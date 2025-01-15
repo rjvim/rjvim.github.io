@@ -1,0 +1,32 @@
+.docs-wrapper {
+  /* Give more breathing space to page content */
+  [class*="docItemContainer_"],
+  [class*="generatedIndexPage_"] {
+    @apply pt-1;
+  }
+
+  /* .container {
+    @apply md:px-0;
+  } */
+
+  /* Remove background from breadcrumbs, make them subtle */
+  .breadcrumbs__link:any-link:hover,
+  .breadcrumbs__item--active .breadcrumbs__link {
+    @apply !bg-transparent;
+  }
+  .breadcrumbs__link {
+    @apply p-0;
+  }
+  .theme-doc-breadcrumbs {
+    @apply sm:!mb-4;
+  }
+
+  /* Add divider under h1 */
+  header h1 {
+    @apply pb-4 border-solid border-0 border-b border-gray-200 dark:border-gray-700;
+  }
+
+  .table-of-contents {
+    @apply lg:!pt-1;
+  }
+}

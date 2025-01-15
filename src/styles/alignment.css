@@ -1,0 +1,44 @@
+.navbar {
+  @apply !px-0;
+}
+
+/* .navbar__inner,
+.footer > div,
+.docs-wrapper .main-wrapper,
+.blog-post-page .main-wrapper,
+.blog-authors-posts-page .main-wrapper,
+.blog-tags-post-list-page .main-wrapper,
+.blog-authors-list-page .main-wrapper,
+.blog-list-page .main-wrapper {
+  @apply px-0 mx-0 lg:px-16 lg:mx-auto md:bg-red-200 lg:bg-blue-200;
+} */
+
+/* .navbar__inner,
+.footer > div,
+.docs-wrapper .main-wrapper,
+.blog-post-page .main-wrapper,
+.blog-authors-posts-page .main-wrapper,
+.blog-tags-post-list-page .main-wrapper,
+.blog-authors-list-page .main-wrapper,
+.blog-list-page .main-wrapper {
+  @apply bg-red-200 sm:bg-pink-200 md:bg-yellow-200 lg:bg-blue-200;
+} */
+
+.footer {
+  @apply px-0;
+}
+
+.navbar__inner,
+.footer > div,
+.docs-wrapper .main-wrapper,
+.blog-post-page .main-wrapper,
+.blog-authors-posts-page .main-wrapper,
+.blog-tags-post-list-page .main-wrapper,
+.blog-authors-list-page .main-wrapper,
+.blog-list-page .main-wrapper {
+  @apply px-4 lg:px-32 xl:px-48;
+}
+
+.container {
+  @apply !max-w-full;
+}

@@ -1,0 +1,129 @@
+/* Remove underlines for links */
+.blog-post-page,
+.blog-authors-posts-page,
+.blog-tags-post-list-page,
+.blog-authors-list-page,
+.blog-list-page {
+  a {
+    @apply no-underline;
+  }
+  a:not([class^="tag_"]),
+  a:not([class^="tag_"]):hover {
+    --ifm-link-color: var(--ifm-font-base-color);
+    --ifm-link-hover-color: var(--ifm-font-base-color);
+  }
+
+  a:not([class^="tag_"]):hover {
+    @apply opacity-95;
+  }
+}
+
+/* Make blog left sidebar aligned */
+.blog-post-page,
+.blog-list-page,
+.blog-authors-posts-page,
+.blog-authors-list-page,
+.blog-tags-post-list-page,
+.blog-tags-list-page {
+  .main-wrapper > div,
+  .main-wrapper > div {
+    @apply md:px-0;
+  }
+  /* div[class*="authorCol_"] {
+    @apply md:pl-0;
+  } */
+}
+
+/* Style each blog card */
+.blog-authors-posts-page,
+.blog-tags-post-list-page,
+.blog-list-page {
+  article {
+    @apply py-8 px-8 rounded-xl bg-gray-50 hover:bg-gray-100 cursor-pointer dark:bg-gray-700 dark:hover:bg-gray-800 !mb-8;
+  }
+}
+
+/* Add divider on blog detail page */
+
+.blog-post-page {
+  header {
+    @apply pb-4 border-solid border-0 border-b border-gray-200 dark:border-gray-700;
+  }
+
+  #__blog-post-container {
+    @apply mt-8 lg:mt-8;
+  }
+
+  .table-of-contents {
+    @apply lg:!pt-1;
+  }
+
+  .table-of-contents__left-border {
+    @apply border-0;
+  }
+}
+
+/* Start -- Following are required only if blogSidebarCount is 0 */
+
+.blog-post-page {
+  /* We need col--10 here */
+
+  @media (max-width: 996px) {
+    .col {
+      --ifm-col-width: 100%;
+      flex-basis: var(--ifm-col-width);
+      margin-left: 0;
+    }
+  }
+
+  main {
+    @apply !px-0 md:ml-0;
+    --ifm-col-width: calc(10 / 12 * 100%);
+    flex: 0 0 var(--ifm-col-width) !important;
+  }
+  .row {
+    @apply md:ml-0;
+  }
+}
+
+.blog-list-page {
+  /* We need col--12 here */
+  main {
+    @apply md:mx-0 !px-0 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 md:!px-4;
+    --ifm-col-width: calc(12 / 12 * 100%);
+    flex: 0 0 var(--ifm-col-width) !important;
+  }
+
+  /* .row {
+    @apply md:ml-0 md:pl-0;
+  } */
+
+  /* div[class*="authorCol_"] {
+    @apply hidden;
+  } */
+
+  main > article {
+    @apply !mb-0 relative min-h-40 max-h-96 overflow-hidden;
+  }
+
+  main > article::after {
+    @apply content-[''] absolute bottom-0 left-0 right-0 h-12 pointer-events-none
+      bg-gradient-to-b 
+      from-transparent to-gray-50
+      dark:from-transparent dark:to-gray-700 dark:hover:to-gray-800;
+  }
+
+  main > article > footer {
+    @apply hidden;
+  }
+
+  .pagination-nav {
+    @apply block;
+  }
+
+  .pagination-nav__link {
+    @apply flex justify-center items-center hover:border-gray-400 dark:hover:border-gray-500;
+  }
+}
+
+/* End -- Above are required only if blogSidebarCount is 0 */

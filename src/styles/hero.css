@@ -1,0 +1,10 @@
+.hero--primary {
+  --ifm-hero-background-color: var(--ifm-background-color);
+  --ifm-hero-text-color: var(--ifm-font-color-base);
+  @apply relative isolate;
+}
+
+.hero--primary::before {
+  @apply content-[''] absolute inset-0 -z-10 opacity-40 dark:opacity-20;
+  background-color: var(--ifm-color-primary-contrast-background);
+}
