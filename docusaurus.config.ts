@@ -26,6 +26,7 @@ const config: Config = {
   deploymentBranch: "main",
   trailingSlash: false,
   plugins: [
+    '@saucelabs/theme-github-codeblock',
     "docusaurus-tailwindcss-loader", 
     [
       "@ohimg/ohimg-docusaurus-plugin",
