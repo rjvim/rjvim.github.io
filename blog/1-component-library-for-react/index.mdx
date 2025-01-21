@@ -1,5 +1,6 @@
 ---
 title: "Building React Component Library - Configure Vite and Tailwind"
+slug: "building-react-component-library-configure-vite-tailwind"
 date: "2025-01-21T10:00"
 tags: [react,component-library, releases]
 ---
@@ -13,6 +14,10 @@ import TabItem from '@theme/TabItem';
 In this post, I will walk you through how to build a component library for React using Vite and Tailwind. We will also see how to publish it to npm and use it in a React application. We will also integrate auto for versioning and release notes. 
 
 {/* truncate */}
+
+import SeriesHeader from './_sample.mdx';
+
+<SeriesHeader part="part 1" />
 
 ## Requirements
 
@@ -206,101 +211,4 @@ If dev is working fine, we will now just run `npm run package:build` - This shou
 
 ![Dist Folder](./dist.png)
 
-It has been long journey till here, pat your back. We have much more to do.
-
-## Publishing and Releasing
-
-### Configure Auto
-
-```bash
-npm install -D auto @auto-it/all-contributors @auto-it/conventional-commits @auto-it/npm @auto-it/omit-commits @auto-it/omit-release-notes @auto-it/released
-```
-
-**Add labels**
-
-Auto depends on labels which are added to PR to make a decision to release. So, we need to create labels on our repo.
-
-Run `npx auto create-labels`
-
-**Add following files**
-
-<Tabs>
-<TabItem value=".env" label=".env">
-```env reference title=".env" customStyling="true"
-https://github.com/rjvim/react-component-library-starter/blob/main/.env.example
-```
-</TabItem>
-<TabItem value=".autorc" label=".autorc">
-```js reference title=".autorc"
-https://github.com/rjvim/react-component-library-starter/blob/main/.autorc
-```
-</TabItem>
-</Tabs>
-
-### Canary Release
-
-**Make a canary release**
-
-- Create a new branch from main
-- Run `npx auto canary --force` and it should be successful
-- At this point you should find a version in npm similar to `0.1.0--canary.457943b.0 -D`
-
-### Release Action
-
-Let's add a release action to Github which can handle releasing.
-
-```yml reference title="release.yml"
-https://github.com/rjvim/react-component-library-starter/blob/main/.github/workflows/release.yml
-```
-
-Before you push above file, make sure you have added a secret `NPM_TOKEN` in your repo settings. This token would be used to publish to npm.
-
-### Test Release
-
-Note: You should already be in a branch at this point
-
-- Raise a PR with "release" label, and merge it. 
-- You should see a new release on Github with release notes (Check Actions tab for running)
-
-At this point we have a npm package which is configured with vite to build, and auto to version and ship.
-
-## Publish Docs
-
-### Configure docusaurus
-
-```typescript title="docusaurus.config.ts"
-{
-  organizationName: 'orgName-or-Username', // Put your GitHub org/user name.
-  projectName: 'projectName', // Put your repo name.
-}
-```
-
-### Deploy to Github Pages
-
-The first deployment to Github pages is manual, but we will automate it in the next steps.
-
-```bash
-npm run docs:deploy
-```
-
-After running this command you should see a branch in your Github like following:
-
-![gh-pages branch](./gh-pages-branch.png)
-
-### Configure Domain
-
-Depending on to which endpoint you want to deploy you have to configure baseUrl accordingly and do DNS mapping for your preferred domain. If you are going to use `*.github.io` you won't have to configure DNS. But you would need to configure `baseUrl`.
-
-
-```typescript title="docusaurus.config.ts"
-{
-  baseUrl: "???"
-}
-```
-
-Once you configure, things would start looking like following:
-
-> Here I have configured at `rcls.rjv.im`, so I had to do DNS mapping.
-
-![Domain mapped](./gh-pages-domain.png)
-
+It has been long journey till here, pat your back. We have much more to do. Next we will publish this package to npm.
