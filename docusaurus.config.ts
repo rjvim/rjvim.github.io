@@ -40,7 +40,7 @@ const config: Config = {
     //     publishableKey: process.env.OMG_PUBLISHABLE_KEY,
     //     signatureSecret: process.env.OMG_SIGNATURE_SECRET,
     //     imageOptions: {
-    //       "logoSrc": "https://rjv.im/img/logo.png"
+    //       "logoSrc": "https://rjv.im/img/rajiv-dark-logo.png"
     //     }
     //   }
     // ],
