@@ -38,3 +38,7 @@
     flex: 0 0 var(--ifm-col-width) !important;
   } */
 }
+
+.github-codeblock-reference-link {
+  display: none;
+}
