@@ -116,7 +116,7 @@ const config: Config = {
     //   isCloseable: false,
     // },
     // Replace with your project's social card
-    image: "img/rjvim-social-card.jpg",
+    image: "img/rjvim-social-card.png",
     navbar: {
       title: "RJV.IM",
       logo: {
