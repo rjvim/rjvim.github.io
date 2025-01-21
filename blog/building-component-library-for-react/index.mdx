@@ -1,14 +1,14 @@
 ---
 title: "Building Component Library for React using Vite and Tailwind"
-date: "2020-03-16"
-tags: [hola, docusaurus]
+date: "2025-01-21"
+tags: [react,component-library, releases]
 ---
 
 import CodeBlock from "@theme/CodeBlock";
 
 # Introduction
 
-In this post, I will walk you through how to build a component library for React using Vite and Tailwind. We will also see how to publish it to npm and use it in a React application.
+In this post, I will walk you through how to build a component library for React using Vite and Tailwind. We will also see how to publish it to npm and use it in a React application. We will also integrate auto for versioning and release notes. 
 
 {/* truncate */}
 
@@ -131,26 +131,6 @@ npx tailwindcss init -p --ts
 ```
 
 Update tailwind config to:
-
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import path from 'path';
-
-export default defineConfig({
-  plugins: [react()],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
-  },
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: `@import "@/styles/variables.scss";`,
-      },
-    },
-  },
-});
 
 ```ts title="packages/elements/tailwind.config.ts"
   content: [

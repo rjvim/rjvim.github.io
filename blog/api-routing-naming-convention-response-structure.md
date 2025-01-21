@@ -1,7 +1,6 @@
 ---
 title: "HTTP APIs Routing Naming Conventions & Response Structures"
 date: "2020-06-03"
-tags: [hola, docusaurus]
 description: Everyone and their dog wants an API, so you should probably learn how to build them.
 ---
 
