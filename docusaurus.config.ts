@@ -10,7 +10,7 @@ const BASE_URL =
 
 const config: Config = {
   title: "Rajiv I'm",
-  tagline: "I write on tech and product, entrepreneurship. I work @betalectic",
+  tagline: "I write on tech, product and entrepreneurship. I work @betalectic",
   favicon: "img/favicon.ico",
   titleDelimiter: "-",
   // Set the production url of your site here
@@ -26,23 +26,24 @@ const config: Config = {
   deploymentBranch: "main",
   trailingSlash: false,
   plugins: [
+    '@saucelabs/theme-github-codeblock',
     "docusaurus-tailwindcss-loader", 
-    [
-      "@ohimg/ohimg-docusaurus-plugin",
-      {
-        enabledPlugins: [
-          'docusaurus-plugin-content-docs',
-          'docusaurus-plugin-content-pages',
-          'docusaurus-plugin-content-blog'
-        ],
-        debug: false,
-        publishableKey: process.env.OMG_PUBLISHABLE_KEY,
-        signatureSecret: process.env.OMG_SIGNATURE_SECRET,
-        imageOptions: {
-          "logoSrc": "https://rjv.im/img/logo.png"
-        }
-      }
-    ],
+    // [
+    //   "@ohimg/ohimg-docusaurus-plugin",
+    //   {
+    //     enabledPlugins: [
+    //       'docusaurus-plugin-content-docs',
+    //       'docusaurus-plugin-content-pages',
+    //       'docusaurus-plugin-content-blog'
+    //     ],
+    //     debug: false,
+    //     publishableKey: process.env.OMG_PUBLISHABLE_KEY,
+    //     signatureSecret: process.env.OMG_SIGNATURE_SECRET,
+    //     imageOptions: {
+    //       "logoSrc": "https://rjv.im/img/rajiv-dark-logo.png"
+    //     }
+    //   }
+    // ],
   ],
   onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
@@ -78,7 +79,7 @@ const config: Config = {
         blog: {
           routeBasePath: "/",
           blogSidebarCount: 0,
-          showReadingTime: false,
+          showReadingTime: true,
           postsPerPage: 'ALL',
           feedOptions: {
             type: ["rss", "atom"],
@@ -115,12 +116,13 @@ const config: Config = {
     //   isCloseable: false,
     // },
     // Replace with your project's social card
-    image: "img/docusaurus-social-card.jpg",
+    image: "img/rjvim-social-card.jpg",
     navbar: {
       title: "RJV.IM",
       logo: {
         alt: "Rajiv I'm",
-        src: "img/logo.png",
+        src: "img/rajiv-light-logo.png",
+        srcDark: "img/rajiv-dark-logo.png",
       },
       items: [
         // {

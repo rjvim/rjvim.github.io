@@ -55,7 +55,7 @@ export default function BlogPostItemHeaderInfo({
 
   const dateTimeFormat = useDateTimeFormat({
     day: 'numeric',
-    month: 'long',
+    month: 'short',
     year: 'numeric',
     timeZone: 'UTC',
   });
@@ -65,7 +65,7 @@ export default function BlogPostItemHeaderInfo({
 
   return (
     <div className={clsx(styles.container, 'margin-vert--md', className)}>
-      <DateTime date={date} formattedDate={formatDate(date)} />
+      Updated on <DateTime date={date} formattedDate={formatDate(date)} />
       {typeof readingTime !== 'undefined' && (
         <>
           <Spacer />

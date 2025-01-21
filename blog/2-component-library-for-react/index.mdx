@@ -1,0 +1,85 @@
+---
+title: "Publishing React Component Library - Configure Auto and Github Actions"
+slug: "publishing-react-component-library-configure-auto-github-actions"
+date: "2025-01-21T11:00"
+tags: [react,component-library, releases]
+---
+
+import CodeBlock from "@theme/CodeBlock";
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Introduction
+
+In this post, I will walk you through how to build a component library for React using Vite and Tailwind. We will also see how to publish it to npm and use it in a React application. We will also integrate auto for versioning and release notes. 
+
+{/* truncate */}
+
+import SeriesHeader from '../1-component-library-for-react/_sample.mdx';
+
+<SeriesHeader part="part 2" />
+
+## Configure Auto
+
+```bash
+npm install -D auto @auto-it/all-contributors @auto-it/conventional-commits @auto-it/npm @auto-it/omit-commits @auto-it/omit-release-notes @auto-it/released
+```
+
+**Add labels**
+
+Auto depends on labels which are added to PR to make a decision to release. So, we need to create labels on our repo.
+
+Run `npx auto create-labels`
+
+**Add following files**
+
+*Note: Change author*
+
+<Tabs>
+<TabItem value=".env" label=".env">
+```env reference title=".env" customStyling="true"
+https://github.com/rjvim/react-component-library-starter/blob/main/.env.example
+```
+</TabItem>
+<TabItem value=".autorc" label=".autorc">
+```js reference title=".autorc"
+https://github.com/rjvim/react-component-library-starter/blob/main/.autorc
+```
+</TabItem>
+</Tabs>
+
+## Canary Release
+
+**Make a canary release**
+
+- Create a new branch from main
+- Run `npx auto canary --force` and it should be successful
+- At this point you should find a version in npm similar to `0.1.0--canary.457943b.0 -D`
+
+## Release Action
+
+Let's add a release action to Github which can handle releasing.
+
+Before you push the following file, make sure you have added a secret `NPM_TOKEN` in your repo settings. This token would be used to publish to npm.
+
+```yml reference title=".github/workflows/release.yml"
+https://github.com/rjvim/react-component-library-starter/blob/main/.github/workflows/release.yml
+```
+
+## Test Release
+
+Action: Raise a PR with "release" label, and merge it.
+
+Outcomes:
+
+- An action should run on Github (Check Actions tab for running)
+- You should see a new version on npmjs
+- You should see a new release on Github with release notes 
+
+
+:::info
+At this point we have a npm package which is configured with vite to build, and auto to version and ship.
+:::
+
+
+
