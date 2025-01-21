@@ -10,7 +10,7 @@ const BASE_URL =
 
 const config: Config = {
   title: "Rajiv I'm",
-  tagline: "I write on tech and product, entrepreneurship. I work @betalectic",
+  tagline: "I write on tech, product and entrepreneurship. I work @betalectic",
   favicon: "img/favicon.ico",
   titleDelimiter: "-",
   // Set the production url of your site here
@@ -116,12 +116,13 @@ const config: Config = {
     //   isCloseable: false,
     // },
     // Replace with your project's social card
-    image: "img/docusaurus-social-card.jpg",
+    image: "img/rjvim-social-card.jpg",
     navbar: {
       title: "RJV.IM",
       logo: {
         alt: "Rajiv I'm",
-        src: "img/logo.png",
+        src: "img/rajiv-light-logo.png",
+        srcDark: "img/rajiv-dark-logo.png",
       },
       items: [
         // {

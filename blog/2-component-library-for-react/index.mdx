@@ -33,6 +33,8 @@ Run `npx auto create-labels`
 
 **Add following files**
 
+*Note: Change author*
+
 <Tabs>
 <TabItem value=".env" label=".env">
 ```env reference title=".env" customStyling="true"
@@ -60,16 +62,24 @@ Let's add a release action to Github which can handle releasing.
 
 Before you push the following file, make sure you have added a secret `NPM_TOKEN` in your repo settings. This token would be used to publish to npm.
 
-```yml reference title="release.yml"
+```yml reference title=".github/workflows/release.yml"
 https://github.com/rjvim/react-component-library-starter/blob/main/.github/workflows/release.yml
 ```
 
 ## Test Release
 
-Note: You should already be in a branch at this point
+Action: Raise a PR with "release" label, and merge it.
 
-- Raise a PR with "release" label, and merge it. 
-- You should see a new release on Github with release notes (Check Actions tab for running)
+Outcomes:
 
+- An action should run on Github (Check Actions tab for running)
+- You should see a new version on npmjs
+- You should see a new release on Github with release notes 
+
+
+:::info
 At this point we have a npm package which is configured with vite to build, and auto to version and ship.
+:::
+
+
 
