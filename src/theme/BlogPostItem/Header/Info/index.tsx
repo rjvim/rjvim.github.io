@@ -65,10 +65,10 @@ export default function BlogPostItemHeaderInfo({
 
   return (
     <div className={clsx(styles.container, 'margin-vert--md', className)}>
-      <DateTime date={date} formattedDate={formatDate(date)} />
+      {/* <DateTime date={date} formattedDate={formatDate(date)} /> */}
       {typeof readingTime !== 'undefined' && (
         <>
-          <Spacer />
+          {/* <Spacer /> */}
           <ReadingTime readingTime={readingTime} />
         </>
       )}

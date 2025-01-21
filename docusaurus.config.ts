@@ -79,7 +79,7 @@ const config: Config = {
         blog: {
           routeBasePath: "/",
           blogSidebarCount: 0,
-          showReadingTime: false,
+          showReadingTime: true,
           postsPerPage: 'ALL',
           feedOptions: {
             type: ["rss", "atom"],
