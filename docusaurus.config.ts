@@ -28,22 +28,22 @@ const config: Config = {
   plugins: [
     '@saucelabs/theme-github-codeblock',
     "docusaurus-tailwindcss-loader", 
-    // [
-    //   "@ohimg/ohimg-docusaurus-plugin",
-    //   {
-    //     enabledPlugins: [
-    //       'docusaurus-plugin-content-docs',
-    //       'docusaurus-plugin-content-pages',
-    //       'docusaurus-plugin-content-blog'
-    //     ],
-    //     debug: false,
-    //     publishableKey: process.env.OMG_PUBLISHABLE_KEY,
-    //     signatureSecret: process.env.OMG_SIGNATURE_SECRET,
-    //     imageOptions: {
-    //       "logoSrc": "https://rjv.im/img/rajiv-dark-logo.png"
-    //     }
-    //   }
-    // ],
+    [
+      "@ohimg/ohimg-docusaurus-plugin",
+      {
+        enabledPlugins: [
+          'docusaurus-plugin-content-docs',
+          'docusaurus-plugin-content-pages',
+          'docusaurus-plugin-content-blog'
+        ],
+        debug: false,
+        publishableKey: process.env.OMG_PUBLISHABLE_KEY,
+        signatureSecret: process.env.OMG_SIGNATURE_SECRET,
+        imageOptions: {
+          "logoSrc": "https://rjv.im/img/rajiv-dark-logo.png"
+        }
+      }
+    ],
   ],
   onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
