@@ -57,3 +57,36 @@ Once you configure, things would start looking like following:
 
 ![Domain mapped](./gh-pages-domain.png)
 
+## Automate deployment
+
+We will automate the deployment using GitHub actions. Create a new file in `.github/workflows/docs-deploy.yml` with the following content:
+
+```yaml reference title=".github/workflows/docs-deploy.yml"
+https://github.com/rjvim/react-component-library-starter/blob/main/.github/workflows/docs-deploy.yml
+```
+
+Add this change to main branch and deploy it.
+
+## Preview PR
+
+This is optional but you can preview the PR by deploying it to a temporary url on same domain. I would recommend this as it will make reviewing much easier and efficient.
+
+For a PR preview the main docs baseUrl has to be changed to `/pr-preview/pr-<PR_NUMBER>/`
+
+```typescript title="docusaurus.config.ts"
+const BASE_URL =
+  process.env.PR_NUMBER !== undefined
+    ? `/pr-preview/pr-${process.env.PR_NUMBER}/`
+    : "/";
+
+
+const config: Config = {
+  baseUrl: BASE_URL,
+}
+```
+
+Create a new file in `.github/workflows/docs-preview.yml` with the following content:
+
+```yaml reference title=".github/workflows/docs-preview.yml"
+https://github.com/rjvim/react-component-library-starter/blob/main/.github/workflows/docs-preview.yml
+```
