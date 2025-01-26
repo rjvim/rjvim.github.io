@@ -42,7 +42,7 @@
     "@headlessui/react": "^2.1.9",
     "@ohimg/ohimg-docusaurus-plugin": "^1.0.6",
     "@ohimg/ohimg-js": "^1.1.4",
-    "@tailwindcss/typography": "^0.5.15",
+    "@tailwindcss/typography": "^0.5.16",
     "autoprefixer": "^10.4.20",
     "docusaurus-tailwindcss-loader": "file:plugins/docusaurus-tailwindcss-loader",
     "postcss": "^8.4.47",
