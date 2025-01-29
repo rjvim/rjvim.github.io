@@ -27,7 +27,7 @@ npm install -D auto @auto-it/all-contributors @auto-it/conventional-commits @aut
 
 **Add labels**
 
-Auto depends on labels that are added to PR to make a decision to release. So, we need to create labels on our repo.
+Auto depends on labels that are added to PR to decide to release. So, we need to create labels on our repo.
 
 Run `npx auto create-labels`
 
@@ -52,15 +52,15 @@ https://github.com/rjvim/react-component-library-starter/blob/main/.autorc
 
 **Make a canary release**
 
-- Create a new branch from main
+- Create a new branch from the main
 - Run `npx auto canary --force`, and it should be successful
-- At this point, you should find a version in npm that is similar to `0.1.0--canary.457943b.0 -D`
+- At this point, you should find a version in npm similar to `0.1.0--canary.457943b.0 -D`
 
 ## Release Action
 
 Let's add a release action to Github which can handle releasing.
 
-Before you push the following file, make sure you have added a secret `NPM_TOKEN` in your repo settings. This token would be used to publish to npm.
+Before you push the following file, add a secret `NPM_TOKEN` in your repo settings. This token would be used to publish to npm.
 
 ```yml reference title=".github/workflows/release.yml"
 https://github.com/rjvim/react-component-library-starter/blob/main/.github/workflows/release.yml
@@ -78,7 +78,7 @@ Outcomes:
 
 
 :::info
-At this point we have a npm package which is configured with vite to build, and auto to version and ship.
+We have an npm package configured with Vite to build and Auto to version and ship.
 :::
 
 
