@@ -11,7 +11,7 @@ import TabItem from '@theme/TabItem';
 
 # Introduction
 
-In this post, I will walk you through how to build a component library for React using Vite and Tailwind. We will also see how to publish it to npm and use it in a React application. We will also integrate auto for versioning and release notes. 
+In this post, I will walk you through building a React component library using Vite and Tailwind. We will also see how to publish it to npm and use it in a React application. We will integrate auto for versioning and release notes. 
 
 {/* truncate */}
 
@@ -31,7 +31,7 @@ import SeriesHeader from './_sample.mdx';
 
 ### Initialize Codebase
 
-We will use lerna to setup our codebase and add docusaurus for documentation.
+We will use Lerna to set up our codebase and add Docusaurus for documentation.
 
 ```bash
 npx lerna init --packages="packages/*" --packages="apps/*"
@@ -45,7 +45,7 @@ npx create-docusaurus@latest apps/docs classic --typescript
 
 ### Create Vite React App
 
-**Run following command**
+**Run the following command**
 
 ```bash
 npm create vite@latest packages/elements -- --template react-ts
@@ -53,12 +53,12 @@ npm create vite@latest packages/elements -- --template react-ts
 
 **Change package name**
 
-Change name in package.json to `@rcls/elements` (actually to something you like)
+Change the name in package.json to `@rcls/elements` (actually to something you like)
 
 
 ### Setup scripts
 
-*Add following scripts to root package.json*
+*Add the following scripts to root package.json*
 
 ```json reference title="package.json" customStyling="true"
 https://github.com/rjvim/react-component-library-starter/blob/main/package.json#L8-L16
@@ -70,19 +70,19 @@ https://github.com/rjvim/react-component-library-starter/blob/main/package.json#
 - Build package: `npm run package:build`
 - Build everything: `npm run build`
 
-If both of these work, then setup is complete. If anything seems to fail, you can clean the repo and build again using `npx lerna clean -y && npm install`
+If both of these work, then the setup is complete. If anything seems to fail, you can clean the repo and build again using `npx lerna clean -y && npm install`
 
 ### Push to Github
 
-Create a github public repo on Github and push codebase to it, as in next steps we would be using github actions.
+Create a github public repo on Github and push the codebase to it, as in the following steps we would be using github actions.
 
 ## Setup Component Library
 
 ### Install Tailwind 3
 
-Note that we are installing Tailwind 3 here, we will have alternate section to do the same with tailwind v4
+Note that we are installing Tailwind 3 here; we will have an alternate section to do the same with Tailwind V4.
 
-Go to package directory `cd packages/elements`
+Go to the package directory `cd packages/elements`
 
 ```bash
 npm install -D tailwindcss postcss autoprefixer tailwindcss-scoped-preflight
@@ -95,19 +95,19 @@ Update tailwind config to:
 https://github.com/rjvim/react-component-library-starter/blob/main/packages/elements/tailwind.config.ts
 ```
 
-Let's note few things which we have done here:
+Let's note a few things that we have done here:
 
-- We added prefix
+- We added the prefix
 - We scope preflight
 
-We did both of these things so that our component styles won't override styles of the app where we install our component package.
+We did both of these things so that our component styles would not override the styles of the app where we installed our component package.
 
-`twp` is the scoping class which will force tailwind preflight classes to be valid only when there is `class="twp"` on an element or the parent wrapper.
+`twp` is the scoping class that will force Tailwind preflight classes to be valid only when there is `class="twp"` on an element or the parent wrapper.
 
 ### Add index.css
 
 - Delete default `src/index.css`
-- Add index.css file at `packages/elements/index.css` with following contents
+- Add index.css file at `packages/elements/index.css` with the following contents
 
 ```css title="packages/elements/index.css"  
 @tailwind base;
@@ -117,7 +117,7 @@ We did both of these things so that our component styles won't override styles o
 
 ### Test Tailwind
 
-Replace App.jsx default content with following:
+Replace App.jsx default content with the following:
 
 ```tsx title="packages/elements/src/App.tsx"
 import "../index.css";
@@ -129,9 +129,9 @@ export default function App() {
 
 ## Implement Components
 
-In this section we will implement couple of components and couple of components. To demonstrate build which can be tree shaked, I have added two components
+In this section, we will implement a couple of components and a couple of components. I have added two components to demonstrate a build that can be tree-shaken.
 
-Run `npm run package:dev` and you should see Hello World in red background! This is a temporary change to test if tailwind is working fine before we move on to library changes.
+Run `npm run package:dev`, and you should see Hello World in the red background! This is a temporary change to test whether Tailwind is working correctly before we proceed to library changes.
 
 <Tabs>
 <TabItem value="Button" label="Button">
@@ -157,13 +157,13 @@ https://github.com/rjvim/react-component-library-starter/blob/main/packages/elem
 
 **Install dependencies**
 
-Run the following command inside your package folder, not root folder
+Run the following command inside your package folder, not the root folder.
 
 ```bash
 npm i -D vite-plugin-dts react react-dom
 ```
 
-Next we configure vite so that we can leverage it's lib mode and build our package
+Next, we configure Vite so that we can leverage its lib mode and build our package.
 
 <Tabs>
   <TabItem value="package.json" label="package.json" default>
@@ -191,9 +191,9 @@ Next we configure vite so that we can leverage it's lib mode and build our packa
 Let's understand what we are doing above:
 
 - We allowed public access so that we can push to npm 
-- In package.json we are configure what would be exported, and also marking react as peerDependency so that it won't get installed when someone installs our package
-- We are also exporting our .css file, make sure the name of the file matches with what's generated in your repo. The file name would be package name.
-- We are configuring lib mode in vite file to generate build files, exclude few packages, and prepare types
+- In package.json, we configure what would be exported and also mark React as peerDependency so that it won't get installed when someone installs our package
+- We are also exporting our .css file, so make sure the file's name matches what's generated in your repo. The file name would be the package name.
+- We are configuring lib mode in vite file to generate build files, exclude a few packages, and prepare types
 
 ### Run Dev
 
@@ -203,12 +203,12 @@ Let's understand what we are doing above:
 https://github.com/rjvim/react-component-library-starter/blob/main/packages/elements/src/App.tsx
 ```
 
-From the root folder run `npm run package:dev` and you should see your button and label component with proper styling. If not, stop here and debug it further.
+From the root folder, run `npm run package:dev`, and you should see your button and label component with proper styling. If not, stop here and debug it further.
 
 ### Run Build
 
-If dev is working fine, we will now just run `npm run package:build` - This should go all smooth.
+If the dev works fine, we will just run `npm run package:build`. This should go smoothly.
 
 ![Dist Folder](./dist.png)
 
-It has been long journey till here, pat your back. We have much more to do. Next we will publish this package to npm.
+It has been a long journey till here, pat your back. We have much more to do. Next, we will publish this package to npm.
