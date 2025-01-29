@@ -11,7 +11,7 @@ import TabItem from '@theme/TabItem';
 
 # Introduction
 
-In this post, I will walk you through how to build a component library for React using Vite and Tailwind. We will also see how to publish it to npm and use it in a React application. We will also integrate auto for versioning and release notes. 
+In this post, I will walk you through using Docusaurus to create comprehensive documentation for your React component library. You'll also learn to configure automated documentation deployments to GitHub Pages, set up custom domains, and implement PR preview environments. 
 
 {/* truncate */}
 
@@ -36,13 +36,13 @@ The first deployment to Github pages is manual, but we will automate it in the n
 npm run docs:deploy
 ```
 
-After running this command you should see a branch in your Github like following:
+After running this command, you should see a branch in your Github like the following:
 
 ![gh-pages branch](./gh-pages-branch.png)
 
 ## Configure Domain
 
-Depending on to which endpoint you want to deploy you have to configure baseUrl accordingly and do DNS mapping for your preferred domain. If you are going to use `*.github.io` you won't have to configure DNS. But you would need to configure `baseUrl`.
+Depending on which endpoint you want to deploy, you must configure baseUrl accordingly and do DNS mapping for your preferred domain. If you are going to use `*.github.io`, you won't have to configure DNS. But you would need to configure `baseUrl`.
 
 
 ```typescript title="docusaurus.config.ts"
@@ -51,9 +51,9 @@ Depending on to which endpoint you want to deploy you have to configure baseUrl 
 }
 ```
 
-Once you configure, things would start looking like following:
+Once you configure, things will start looking like the following:
 
-> Here I have configured at `rcls.rjv.im`, so I had to do DNS mapping.
+> Here, I have configured at `rcls.rjv.im`, so I had to do DNS mapping.
 
 ![Domain mapped](./gh-pages-domain.png)
 
@@ -65,13 +65,13 @@ We will automate the deployment using GitHub actions. Create a new file in `.git
 https://github.com/rjvim/react-component-library-starter/blob/main/.github/workflows/docs-deploy.yml
 ```
 
-Add this change to main branch and deploy it.
+Add this change to the main branch and deploy it.
 
 ## Preview PR
 
-This is optional but you can preview the PR by deploying it to a temporary url on same domain. I would recommend this as it will make reviewing much easier and efficient.
+This is optional, but you can preview the PR by deploying it to a temporary URL on the same domain. I recommend this as it will make reviewing much more manageable and efficient.
 
-For a PR preview the main docs baseUrl has to be changed to `/pr-preview/pr-<PR_NUMBER>/`
+For a PR preview, the main docs baseUrl has to be changed to `/pr-preview/pr-<PR_NUMBER>/`
 
 ```typescript title="docusaurus.config.ts"
 const BASE_URL =
