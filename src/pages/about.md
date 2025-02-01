@@ -4,7 +4,7 @@ title: About
 
 # About
 
-Hi, I'm Rajiv Seelam. I write code and build products. Based in Hyderabad, India, I've spent over a decade working on business challenges through software.
+Hi, I'm Rajiv Seelam. I write code and build products. I've spent over a 18+ years coding and 13+ years working on business challenges through software.
 
 ## What I Do
 

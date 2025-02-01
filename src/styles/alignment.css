@@ -35,8 +35,15 @@
 .blog-authors-posts-page .main-wrapper,
 .blog-tags-post-list-page .main-wrapper,
 .blog-authors-list-page .main-wrapper,
-.blog-list-page .main-wrapper {
+.blog-list-page .main-wrapper,
+.mdx-page .main-wrapper {
   @apply px-4 lg:px-32 xl:px-48;
+}
+
+.mdx-page {
+  [class*="mdxPageWrapper_"] {
+    @apply !m-0;
+  }
 }
 
 .container {
