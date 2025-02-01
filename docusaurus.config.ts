@@ -9,7 +9,7 @@ const BASE_URL =
     : "/";
 
 const config: Config = {
-  title: "Rajiv I'm",
+  title: "Rajiv S",
   tagline: "I write on tech, product and entrepreneurship. I work @betalectic",
   favicon: "img/favicon.ico",
   titleDelimiter: "-",
