@@ -37,13 +37,29 @@
 .blog-authors-list-page .main-wrapper,
 .blog-list-page .main-wrapper,
 .mdx-page .main-wrapper {
-  @apply px-4 lg:px-32 xl:px-48;
+  @apply px-8 lg:px-32 xl:px-48;
 }
 
 .mdx-page {
   [class*="mdxPageWrapper_"] {
     @apply !m-0;
   }
+
+  [class*="mdxPageWrapper_"] > .col--8 {
+    @apply p-0;
+    /* @apply bg-red-400; */
+    --ifm-col-width: calc(10 / 12 * 100%);
+  }
+
+  @media (max-width: 996px) {
+    [class*="mdxPageWrapper_"] > .col--8 {
+      @apply p-0;
+      /* @apply bg-red-400; */
+      --ifm-col-width: calc(12 / 12 * 100%);
+    }
+  }
+
+
 }
 
 .container {
