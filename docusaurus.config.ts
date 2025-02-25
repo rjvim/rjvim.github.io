@@ -132,11 +132,11 @@ const config: Config = {
         //   label: "Tutorial",
         // },
         { to: "/about", label: "About", position: "right" },
-        // {
-        //   href: "https://github.com/facebook/docusaurus",
-        //   label: "GitHub",
-        //   position: "right",
-        // },
+        {
+          href: "https://x.com/rjv_im",
+          label: "X",
+          position: "right",
+        },
       ],
     },
     footer: {
