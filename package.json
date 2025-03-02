@@ -47,7 +47,7 @@
     "docusaurus-tailwindcss-loader": "file:plugins/docusaurus-tailwindcss-loader",
     "postcss": "^8.4.47",
     "postcss-import": "^16.1.0",
-    "postcss-preset-env": "^10.0.6",
+    "postcss-preset-env": "^10.1.5",
     "tailwindcss": "^3.4.13",
     "typescript": "~5.5.2"
   },
