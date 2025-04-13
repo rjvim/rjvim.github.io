@@ -99,6 +99,9 @@ importers:
       mermaid:
         specifier: ^11.6.0
         version: 11.6.0
+      motion:
+        specifier: ^12.5.0
+        version: 12.6.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       next:
         specifier: ^15.3.0
         version: 15.3.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -395,6 +398,9 @@ importers:
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
+      '@repo/shadcn':
+        specifier: workspace:*
+        version: link:../shadcn
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
