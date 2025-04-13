@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { cn } from "@repo/shadcn/lib/utils";
+import { RootProvider } from "fumadocs-ui/provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -23,8 +25,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+      <body
+        className={cn(
+          "relative flex min-h-svh flex-col overflow-x-hidden"
+          // `${geistSans.variable} ${geistMono.variable}`
+        )}
+      >
+        <RootProvider>{children}</RootProvider>
       </body>
     </html>
   );
