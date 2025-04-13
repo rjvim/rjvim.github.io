@@ -13,3 +13,33 @@
 @import "@repo/ui/globals.css";
 
 @source '../node_modules/fumadocs-ui/dist/**/*.js';
+
+@layer utilities {
+  .bg-dashed {
+    background-image: linear-gradient(
+      45deg,
+      var(--color-border) 12.5%,
+      transparent 12.5%,
+      transparent 50%,
+      var(--color-border) 50%,
+      var(--color-border) 62.5%,
+      transparent 62.5%,
+      transparent 100%
+    );
+    background-size: 0.25rem 0.25rem;
+  }
+}
+
+.blog {
+  #nd-page {
+    @apply col-span-4 xl:col-span-3 order-last;
+  }
+
+  #nd-toc {
+    @apply mx-auto px-4 lg:px-6;
+    /* @apply mx-auto; */
+    div {
+      @apply pe-0;
+    }
+  }
+}

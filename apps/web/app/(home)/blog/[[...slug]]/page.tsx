@@ -1,11 +1,11 @@
 import { blogSource } from "@/lib/source";
 import React from "react";
 import { notFound } from "next/navigation";
-import { blogsMetaImage } from "@/lib/metadata-image";
 import {
   BlogList,
   CategoryBlogList,
 } from "@/app/(home)/blog/[[...slug]]/(components)/blog-list";
+import { BlogPost } from "@/app/(home)/blog/[[...slug]]/(components)/blog-post";
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
