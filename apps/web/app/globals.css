@@ -11,4 +11,20 @@
 
 @import "@repo/shadcn/globals.css";
 
+:root {
+  --grid-base-color: rgba(66, 71, 112, 0.09);
+  --grid-dots-color: rgba(66, 71, 112, 0.09);
+}
+
+.dark {
+  --grid-base-color: rgba(255, 255, 255, 0.09);
+  --grid-dots-color: rgba(255, 255, 255, 0.09);
+}
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 0rem;
+  @apply max-w-7xl;
+}
+
 @source '../node_modules/fumadocs-ui/dist/**/*.js';
