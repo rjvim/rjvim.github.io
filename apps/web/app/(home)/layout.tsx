@@ -6,7 +6,7 @@ import { HomeLayout } from "fumadocs-ui/layouts/home";
 import { baseOptions, linkItems } from "@/app/layout.config";
 import { getLinks } from "fumadocs-ui/layouts/shared";
 import { Header } from "@/components/header";
-import { Icons } from "@/components/icons";
+import { SocialIcons } from "@repo/ui/components/social-icons";
 
 export default function Layout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -37,12 +37,12 @@ export default function Layout({ children }: { children: ReactNode }) {
       {
         name: "Twitter",
         href: "https://x.com/rjv_im",
-        icon: Icons.x,
+        icon: SocialIcons.x,
       },
       {
         name: "GitHub",
         href: "https://github.com/rjvim",
-        icon: Icons.github,
+        icon: SocialIcons.github,
       },
     ],
   };
