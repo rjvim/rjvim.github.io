@@ -57,6 +57,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@repo/shadcn':
+        specifier: workspace:*
+        version: link:../../packages/shadcn
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui
