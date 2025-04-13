@@ -20,7 +20,7 @@ const ThemeImage = (props: Props) => {
 export default function Home() {
   return (
     <div>
-      <main>
+      <main className="bg-red-200">
         <ol>
           <li>
             Get started by editing <code>apps/web/app/page.tsx</code>

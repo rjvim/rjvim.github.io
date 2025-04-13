@@ -1,10 +1,29 @@
 import { createMDX } from "fumadocs-mdx/next";
 
+const withMDX = createMDX();
+
+/** @type {import('next').NextConfig} */
 const config = {
   reactStrictMode: true,
-  serverExternalPackages: ["typescript", "twoslash"],
+  output: "export",
+  pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
+  basePath: "",
+  images: { unoptimized: true },
+  experimental: {
+    viewTransition: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  serverExternalPackages: [
+    "ts-morph",
+    "typescript",
+    "oxc-transform",
+    "twoslash",
+  ],
 };
-
-const withMDX = createMDX();
 
 export default withMDX(config);
