@@ -4,11 +4,6 @@ import { createMDXSource } from "fumadocs-mdx";
 import type { InferMetaType, InferPageType } from "fumadocs-core/source";
 import type { PageTree } from "fumadocs-core/server";
 
-// export const docsSource = loader({
-//   baseUrl: "/docs",
-//   source: docs.toFumadocsSource(),
-// });
-
 export const blogSource = loader({
   baseUrl: "/blog",
   source: createMDXSource(blog),

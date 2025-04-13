@@ -1,13 +1,10 @@
 import {
   defineCollections,
   defineConfig,
-  defineDocs,
   frontmatterSchema,
-  metaSchema,
 } from "fumadocs-mdx/config";
 import { z } from "zod";
 import { transformerTwoslash } from "fumadocs-twoslash";
-import { createFileSystemTypesCache } from "fumadocs-twoslash/cache-fs";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
 import { transformerRemoveNotationEscape } from "@shikijs/transformers";
