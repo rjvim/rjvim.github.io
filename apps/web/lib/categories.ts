@@ -10,6 +10,7 @@ import {
   Wrench,
 } from "lucide-react";
 import { SocialIcons } from "@repo/ui/components/social-icons";
+import { getSortedByDatePosts } from "./source";
 
 export const getCategoryBySlug = (slug: string) => {
   const categories = {
@@ -71,5 +72,23 @@ export const getCategoryBySlug = (slug: string) => {
       label: slug.toString().replace(/-/g, " ").toLowerCase(),
       icon: SocialIcons.github,
     }
+  );
+};
+
+export const getPostsByCategory = (category: string) => {
+  return getSortedByDatePosts()
+    .filter((post) => post.slugs && post.slugs[0] === category)
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+};
+
+export const getPostsByCategoryAndSlug = (category: string, slug: string) => {
+  return (
+    getSortedByDatePosts()
+      .filter(
+        (post) =>
+          post.slugs && post.slugs[0] === category && post.slugs[1] === slug
+      )
+      .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())[0] ||
+    undefined
   );
 };
