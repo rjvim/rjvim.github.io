@@ -58,9 +58,9 @@ export default function Layout({ children }: { children: ReactNode }) {
           />
         ),
       }}
-      className="pt-0"
+      className="pt-0 home-layout"
     >
-      <div className="flex flex-1 flex-col divide-y divide-dashed divide-border/70 border-border/70 border-dashed sm:border-b dark:divide-border dark:border-border">
+      <div className="home-children flex flex-1 flex-col divide-y divide-dashed divide-border/70 border-border/70 border-dashed sm:border-b dark:divide-border dark:border-border">
         {children}
       </div>
       <BigFooter

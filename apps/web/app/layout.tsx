@@ -30,12 +30,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable}`}
+      suppressHydrationWarning
+    >
       <body
-        className={cn(
-          "relative flex min-h-svh flex-col overflow-x-hidden",
-          `${geistSans.variable} ${geistMono.variable}`
-        )}
+        className={cn("relative flex min-h-svh flex-col overflow-x-hidden")}
       >
         <RootProvider
           search={{

@@ -1,8 +1,6 @@
-"use client";
-
 import { PlusIcon } from "lucide-react";
 import type { HTMLAttributes } from "react";
-import { GridBackground } from "./grid-background";
+import { GridBackground } from "@repo/ui/components/grid-background";
 import { cn } from "@repo/shadcn/lib/utils";
 
 type SectionProps = {

@@ -4,7 +4,7 @@ import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import { DocsPage } from "fumadocs-ui/page";
 import { cn } from "@repo/shadcn/lib/utils";
 import { GridBackground } from "@repo/ui/components/grid-background";
-import { Section } from "@repo/ui/components/section";
+import { Section } from "./section";
 
 interface MdxLayoutProps {
   children: ReactNode;
@@ -19,11 +19,11 @@ export default function VanillaMdx({
 }: MdxLayoutProps): ReactNode {
   return (
     <>
-      {/* <Section className="p-4 lg:p-6">
+      <Section className="p-4 lg:p-6">
         <h1 className="text-center font-bold text-3xl leading-tight tracking-tighter md:text-4xl">
           {title}
         </h1>
-      </Section> */}
+      </Section>
 
       <DocsLayout
         nav={{ enabled: false }}
