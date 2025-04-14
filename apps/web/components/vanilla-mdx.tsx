@@ -3,6 +3,7 @@ import type { TableOfContents } from "fumadocs-core/server";
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import { DocsPage } from "fumadocs-ui/page";
 import { cn } from "@repo/shadcn/lib/utils";
+import { GridBackground } from "@repo/ui/components/grid-background";
 
 interface MdxLayoutProps {
   children: ReactNode;
@@ -28,6 +29,7 @@ export default function VanillaMdx({
           className: cn("relative container md:[--fd-nav-height:57px]"),
         }}
       >
+        <GridBackground maxWidthClass="container" />
         <DocsPage
           toc={toc}
           article={{
