@@ -34,6 +34,7 @@ var blog = defineCollections({
 var source_config_default = defineConfig({
   lastModifiedTime: "git",
   mdxOptions: {
+    providerImportSource: "@/mdx-components",
     rehypeCodeOptions: {
       inline: "tailing-curly-colon",
       themes: {
