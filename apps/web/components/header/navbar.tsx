@@ -30,23 +30,7 @@ export const Navbar = (props: HTMLAttributes<HTMLElement>) => {
             "relative container mx-auto flex size-full h-14 flex-row items-center"
           )}
         >
-          {!props.isHomePage && <GridBackground maxWidthClass="container" />}
-          <div
-            className={cn(
-              "absolute top-0 left-0 h-14 w-14 -z-10",
-              props.isHomePage ? "hidden" : ""
-            )}
-            style={{
-              backgroundColor: "#f5f5f5",
-              opacity: 0.2,
-              backgroundImage:
-                "repeating-radial-gradient(circle at 0 0, transparent 0, #f5f5f5 8px), repeating-linear-gradient(#9ca3af55, #6b7280)",
-              maskImage:
-                "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)",
-              WebkitMaskImage:
-                "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)",
-            }}
-          ></div>
+          <GridBackground maxWidthClass="container" />
 
           <div className="flex flex-row size-full items-center gap-1.5 px-4 lg:px-6">
             {props.children}
