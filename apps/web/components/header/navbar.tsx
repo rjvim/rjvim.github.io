@@ -31,7 +31,6 @@ export const Navbar = (props: HTMLAttributes<HTMLElement>) => {
           )}
         >
           <GridBackground maxWidthClass="container" />
-
           <div className="flex flex-row size-full items-center gap-1.5 px-4 lg:px-6">
             {props.children}
           </div>
