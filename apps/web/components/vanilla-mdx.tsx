@@ -4,7 +4,7 @@ import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import { DocsPage } from "fumadocs-ui/page";
 import { cn } from "@repo/shadcn/lib/utils";
 import { GridBackground } from "@repo/ui/components/grid-background";
-import { Section } from "./section";
+import { Section } from "@repo/ui/components/section";
 
 interface MdxLayoutProps {
   children: ReactNode;
