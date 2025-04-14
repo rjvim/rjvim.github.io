@@ -27,8 +27,8 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={cn(
-          "relative flex min-h-svh flex-col overflow-x-hidden"
-          // `${geistSans.variable} ${geistMono.variable}`
+          "relative flex min-h-svh flex-col overflow-x-hidden",
+          `${geistSans.variable} ${geistMono.variable}`
         )}
       >
         <RootProvider>{children}</RootProvider>

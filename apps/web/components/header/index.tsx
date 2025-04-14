@@ -7,7 +7,7 @@ import {
   LargeSearchToggle,
   SearchToggle,
 } from "fumadocs-ui/components/layout/search-toggle";
-// import { ThemeToggle } from 'fumadocs-ui/components/layout/theme-toggle';
+// import { ThemeToggle } from "fumadocs-ui/components/layout/theme-toggle";
 import { NavigationMenuList } from "fumadocs-ui/components/ui/navigation-menu";
 import type { HomeLayoutProps } from "fumadocs-ui/layouts/home";
 import {
@@ -22,7 +22,6 @@ import { ChevronDown, Languages } from "lucide-react";
 import { ThemeToggle } from "../theme-toggle";
 import { Menu, MenuContent, MenuLinkItem, MenuTrigger } from "./menu";
 import { Navbar, NavbarMenuLink } from "./navbar";
-import { Icons } from "../icons";
 import { cn } from "@repo/shadcn/lib/utils";
 
 export const Header = ({
