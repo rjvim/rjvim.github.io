@@ -32,6 +32,8 @@ export const blog = defineCollections({
     tags: z.array(z.string()).optional(),
     image: z.string().optional(),
     draft: z.boolean().optional().default(false),
+    series: z.string().optional(),
+    seriesPart: z.number().optional(),
   }),
 });
 
