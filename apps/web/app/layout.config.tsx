@@ -1,5 +1,6 @@
 import { Icons } from "@/components/icons";
 import type { BaseLayoutProps, LinkItemType } from "fumadocs-ui/layouts/shared";
+import Image from "next/image";
 
 export const title = "mfstack";
 export const description =
@@ -16,8 +17,14 @@ export const baseOptions: BaseLayoutProps = {
   nav: {
     title: (
       <>
-        <img src="/logo.svg" alt="logo" className="w-12 h-12" />
-        MFStack
+        <Image
+          src="/avatar.png"
+          width={24}
+          height={24}
+          alt="Logo"
+          className="rounded-full"
+        />{" "}
+        rjv.im
       </>
     ),
   },
