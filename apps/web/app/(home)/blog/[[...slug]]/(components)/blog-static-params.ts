@@ -1,4 +1,5 @@
 import { blogSource } from "@/lib/source";
+import { getSeriesNames } from "@/lib/series";
 
 /**
  * Generates static parameters for blog routes including:
@@ -19,6 +20,11 @@ export async function generateBlogStaticParams() {
         // Remove duplicates
         index === self.findIndex((c) => c.slug[0] === category.slug[0])
     );
+    
+  // Generate series page params
+  const seriesParams = getSeriesNames().map((seriesName) => ({
+    slug: ["series", seriesName],
+  }));
 
   // Get all posts to calculate pagination
   const postsPerPage = 5;
@@ -75,6 +81,7 @@ export async function generateBlogStaticParams() {
     ...filteredParams,
     ...rootPaginationParams,
     ...categoryPaginationParams,
+    ...seriesParams,
   ];
 
   // console.log("generateStaticParams", allParams);

@@ -12,6 +12,7 @@ import Link from "next/link";
 import { cn } from "@repo/shadcn/lib/utils";
 import { GridBackground } from "@repo/ui/components/grid-background";
 import { getCategoryBySlug } from "@/lib/categories";
+import { SeriesInfo } from "./series-info";
 
 interface BlogPostProps {
   page: any;
@@ -68,6 +69,12 @@ export function BlogPost({ page, category, lastUpdate, tags }: BlogPostProps) {
             ))}
         </div>
       </div>
+
+      {page.data.series && page.data.seriesPart && (
+        <div className="container px-4 lg:px-6">
+          <SeriesInfo seriesName={page.data.series} currentPart={page.data.seriesPart} />
+        </div>
+      )}
 
       <DocsLayout
         nav={{ enabled: false }}
