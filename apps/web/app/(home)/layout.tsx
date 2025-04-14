@@ -10,7 +10,6 @@ import { SocialIcons } from "@repo/ui/components/social-icons";
 import BigFooter from "@/components/big-footer";
 
 export default function Layout({ children }: { children: ReactNode }) {
-  const pathname = usePathname();
   const footerNavigation = {
     solutions: [
       { name: "Marketing", href: "/marketing" },
@@ -56,7 +55,6 @@ export default function Layout({ children }: { children: ReactNode }) {
           <Header
             finalLinks={getLinks(linkItems, baseOptions.githubUrl)}
             {...baseOptions}
-            isHomePage={false}
           />
         ),
       }}

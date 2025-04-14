@@ -10,16 +10,14 @@ import {
 import { type HTMLAttributes, useState } from "react";
 import { GridBackground } from "@repo/ui/components/grid-background";
 
-export const Navbar = (
-  props: HTMLAttributes<HTMLElement> & { isHomePage: boolean }
-) => {
+export const Navbar = (props: HTMLAttributes<HTMLElement>) => {
   const [value, setValue] = useState("");
 
   return (
     <NavigationMenu value={value} onValueChange={setValue} asChild>
       <header
         id="nd-nav"
-        {...(({ isHomePage, ...rest }) => rest)(props)}
+        {...props}
         className={cn(
           "sticky top-[var(--fd-banner-height)] z-30 box-content w-full bg-background/80 backdrop-blur-lg transition-colors",
           "border-border/70 border-b border-dashed dark:border-border",

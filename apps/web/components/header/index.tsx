@@ -28,10 +28,8 @@ export const Header = ({
   nav: { enableSearch = true, ...nav } = {},
   i18n = false,
   finalLinks,
-  isHomePage,
 }: HomeLayoutProps & {
   finalLinks: LinkItemType[];
-  isHomePage: boolean;
 }) => {
   const navItems = finalLinks.filter((item) =>
     ["nav", "all"].includes(item.on ?? "all")
@@ -41,10 +39,7 @@ export const Header = ({
   );
 
   return (
-    <Navbar
-      className={cn(isHomePage ? "bg-transparent border-none relative" : "")}
-      isHomePage={isHomePage}
-    >
+    <Navbar>
       <Link
         href={nav.url ?? "/"}
         className="inline-flex items-center gap-2.5 font-semibold"
