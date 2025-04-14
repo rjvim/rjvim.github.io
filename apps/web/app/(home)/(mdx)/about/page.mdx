@@ -3,84 +3,19 @@ import VanillaMdx from "@/components/vanilla-mdx";
 
 <VanillaMdx title="About" toc={toc}>
 
-## Problem
+I have been helping founders take their ideas to market since 2016. My work predominantly was with first time founders who haven't raised funding yet and want to go to market with a production read application(s).
 
-Fuma Docs is a tool to add documentation using MDX in NextJS. I loved the UX/UI it gave out of the box, particularly the table of contents.
+I always loved the challenge of doing things with limited resources - its a puzzle of putting together a tech stack which gives ability to build applications, scale them and also keep costs low till it the product finds its market fit. I like to view myself as a "full stack product and engineering tech guy", because the problem starts at product and delivered by a realistic tech stack engineered to sustain.
 
-It doesn't support "blog" out of the box, and since it's a framework which also provides parsing for MDX files, I used it to build my blog.
+I built apps in various domains like Edutech, Real Estate, SaaS, Wealth Tech, Finance, Banking, and some are purely fun projects, and unique ideas.
 
-I made multiple attempts at it, and this article is about the trials and tribulations of implementing category functionality on Fuma Docs.
+The posts which I am writing on this blog give more details on what I worked on.
 
-## Attempt 1: Using Frontmatter
+This is not a detailed post on how visualize product and engineering coming together and make things happen - but simply put - every decision is a product decision including where and how you host your software. And I particularly like the entire journey of this.
 
-I added `category` to frontmatter like the following:
+I share failures, disasters, successes from various different lenses.
 
-```md
----
-title: Open Source Sustainability
-description: Exploring the challenges and solutions for maintaining healthy open source ecosystems
-author: rajiv
-date: 2025-03-12
-category: tech
----
-```
-
-I extended the frontmatter in `source.config.ts` to support `category`.
-
-```ts
-export const blog = defineCollections({
-  type: "doc",
-  dir: "content/blog",
-  schema: frontmatterSchema.extend({
-    category: z.string(),
-  }),
-});
-```
-
-I then added a route `app/(home)/blog/[category]/[slug]/page.tsx` and needed to generate these URLs as static params.
-
-```tsx
-export function generateStaticParams(): { category: string; slug: string }[] {
-  return blogSource.getPages().map((page) => ({
-    category: page.data.category,
-    slug: page.slugs[0] || "",
-  }));
-}
-```
-
-And finally:
-
-```tsx
-export default async function Page(props: {
-  params: Promise<{ category: string; slug: string }>;
-}) {
-  const params = await props.params;
-  const page = getPostsByCategoryAndSlug(params.category, params.slug);
-  // Rest of the code
-}
-```
-
-## Attempt 2: Using Folders
-
-In fact, this is how Fuma Docs implements documentation out of the box. You can create folders of any depth - but all I needed was 2 levels.
-
-Realizing that I could just use folders was a face-palm moment, because the above attempt was the definition of overkill - I didn't spend enough time to understand how Docs handles this!
-
-So, now it's as simple as:
-
-```tsx
-export default async function Page(props: {
-  params: Promise<{ slug?: string[] }>;
-}) {
-  const params = await props.params;
-  const page = blogSource.getPage(params.slug);
-  // Rest of the code
-}
-
-export async function generateStaticParams() {
-  return blogSource.generateParams();
-}
-```
+And finally, a shameless plug - hire me to design and architect your product and engineering stack, or just let's connect.
 
 Open X: https://x.com/rjv_im
 

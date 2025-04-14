@@ -19,7 +19,7 @@ export const Navbar = (
     <NavigationMenu value={value} onValueChange={setValue} asChild>
       <header
         id="nd-nav"
-        {...props}
+        {...(({ isHomePage, ...rest }) => rest)(props)}
         className={cn(
           "sticky top-[var(--fd-banner-height)] z-30 box-content w-full bg-background/80 backdrop-blur-lg transition-colors",
           "border-border/70 border-b border-dashed dark:border-border",

@@ -7,6 +7,7 @@ import { baseOptions, linkItems } from "@/app/layout.config";
 import { getLinks } from "fumadocs-ui/layouts/shared";
 import { Header } from "@/components/header";
 import { SocialIcons } from "@repo/ui/components/social-icons";
+import BigFooter from "@/components/big-footer";
 
 export default function Layout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -64,6 +65,15 @@ export default function Layout({ children }: { children: ReactNode }) {
       <div className="flex flex-1 flex-col divide-y divide-dashed divide-border/70 border-border/70 border-dashed sm:border-b dark:divide-border dark:border-border">
         {children}
       </div>
+      <BigFooter
+        solutions={footerNavigation.solutions}
+        support={footerNavigation.support}
+        company={footerNavigation.company}
+        legal={footerNavigation.legal}
+        social={footerNavigation.social}
+        companyName="rjv.im"
+        companyDescription="I am Rajiv. I love coding and solving problems."
+      />
     </HomeLayout>
   );
 }
