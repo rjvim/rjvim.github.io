@@ -14,56 +14,57 @@ import { createMetadata } from "@/lib/metadata";
 import { blogsMetaImage } from "@/lib/metadata-image";
 import type { Metadata } from "next";
 import { getCategoryBySlug } from "@/lib/categories";
+import {
+  isBlogRootPage,
+  isSeriesPage,
+  isCategoryPage,
+  isPaginatedBlogPage,
+  isPaginatedCategoryPage,
+  isBlogPostPage,
+  getSeriesSlug,
+  getCategorySlug,
+  getPageNumber,
+} from "./utils/page-type";
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
 }) {
   const params = await props.params;
-  // There is no slug, it's /blog page
-  if (!params.slug || params.slug.length === 0) {
+
+  // Handle blog root page
+  if (isBlogRootPage(params)) {
     return <BlogList page={1} />;
   }
 
-  // Handle series route
-  if (
-    params.slug.length >= 2 &&
-    params.slug[0] === "series" &&
-    params.slug[1]
-  ) {
-    const seriesSlug = params.slug[1];
+  // Handle series page
+  if (isSeriesPage(params)) {
+    const seriesSlug = getSeriesSlug(params)!;
     return <SeriesList seriesSlug={seriesSlug} />;
   }
 
-  // There is a category in url
-  if (!params.slug || params.slug.length === 1) {
-    const category = params.slug?.[0] || "";
+  // Handle category page
+  if (isCategoryPage(params)) {
+    const category = getCategorySlug(params);
     return <CategoryBlogList category={category} />;
   }
 
-  // There is no category in url, it's /blog page with page number
-  if (
-    params.slug.length === 2 &&
-    params.slug[0] === "page" &&
-    !isNaN(Number(params.slug[1]))
-  ) {
-    return <BlogList page={Number(params.slug[1])} />;
+  // Handle paginated blog page
+  if (isPaginatedBlogPage(params)) {
+    return <BlogList page={getPageNumber(params)} />;
   }
 
-  // There is a category in url, it's /blog/category page with page number
-  if (
-    params.slug.length === 3 &&
-    params.slug[1] === "page" &&
-    !isNaN(Number(params.slug[2]))
-  ) {
+  // Handle paginated category page
+  if (isPaginatedCategoryPage(params)) {
     return (
       <CategoryBlogList
-        category={params.slug[0]}
-        page={Number(params.slug[2])}
+        category={params.slug![0]}
+        page={getPageNumber(params)}
       />
     );
   }
 
-  if (params.slug.length === 2) {
+  // Handle blog post page
+  if (isBlogPostPage(params)) {
     const page = blogSource.getPage(params.slug);
     const category = params.slug?.[0] || undefined;
 
@@ -92,7 +93,7 @@ export async function generateMetadata(props: {
   const params = await props.params;
 
   // Default for root blog page or when slug is undefined
-  if (!params.slug || params.slug.length === 0) {
+  if (isBlogRootPage(params)) {
     return createMetadata({
       title: "Blog",
       description: "Articles and thoughts",
@@ -106,11 +107,7 @@ export async function generateMetadata(props: {
   }
 
   // Handle blog post page
-  if (
-    params.slug.length === 2 &&
-    params.slug[0] !== "page" &&
-    params.slug[0] !== "series"
-  ) {
+  if (isBlogPostPage(params)) {
     const page = blogSource.getPage(params.slug);
     if (!page) notFound();
 
@@ -127,18 +124,12 @@ export async function generateMetadata(props: {
       })
     );
 
-    // console.log("metadata for single blog", metadata);
-
     return metadata;
   }
 
   // Handle series page
-  if (
-    params.slug.length >= 2 &&
-    params.slug[0] === "series" &&
-    params.slug[1]
-  ) {
-    const seriesSlug = params.slug[1];
+  if (isSeriesPage(params)) {
+    const seriesSlug = getSeriesSlug(params)!;
     const series = getSeriesBySlug(seriesSlug);
 
     const canonicalUrl = `/blog/series/${seriesSlug}`;
@@ -157,8 +148,8 @@ export async function generateMetadata(props: {
   }
 
   // Handle category page
-  if (params.slug.length === 1) {
-    const category = params.slug[0];
+  if (isCategoryPage(params)) {
+    const category = getCategorySlug(params);
     if (!category) {
       return createMetadata({
         title: "Blog",
@@ -206,7 +197,7 @@ export async function generateMetadata(props: {
   }
 
   // Handle paginated root blog page
-  if (params.slug.length === 2 && params.slug[0] === "page") {
+  if (isPaginatedBlogPage(params) && params.slug) {
     const page = Number(params.slug[1]);
     const canonicalUrl = `/blog`; // Use main blog URL as canonical for all paginated pages
 
@@ -223,7 +214,7 @@ export async function generateMetadata(props: {
   }
 
   // Handle paginated category page
-  if (params.slug.length === 3 && params.slug[1] === "page") {
+  if (isPaginatedCategoryPage(params) && params.slug) {
     const category = params.slug[0];
     if (!category) {
       return createMetadata({
