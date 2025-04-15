@@ -13,7 +13,11 @@ import { cn } from "@repo/shadcn/lib/utils";
 import { GridBackground } from "@repo/ui/components/grid-background";
 import { getCategoryBySlug } from "@/lib/categories";
 import { getSeriesInfo } from "@/lib/series";
-import { Popover, PopoverContent, PopoverTrigger } from "@repo/shadcn/components/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@repo/shadcn/components/popover";
 import { Button } from "@repo/shadcn/components/button";
 import { Badge } from "@repo/shadcn/components/badge";
 import { SeriesPopoverContent } from "./series-info";
@@ -24,8 +28,6 @@ interface BlogPostProps {
   lastUpdate?: Date;
   tags: string[];
 }
-
-
 
 export function BlogPost({ page, category, lastUpdate, tags }: BlogPostProps) {
   const MDX = page.data.body;
@@ -59,18 +61,28 @@ export function BlogPost({ page, category, lastUpdate, tags }: BlogPostProps) {
         )}
         <DocsTitle className="text-left dark:text-white flex items-center gap-2">
           {page.data.title}
+
           {page.data.series && page.data.seriesPart && (
             <Popover>
               <PopoverTrigger asChild>
-                <Button size="icon" variant="ghost" className="relative ml-1 h-7 w-7" aria-label="View series information">
-                  <BookOpen size={16} strokeWidth={2} aria-hidden="true" />
-                  <Badge className="absolute -top-2 left-full min-w-5 -translate-x-1/2 px-1 text-xs">
-                    {page.data.seriesPart}/{getSeriesInfo(page.data.series)?.totalParts || 0}
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="relative ml-1 bg-foreground/10 size-9"
+                  aria-label="View series information"
+                >
+                  <BookOpen className="w-24 h-24" aria-hidden="true" />
+                  <Badge className="absolute -top-2 left-full min-w-5 -translate-x-1/2 px-1 text-xs hidden">
+                    {page.data.seriesPart}/
+                    {getSeriesInfo(page.data.series)?.totalParts || 0}
                   </Badge>
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-80 p-0">
-                <SeriesPopoverContent seriesName={page.data.series} currentPart={page.data.seriesPart} />
+                <SeriesPopoverContent
+                  seriesName={page.data.series}
+                  currentPart={page.data.seriesPart}
+                />
               </PopoverContent>
             </Popover>
           )}
@@ -90,8 +102,6 @@ export function BlogPost({ page, category, lastUpdate, tags }: BlogPostProps) {
             ))}
         </div>
       </div>
-
-
 
       <DocsLayout
         nav={{ enabled: false }}
