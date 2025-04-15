@@ -127,7 +127,7 @@ export async function generateMetadata(props: {
       })
     );
 
-    console.log("metadata for single blog", metadata);
+    // console.log("metadata for single blog", metadata);
 
     return metadata;
   }
@@ -175,18 +175,36 @@ export async function generateMetadata(props: {
     const canonicalUrl = `/blog/${category}`;
     const categoryInfo = getCategoryBySlug(category);
 
-    return createMetadata({
+    const metadata = createMetadata({
       title: `${categoryInfo.label} - Blog`,
       description:
         categoryInfo.description ||
         `Articles in the ${categoryInfo.label} category`,
       openGraph: {
         url: canonicalUrl,
+        images: {
+          alt: "Banner",
+          url: `/blog-og/${category}`,
+          width: 1200,
+          height: 630,
+        },
+      },
+      twitter: {
+        images: {
+          alt: "Banner",
+          url: `/blog-og/${category}`,
+          width: 1200,
+          height: 630,
+        },
       },
       alternates: {
         canonical: canonicalUrl,
       },
     });
+
+    console.log("metadata for category", metadata);
+
+    return metadata;
   }
 
   // Handle paginated root blog page
