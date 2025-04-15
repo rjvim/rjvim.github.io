@@ -2,10 +2,10 @@ import { blogSource } from "@/lib/source";
 import { getSeriesNames } from "@/lib/series";
 
 export async function generateAllParams() {
-  const staticParams = await blogSource.generateParams();
+  const blogPostsParams = await blogSource.generateParams();
 
   // Extract categories from two-part slugs and add them as separate params
-  const categories = staticParams
+  const categories = blogPostsParams
     .filter((param) => param.slug && param.slug.length === 2)
     .map((param) => ({ slug: [param.slug[0]] }))
     .filter(
@@ -19,17 +19,11 @@ export async function generateAllParams() {
     slug: ["series", seriesName],
   }));
 
+  // Get root and pagination params
+  const rootParams = generateRootPathParams(blogPostsParams);
+
   // Get all posts to calculate pagination
   const postsPerPage = 5;
-  const totalPages = Math.ceil(staticParams.length / postsPerPage);
-
-  // Generate pagination params for root route - skip page 1 as it's handled by the root route
-  const rootPaginationParams = Array.from(
-    { length: totalPages - 1 },
-    (_, i) => ({
-      slug: ["page", (i + 2).toString()],
-    })
-  );
 
   // Generate pagination params for each category
   const categoryPaginationParams = [];
@@ -37,7 +31,7 @@ export async function generateAllParams() {
     const categorySlug = category.slug[0];
 
     // Get posts for this category by checking the URL structure
-    const categoryPosts = staticParams.filter((postSlug) => {
+    const categoryPosts = blogPostsParams.filter((postSlug) => {
       // Extract category from URL path
       return postSlug.slug?.length === 2 && postSlug.slug[0] === categorySlug;
     });
@@ -53,7 +47,7 @@ export async function generateAllParams() {
   }
 
   // Filter out any params with slug containing 'page' and '1'
-  const filteredParams = [...staticParams, ...categories].filter((param) => {
+  const filteredParams = [...blogPostsParams, ...categories].filter((param) => {
     // Keep params that don't have 'page' and '1' in sequence
     if (param.slug && param.slug.includes("page")) {
       const pageIndex = param.slug.indexOf("page");
@@ -70,14 +64,13 @@ export async function generateAllParams() {
 
   // Combine all params
   const allParams = [
-    { slug: [] }, // Root route
+    ...rootParams,
     ...filteredParams,
-    ...rootPaginationParams,
     ...categoryPaginationParams,
     ...seriesParams,
   ];
 
-  // console.log("generateStaticParams", allParams);
+  console.log("generateStaticParams", allParams);
 
   return allParams;
 }
@@ -91,4 +84,28 @@ export async function generateAllParams() {
  */
 export async function generateBlogStaticParams() {
   return await generateAllParams();
+}
+
+/**
+ * Builds URLs for the blog root path and its paginated versions
+ */
+export function generateRootPathParams(
+  blogPostsParams: Array<{ slug: string[] }>
+) {
+  const postsPerPage = 5;
+  const totalPages = Math.ceil(blogPostsParams.length / postsPerPage);
+
+  // Generate pagination params for root route - skip page 1 as it's handled by the root route
+  const rootPaginationParams = Array.from(
+    { length: totalPages - 1 },
+    (_, i) => ({
+      slug: ["page", (i + 2).toString()],
+    })
+  );
+
+  // Return root route and pagination params
+  return [
+    { slug: [] }, // Root route
+    ...rootPaginationParams,
+  ];
 }
