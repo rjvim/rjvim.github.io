@@ -12,7 +12,7 @@
 @import "@repo/shadcn/globals.css";
 @import "@repo/ui/globals.css";
 
-@source '../node_modules/fumadocs-ui/dist/**/*.js';
+@source '../../node_modules/fumadocs-ui/dist/**/*.js';
 
 @layer utilities {
   .bg-dashed {
