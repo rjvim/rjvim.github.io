@@ -33,7 +33,9 @@ export function PostList({
         <GridBackground maxWidthClass="container" />
 
         <div className="text-center">
-          <DocsTitle className="text-left dark:text-white">{heading}</DocsTitle>
+          <DocsTitle className="text-left dark:text-white capitalize">
+            {heading}
+          </DocsTitle>
           <DocsDescription className="text-left mt-3 dark:text-gray-300 mb-0">
             {description}
           </DocsDescription>
