@@ -35,7 +35,7 @@ export const Navbar = (props: HTMLAttributes<HTMLElement>) => {
             className="absolute top-0 left-0 h-14 w-14 -z-10"
             style={{
               backgroundColor: "#f5f5f5",
-              opacity: 0.4,
+              opacity: 0.2,
               backgroundImage:
                 "repeating-radial-gradient(circle at 0 0, transparent 0, #f5f5f5 8px), repeating-linear-gradient(#9ca3af55, #6b7280)",
               maskImage:

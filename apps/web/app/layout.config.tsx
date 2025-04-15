@@ -19,9 +19,9 @@ export const baseOptions: BaseLayoutProps = {
       <>
         <Image
           src="/avatar.png"
-          width={24}
-          height={24}
-          alt="Logo"
+          width={28}
+          height={28}
+          alt="rjv.im avatar"
           className="rounded-full"
         />{" "}
         rjv.im
