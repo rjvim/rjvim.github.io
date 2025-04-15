@@ -10,6 +10,9 @@ import { SeriesList } from "@/app/(home)/blog/[[...slug]]/(components)/series-li
 import { getSeriesBySlug, getPostsBySeries } from "@/lib/series";
 import { GridBackground } from "@repo/ui/components/grid-background";
 import Link from "next/link";
+import { createMetadata } from "@/lib/metadata";
+import { blogsMetaImage } from "@/lib/metadata-image";
+import type { Metadata } from "next";
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
@@ -21,7 +24,11 @@ export default async function Page(props: {
   }
 
   // Handle series route
-  if (params.slug.length >= 2 && params.slug[0] === "series" && params.slug[1]) {
+  if (
+    params.slug.length >= 2 &&
+    params.slug[0] === "series" &&
+    params.slug[1]
+  ) {
     const seriesSlug = params.slug[1];
     return <SeriesList seriesSlug={seriesSlug} />;
   }
@@ -78,23 +85,159 @@ export default async function Page(props: {
 
 export { generateBlogStaticParams as generateStaticParams } from "@/app/(home)/blog/[[...slug]]/(components)/blog-static-params";
 
-// export async function generateMetadata(props: {
-//   params: Promise<{ slug?: string[] }>;
-// }) {
-//   const params = await props.params;
-//   const page = blogSource.getPage(params.slug);
-//   if (!page) notFound();
+export async function generateMetadata(props: {
+  params: Promise<{ slug?: string[] }>;
+}): Promise<Metadata> {
+  const params = await props.params;
 
-//   return createMetadata(
-//     blogsMetaImage.withImage(page.slugs, {
-//       title: page.data.title,
-//       description: page.data.description,
-//       openGraph: {
-//         url: page.url,
-//       },
-//       alternates: {
-//         canonical: page.url,
-//       },
-//     })
-//   );
-// }
+  // Default for root blog page or when slug is undefined
+  if (!params.slug || params.slug.length === 0) {
+    return createMetadata({
+      title: "Blog",
+      description: "Articles and thoughts",
+      openGraph: {
+        url: "/blog",
+      },
+      alternates: {
+        canonical: "/blog",
+      },
+    });
+  }
+
+  // Handle blog post page
+  if (
+    params.slug.length === 2 &&
+    params.slug[0] !== "page" &&
+    params.slug[0] !== "series"
+  ) {
+    const page = blogSource.getPage(params.slug);
+    if (!page) notFound();
+
+    return createMetadata(
+      blogsMetaImage.withImage(page.slugs, {
+        title: page.data.title,
+        description: page.data.description,
+        openGraph: {
+          url: page.url,
+        },
+        alternates: {
+          canonical: page.url,
+        },
+      })
+    );
+  }
+
+  // Handle series page
+  if (
+    params.slug.length >= 2 &&
+    params.slug[0] === "series" &&
+    params.slug[1]
+  ) {
+    const seriesSlug = params.slug[1];
+    const series = getSeriesBySlug(seriesSlug);
+
+    const canonicalUrl = `/blog/series/${seriesSlug}`;
+
+    return createMetadata({
+      title: `${series.label} - Blog Series`,
+      description:
+        series.description || `Articles in the ${series.label} series`,
+      openGraph: {
+        url: canonicalUrl,
+      },
+      alternates: {
+        canonical: canonicalUrl,
+      },
+    });
+  }
+
+  // Handle category page
+  if (params.slug.length === 1) {
+    const category = params.slug[0];
+    if (!category) {
+      return createMetadata({
+        title: "Blog",
+        description: "Articles and thoughts",
+        openGraph: {
+          url: "/blog",
+        },
+        alternates: {
+          canonical: "/blog",
+        },
+      });
+    }
+
+    const canonicalUrl = `/blog/${category}`;
+
+    return createMetadata({
+      title: `${category.charAt(0).toUpperCase() + category.slice(1)} - Blog`,
+      description: `Articles in the ${category} category`,
+      openGraph: {
+        url: canonicalUrl,
+      },
+      alternates: {
+        canonical: canonicalUrl,
+      },
+    });
+  }
+
+  // Handle paginated root blog page
+  if (params.slug.length === 2 && params.slug[0] === "page") {
+    const page = Number(params.slug[1]);
+    const canonicalUrl = `/blog`; // Use main blog URL as canonical for all paginated pages
+
+    return createMetadata({
+      title: `Blog - Page ${page}`,
+      description: `Articles and thoughts - Page ${page}`,
+      openGraph: {
+        url: canonicalUrl,
+      },
+      alternates: {
+        canonical: canonicalUrl,
+      },
+    });
+  }
+
+  // Handle paginated category page
+  if (params.slug.length === 3 && params.slug[1] === "page") {
+    const category = params.slug[0];
+    if (!category) {
+      return createMetadata({
+        title: "Blog",
+        description: "Articles and thoughts",
+        openGraph: {
+          url: "/blog",
+        },
+        alternates: {
+          canonical: "/blog",
+        },
+      });
+    }
+
+    const page = Number(params.slug[2]);
+    const canonicalUrl = `/blog/${category}`; // Use main category URL as canonical
+
+    return createMetadata({
+      title: `${category.charAt(0).toUpperCase() + category.slice(1)} - Page ${page}`,
+      description: `Articles in the ${category} category - Page ${page}`,
+      openGraph: {
+        url: canonicalUrl,
+      },
+      alternates: {
+        canonical: canonicalUrl,
+      },
+    });
+  }
+
+  // Default fallback
+  return createMetadata({
+    title: "Blog",
+    description: "Articles and thoughts",
+    openGraph: {
+      url: "/blog",
+    },
+    alternates: {
+      canonical: "/blog",
+    },
+  });
+}
