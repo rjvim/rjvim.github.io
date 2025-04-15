@@ -68,11 +68,11 @@ export function BlogPost({ page, category, lastUpdate, tags }: BlogPostProps) {
                 <Button
                   size="icon"
                   variant="ghost"
-                  className="relative ml-1 bg-foreground/10 size-9"
+                  className="relative ml-1 bg-foreground/5"
                   aria-label="View series information"
                 >
-                  <BookOpen className="w-24 h-24" aria-hidden="true" />
-                  <Badge className="absolute -top-2 left-full min-w-5 -translate-x-1/2 px-1 text-xs hidden">
+                  <BookOpen className="size-5" aria-hidden="true" />
+                  <Badge className="absolute -top-2 left-full min-w-5 -translate-x-1/2 px-1 text-xs">
                     {page.data.seriesPart}/
                     {getSeriesInfo(page.data.series)?.totalParts || 0}
                   </Badge>
