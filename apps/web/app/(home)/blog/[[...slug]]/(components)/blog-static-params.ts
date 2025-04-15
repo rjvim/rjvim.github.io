@@ -4,70 +4,21 @@ import { getSeriesNames } from "@/lib/series";
 export async function generateAllParams() {
   const blogPostsParams = await blogSource.generateParams();
 
-  // Extract categories from two-part slugs and add them as separate params
-  const categories = blogPostsParams
-    .filter((param) => param.slug && param.slug.length === 2)
-    .map((param) => ({ slug: [param.slug[0]] }))
-    .filter(
-      (category, index, self) =>
-        // Remove duplicates
-        index === self.findIndex((c) => c.slug[0] === category.slug[0])
-    );
-
   // Generate series page params
-  const seriesParams = getSeriesNames().map((seriesName) => ({
-    slug: ["series", seriesName],
-  }));
+  const seriesParams = generateSeriesPathParams();
 
   // Get root and pagination params
   const rootParams = generateRootPathParams(blogPostsParams);
 
-  // Get all posts to calculate pagination
-  const postsPerPage = 5;
-
-  // Generate pagination params for each category
-  const categoryPaginationParams = [];
-  for (const category of categories) {
-    const categorySlug = category.slug[0];
-
-    // Get posts for this category by checking the URL structure
-    const categoryPosts = blogPostsParams.filter((postSlug) => {
-      // Extract category from URL path
-      return postSlug.slug?.length === 2 && postSlug.slug[0] === categorySlug;
-    });
-
-    const categoryTotalPages = Math.ceil(categoryPosts.length / postsPerPage);
-
-    // Skip page 1 as it's handled by the category route
-    for (let i = 1; i < categoryTotalPages; i++) {
-      categoryPaginationParams.push({
-        slug: [categorySlug, "page", (i + 1).toString()],
-      });
-    }
-  }
-
-  // Filter out any params with slug containing 'page' and '1'
-  const filteredParams = [...blogPostsParams, ...categories].filter((param) => {
-    // Keep params that don't have 'page' and '1' in sequence
-    if (param.slug && param.slug.includes("page")) {
-      const pageIndex = param.slug.indexOf("page");
-      if (
-        pageIndex >= 0 &&
-        pageIndex + 1 < param.slug.length &&
-        param.slug[pageIndex + 1] === "1"
-      ) {
-        return false; // Filter out page/1 entries
-      }
-    }
-    return true;
-  });
+  // Generate category params (both category pages and their pagination)
+  const categoryParams = generateCategoryPathParams(blogPostsParams);
 
   // Combine all params
   const allParams = [
     ...rootParams,
-    ...filteredParams,
-    ...categoryPaginationParams,
+    ...categoryParams,
     ...seriesParams,
+    ...blogPostsParams,
   ];
 
   console.log("generateStaticParams", allParams);
@@ -108,4 +59,55 @@ export function generateRootPathParams(
     { slug: [] }, // Root route
     ...rootPaginationParams,
   ];
+}
+
+/**
+ * Builds URLs for category paths and their paginated versions
+ */
+export function generateCategoryPathParams(
+  blogPostsParams: Array<{ slug: string[] }>
+) {
+  const postsPerPage = 5;
+
+  // Extract categories from two-part slugs
+  const categoryPages = blogPostsParams
+    .filter((param) => param.slug && param.slug.length === 2)
+    .map((param) => ({ slug: [param.slug[0]] }))
+    .filter(
+      (category, index, self) =>
+        // Remove duplicates
+        index === self.findIndex((c) => c.slug[0] === category.slug[0])
+    );
+
+  const categoryPaginationParams = [];
+
+  for (const category of categoryPages) {
+    const categorySlug = category.slug[0];
+
+    // Get posts for this category by checking the URL structure
+    const categoryPosts = blogPostsParams.filter((postSlug) => {
+      // Extract category from URL path
+      return postSlug.slug?.length === 2 && postSlug.slug[0] === categorySlug;
+    });
+
+    const categoryTotalPages = Math.ceil(categoryPosts.length / postsPerPage);
+
+    // Skip page 1 as it's handled by the category route
+    for (let i = 1; i < categoryTotalPages; i++) {
+      categoryPaginationParams.push({
+        slug: [categorySlug, "page", (i + 1).toString()],
+      });
+    }
+  }
+
+  return [...categoryPages, ...categoryPaginationParams];
+}
+
+/**
+ * Builds URLs for series pages
+ */
+export function generateSeriesPathParams() {
+  return getSeriesNames().map((seriesName) => ({
+    slug: ["series", seriesName],
+  }));
 }
