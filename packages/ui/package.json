@@ -6,7 +6,8 @@
     "./*": "./src/*.tsx",
     "./globals.css": "./src/styles/globals.css",
     "./lib/*": "./src/lib/*.ts",
-    "./components/*": "./src/components/*.tsx"
+    "./components/*": "./src/components/*.tsx",
+    "./ohimg": "./src/ohimg/index.ts"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
