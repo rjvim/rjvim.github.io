@@ -7,12 +7,16 @@ import {
 } from "fumadocs-ui/page";
 import { getMDXComponents } from "@/mdx-components";
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
-import { Calendar } from "lucide-react";
+import { Calendar, BookOpen } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@repo/shadcn/lib/utils";
 import { GridBackground } from "@repo/ui/components/grid-background";
 import { getCategoryBySlug } from "@/lib/categories";
-import { SeriesInfo } from "./series-info";
+import { getSeriesInfo } from "@/lib/series";
+import { Popover, PopoverContent, PopoverTrigger } from "@repo/shadcn/components/popover";
+import { Button } from "@repo/shadcn/components/button";
+import { Badge } from "@repo/shadcn/components/badge";
+import { SeriesPopoverContent } from "./series-info";
 
 interface BlogPostProps {
   page: any;
@@ -20,6 +24,8 @@ interface BlogPostProps {
   lastUpdate?: Date;
   tags: string[];
 }
+
+
 
 export function BlogPost({ page, category, lastUpdate, tags }: BlogPostProps) {
   const MDX = page.data.body;
@@ -51,8 +57,23 @@ export function BlogPost({ page, category, lastUpdate, tags }: BlogPostProps) {
             </div>
           </div>
         )}
-        <DocsTitle className="text-left dark:text-white">
+        <DocsTitle className="text-left dark:text-white flex items-center gap-2">
           {page.data.title}
+          {page.data.series && page.data.seriesPart && (
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button size="icon" variant="ghost" className="relative ml-1 h-7 w-7" aria-label="View series information">
+                  <BookOpen size={16} strokeWidth={2} aria-hidden="true" />
+                  <Badge className="absolute -top-2 left-full min-w-5 -translate-x-1/2 px-1 text-xs">
+                    {page.data.seriesPart}/{getSeriesInfo(page.data.series)?.totalParts || 0}
+                  </Badge>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-80 p-0">
+                <SeriesPopoverContent seriesName={page.data.series} currentPart={page.data.seriesPart} />
+              </PopoverContent>
+            </Popover>
+          )}
         </DocsTitle>
         <DocsDescription className="text-left mt-3 dark:text-gray-300">
           {page.data.description}
@@ -70,11 +91,7 @@ export function BlogPost({ page, category, lastUpdate, tags }: BlogPostProps) {
         </div>
       </div>
 
-      {page.data.series && page.data.seriesPart && (
-        <div className="container px-4 lg:px-6">
-          <SeriesInfo seriesName={page.data.series} currentPart={page.data.seriesPart} />
-        </div>
-      )}
+
 
       <DocsLayout
         nav={{ enabled: false }}
