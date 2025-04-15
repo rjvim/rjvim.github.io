@@ -7,7 +7,12 @@ import { z } from "zod";
 import { transformerTwoslash } from "fumadocs-twoslash";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
-import { transformerRemoveNotationEscape } from "@shikijs/transformers";
+import {
+  transformerRemoveNotationEscape,
+  transformerNotationHighlight,
+  transformerNotationFocus,
+  transformerMetaHighlight,
+} from "@shikijs/transformers";
 import { rehypeCodeDefaultOptions } from "fumadocs-core/mdx-plugins";
 
 export const blog = defineCollections({
@@ -51,6 +56,8 @@ export default defineConfig({
         ...(rehypeCodeDefaultOptions.transformers ?? []),
         transformerTwoslash(),
         transformerRemoveNotationEscape(),
+        transformerNotationFocus(),
+        transformerMetaHighlight(),
       ],
     },
     remarkPlugins: [remarkMath],

@@ -162,6 +162,8 @@ export default async function GithubCodeBlock({
 
     const lang = getLanguageFromUrl(reference.rawUrl);
 
+    // console.log("code", code);
+
     return <DynamicCodeBlock lang={lang} code={code} />;
   } catch (error) {
     console.error("Error in GithubCodeBlock:", error);
