@@ -184,7 +184,7 @@ export async function generateMetadata(props: {
         url: canonicalUrl,
         images: {
           alt: "Banner",
-          url: `/blog-og/${category}`,
+          url: `/blog-og/${category}/image.png`,
           width: 1200,
           height: 630,
         },
@@ -192,7 +192,7 @@ export async function generateMetadata(props: {
       twitter: {
         images: {
           alt: "Banner",
-          url: `/blog-og/${category}`,
+          url: `/blog-og/${category}/image.png`,
           width: 1200,
           height: 630,
         },
@@ -201,8 +201,6 @@ export async function generateMetadata(props: {
         canonical: canonicalUrl,
       },
     });
-
-    console.log("metadata for category", metadata);
 
     return metadata;
   }
