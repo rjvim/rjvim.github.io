@@ -1,4 +1,3 @@
-import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
 import * as Base from "fumadocs-ui/components/codeblock";
 import { highlight } from "fumadocs-core/highlight";
 import { transformerMetaHighlight } from "@shikijs/transformers";
@@ -7,14 +6,22 @@ export interface CodeBlockProps {
   code: string;
   wrapper?: Base.CodeBlockProps;
   lang: string;
+  highlightLines?: string;
 }
 
-export async function CodeBlock({ code, lang, wrapper }: CodeBlockProps) {
+export async function CodeBlock({
+  code,
+  lang,
+  wrapper,
+  highlightLines,
+}: CodeBlockProps) {
   const rendered = await highlight(code, {
     lang,
-    meta: {
-      __raw: "{2,8-16}",
-    },
+    meta: highlightLines
+      ? {
+          __raw: highlightLines,
+        }
+      : undefined,
     themes: {
       light: "github-light",
       dark: "vesper",
@@ -32,15 +39,20 @@ interface GithubCodeBlockProps {
   url: string;
   extractLines?: boolean;
   highlightLines?: string;
+  useLocForHighlight?: boolean;
 }
 
 interface GitHubReference {
   rawUrl: string;
   fromLine?: number;
   toLine?: number;
+  highlightLines?: string;
 }
 
-function parseGitHubUrl(url: string): GitHubReference {
+function parseGitHubUrl(
+  url: string,
+  useLocForHighlight?: boolean
+): GitHubReference {
   try {
     // Split the URL to separate the line reference part
     const [githubUrl, loc] = url.split("#");
@@ -48,6 +60,7 @@ function parseGitHubUrl(url: string): GitHubReference {
     // Parse line references if present
     let fromLine: number | undefined;
     let toLine: number | undefined;
+    let highlightLines: string | undefined;
 
     if (loc) {
       const lineParts = loc.split("-");
@@ -67,6 +80,23 @@ function parseGitHubUrl(url: string): GitHubReference {
           toLine = parseInt(lineParts[1].slice(1), 10) - 1;
         } else {
           toLine = fromLine;
+        }
+
+        // If useLocForHighlight is true, generate highlight lines from loc
+        if (
+          useLocForHighlight &&
+          fromLine !== undefined &&
+          toLine !== undefined
+        ) {
+          // Convert to 1-based for highlighting (fromLine and toLine are 0-based)
+          const startLine = fromLine + 1;
+          const endLine = toLine + 1;
+
+          if (startLine === endLine) {
+            highlightLines = `{${startLine}}`;
+          } else {
+            highlightLines = `{${startLine}-${endLine}}`;
+          }
         }
       }
     }
@@ -101,6 +131,7 @@ function parseGitHubUrl(url: string): GitHubReference {
       rawUrl: `https://raw.githubusercontent.com/${safeOrg}/${safeRepo}/${safeBranch}/${safePathSeg.join("/")}`,
       fromLine,
       toLine,
+      highlightLines,
     };
   } catch (error) {
     console.error("Error parsing GitHub URL:", error);
@@ -110,41 +141,19 @@ function parseGitHubUrl(url: string): GitHubReference {
   }
 }
 
-function parseHighlightLines(highlightLines?: string): number[] {
-  if (!highlightLines) return [];
+function formatHighlightLines(highlightLines?: string): string | undefined {
+  if (!highlightLines) return undefined;
 
-  const result: number[] = [];
-  const segments = highlightLines.split(",");
-
-  for (const segment of segments) {
-    if (segment.includes("-")) {
-      // Range like "3-5"
-      const parts = segment.split("-");
-      const start = parseInt(parts[0] || "0", 10);
-      const end = parseInt(parts[1] || "0", 10);
-      if (!isNaN(start) && !isNaN(end)) {
-        for (let i = start; i <= end; i++) {
-          result.push(i);
-        }
-      }
-    } else {
-      // Single line like "1"
-      const lineNum = parseInt(segment, 10);
-      if (!isNaN(lineNum)) {
-        result.push(lineNum);
-      }
-    }
+  // If the highlightLines already starts with '{' and ends with '}', return it as is
+  if (highlightLines.startsWith("{") && highlightLines.endsWith("}")) {
+    return highlightLines;
   }
 
-  return result;
+  // Otherwise, wrap it with curly braces
+  return `{${highlightLines}}`;
 }
 
-async function fetchCode(
-  url: string,
-  fromLine?: number,
-  toLine?: number,
-  highlightLines: number[] = []
-) {
+async function fetchCode(url: string, fromLine?: number, toLine?: number) {
   try {
     const response = await fetch(url, { cache: "force-cache" });
 
@@ -178,37 +187,13 @@ async function fetchCode(
         Infinity
       );
 
-      // Apply highlighting and handle indentation
+      // Handle indentation only
       return selectedLines
-        .map((line, index) => {
-          // Calculate the actual line number (relative to the extracted section)
-          const lineNumber = fromLine + index + 1;
-
-          // Add highlight comment if this line should be highlighted
-          const shouldHighlight = highlightLines.includes(lineNumber);
-          const highlightComment = shouldHighlight
-            ? " // [!code highlight]"
-            : "";
-
+        .map((line) => {
           if (line.length > 0) {
-            return (
-              line.slice(preceedingSpace < Infinity ? preceedingSpace : 0) +
-              highlightComment
-            );
+            return line.slice(preceedingSpace < Infinity ? preceedingSpace : 0);
           }
           return line;
-        })
-        .join("\n");
-    }
-
-    // If we're not extracting specific lines but still want to highlight
-    if (highlightLines.length > 0) {
-      const lines = content.split("\n");
-      return lines
-        .map((line, index) => {
-          const lineNumber = index + 1;
-          const shouldHighlight = highlightLines.includes(lineNumber);
-          return shouldHighlight ? `${line} // [!code highlight]` : line;
         })
         .join("\n");
     }
@@ -231,8 +216,9 @@ function getLanguageFromUrl(url: string): string {
 
 export default async function GithubCodeBlock({
   url,
-  extractLines = true,
+  extractLines = false,
   highlightLines,
+  useLocForHighlight = true,
 }: GithubCodeBlockProps) {
   try {
     // Validate that it's a GitHub URL
@@ -241,40 +227,34 @@ export default async function GithubCodeBlock({
     }
 
     // Parse GitHub URL to get raw URL and line info
-    const reference = parseGitHubUrl(url);
+    const reference = parseGitHubUrl(url, useLocForHighlight);
 
-    // Parse highlight lines
-    const highlightLinesArray = parseHighlightLines(highlightLines);
+    // Format highlight lines for Shiki, but only if we're not extracting lines
+    // Priority: explicitly provided highlightLines prop > lines from URL loc
+    const formattedHighlightLines = !extractLines
+      ? formatHighlightLines(highlightLines || reference.highlightLines)
+      : undefined;
 
     // Fetch the code content, extracting specific lines if needed
     const code = await fetchCode(
       reference.rawUrl,
       extractLines ? reference.fromLine : undefined,
-      extractLines ? reference.toLine : undefined,
-      highlightLinesArray
+      extractLines ? reference.toLine : undefined
     );
 
     const lang = getLanguageFromUrl(reference.rawUrl);
 
-    // console.log("code", code);
-
-    // return (
-    //   <DynamicCodeBlock
-    //     lang={lang}
-    //     code={code}
-    //     options={{
-    //       meta: {
-    //         __raw: "{8-16}",
-    //       },
-    //     }}
-    //   />
-    // );
-
-    return <CodeBlock lang={lang} code={code} />;
+    return (
+      <CodeBlock
+        lang={lang}
+        code={code}
+        highlightLines={formattedHighlightLines}
+      />
+    );
   } catch (error) {
     console.error("Error in GithubCodeBlock:", error);
     return (
-      <DynamicCodeBlock
+      <CodeBlock
         lang="text"
         code={`// Error: ${error instanceof Error ? error.message : String(error)}`}
       />
