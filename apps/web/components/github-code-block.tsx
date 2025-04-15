@@ -22,9 +22,19 @@ function parseGitHubUrl(url: string): GitHubReference {
 
     if (loc) {
       const lineParts = loc.split("-");
-      if (lineParts.length > 0 && lineParts[0].startsWith("L")) {
+      // Make sure lineParts[0] exists and starts with 'L'
+      if (
+        lineParts.length > 0 &&
+        lineParts[0] &&
+        lineParts[0].startsWith("L")
+      ) {
         fromLine = parseInt(lineParts[0].slice(1), 10) - 1;
-        if (lineParts.length > 1 && lineParts[1].startsWith("L")) {
+        // Make sure lineParts[1] exists and starts with 'L'
+        if (
+          lineParts.length > 1 &&
+          lineParts[1] &&
+          lineParts[1].startsWith("L")
+        ) {
           toLine = parseInt(lineParts[1].slice(1), 10) - 1;
         } else {
           toLine = fromLine;
@@ -44,6 +54,7 @@ function parseGitHubUrl(url: string): GitHubReference {
       throw new Error("Invalid GitHub repository path");
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [org, repo, blob, branch, ...pathSeg] = pathParts;
 
     if (!org || !repo || !branch || pathSeg.length === 0) {
