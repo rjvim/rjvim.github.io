@@ -1,6 +1,4 @@
-// import { generateOGImage } from "@/og-image";
-
-import { generateOGImage } from "fumadocs-ui/og";
+import { generateOGImage } from "@/components/og-image";
 
 // Image metadata
 export const alt = "rjv.im";
@@ -11,13 +9,9 @@ export const size = {
 
 export const contentType = "image/png";
 export const dynamic = "force-static";
-export const revalidate = false;
+export const revalidate = false; // Revalidate every hour (or your preferred interval)
 
 // Image generation
 export default async function Image() {
-  return generateOGImage({
-    title: "rjv.im",
-    description: "rjv.im",
-    site: "rjv.im",
-  });
+  return generateOGImage("Rajiv I'm");
 }

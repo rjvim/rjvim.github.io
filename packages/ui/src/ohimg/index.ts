@@ -7,4 +7,4 @@ export type {
   AlignmentOption,
   PatternType,
 } from "./types";
-export { OhImgBaseTemplate } from "./template";
+export { OhImgBaseTemplate, ohimgConfig } from "./template";
