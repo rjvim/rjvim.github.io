@@ -114,7 +114,7 @@ export async function generateMetadata(props: {
     const page = blogSource.getPage(params.slug);
     if (!page) notFound();
 
-    return createMetadata(
+    const metadata = createMetadata(
       blogsMetaImage.withImage(page.slugs, {
         title: page.data.title,
         description: page.data.description,
@@ -126,6 +126,10 @@ export async function generateMetadata(props: {
         },
       })
     );
+
+    console.log("metadata for single blog", metadata);
+
+    return metadata;
   }
 
   // Handle series page

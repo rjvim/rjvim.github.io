@@ -21,7 +21,7 @@ export async function generateAllParams(includeBlogPosts = true) {
     allParams.push(...blogPostsParams);
   }
 
-  console.log("generateStaticParams", allParams);
+  // console.log("generateStaticParams", allParams);
 
   return allParams;
 }

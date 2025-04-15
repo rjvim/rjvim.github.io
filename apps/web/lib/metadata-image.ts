@@ -11,6 +11,6 @@ interface MetadataImageResult {
 }
 
 export const blogsMetaImage = createMetadataImage({
-  imageRoute: "/blogs-og",
+  imageRoute: "/blog-posts-og",
   source: blogSource,
 }) as MetadataImageResult;
