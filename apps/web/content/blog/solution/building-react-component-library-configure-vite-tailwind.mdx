@@ -1,0 +1,74 @@
+---
+title: Building React Component Library - Configure Vite and Tailwind
+description: Why modern security architectures assume breach and verify everything
+date: 2025-04-14
+author: rajiv
+tags: [react, component-library]
+image: https://shadcnblocks.com/images/block/placeholder-5.svg
+series: building-react-component-library
+seriesPart: 1
+---
+
+import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
+
+In this post, I will walk you through building a React component library using Vite and Tailwind. We will also see how to publish it to npm and use it in a React application. We will integrate auto for versioning and release notes.
+
+## Requirements
+
+- We will create a react component library using Vite and Tailwind
+- We will publish the component library to npm
+- We will publish documentation to GitHub pages using Docusaurus
+- Make all this setup in a monorepo built with Lerna
+- Automate Release Versioning & Release Notes using auto
+
+## Setup
+
+### Initialize Codebase
+
+We will use Lerna to set up our codebase and add Docusaurus for documentation.
+
+```bash
+npx lerna init --packages="packages/*" --packages="apps/*"
+```
+
+### Create Docusaurus App
+
+```bash
+npx create-docusaurus@latest apps/docs classic --typescript
+```
+
+### Create Vite React App
+
+**Run the following command**
+
+```bash
+npm create vite@latest packages/elements -- --template react-ts
+```
+
+**Change package name**
+
+Change the name in package.json to `@rcls/elements` (actually to something you like)
+
+### Setup scripts
+
+_Add the following scripts to root package.json_
+
+```json reference title="package.json" customStyling="true"
+https://github.com/rjvim/react-component-library-starter/blob/main/package.json#L8-L16
+```
+
+<RemoteCodeBlock />
+
+<include>../../../lib/series.ts</include>
+
+### Test Setup
+
+- Build docs: `npm run docs:build`
+- Build package: `npm run package:build`
+- Build everything: `npm run build`
+
+If both of these work, then the setup is complete. If anything seems to fail, you can clean the repo and build again using `npx lerna clean -y && npm install`
+
+### Push to Github
+
+Create a github public repo on Github and push the codebase to it, as in the following steps we would be using github actions.

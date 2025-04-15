@@ -9,6 +9,11 @@ export const getSeriesBySlug = (slug: string) => {
       description:
         "A comprehensive series on Zero Trust security architecture.",
     },
+    "building-react-component-library": {
+      label: "Building React Component Library",
+      icon: Book,
+      description: "A series on building a React component library.",
+    },
     // Add more series here as needed
   };
 
