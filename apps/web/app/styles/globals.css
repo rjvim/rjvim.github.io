@@ -30,6 +30,8 @@
   }
 }
 
+@import "./patterns.css";
+
 .blog {
   #nd-page {
     @apply col-span-4 xl:col-span-3 order-last;

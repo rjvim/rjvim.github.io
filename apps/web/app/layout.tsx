@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./globals.css";
+import "./styles/globals.css";
 import { cn } from "@repo/shadcn/lib/utils";
 import { RootProvider } from "fumadocs-ui/provider";
 import { description } from "./layout.config";
