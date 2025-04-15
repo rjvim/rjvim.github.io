@@ -34,7 +34,7 @@ function parseGitHubUrl(url: string): string {
     return `https://raw.githubusercontent.com/${org}/${repo}/${branch}/${pathSeg.join("/")}`;
   } catch (error) {
     console.error("Error parsing GitHub URL:", error);
-    return url; // Return original URL if parsing fails
+    throw new Error(`Invalid GitHub URL: ${error instanceof Error ? error.message : String(error)}`);
   }
 }
 
@@ -66,13 +66,15 @@ function getLanguageFromUrl(url: string): string {
 
 export default async function GithubCodeBlock({ url }: GithubCodeBlockProps) {
   try {
-    let fetchUrl = url;
-
-    // Convert GitHub URLs to raw URLs
-    if (url.includes("github.com")) {
-      fetchUrl = parseGitHubUrl(url);
+    // Validate that it's a GitHub URL
+    if (!url.includes("github.com")) {
+      throw new Error("This component only supports GitHub URLs");
     }
 
+    // Convert GitHub URL to raw URL
+    const fetchUrl = parseGitHubUrl(url);
+    
+    // Fetch the code content
     const code = await fetchCode(fetchUrl);
     const lang = getLanguageFromUrl(fetchUrl);
 
