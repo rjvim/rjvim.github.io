@@ -1,6 +1,6 @@
 import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
 
-interface RemoteCodeBlockProps {
+interface GithubCodeBlockProps {
   url: string;
 }
 
@@ -64,7 +64,7 @@ function getLanguageFromUrl(url: string): string {
   }
 }
 
-export default async function RemoteCodeBlock({ url }: RemoteCodeBlockProps) {
+export default async function GithubCodeBlock({ url }: GithubCodeBlockProps) {
   try {
     let fetchUrl = url;
 
@@ -78,7 +78,7 @@ export default async function RemoteCodeBlock({ url }: RemoteCodeBlockProps) {
 
     return <DynamicCodeBlock lang={lang} code={code} />;
   } catch (error) {
-    console.error("Error in RemoteCodeBlock:", error);
+    console.error("Error in GithubCodeBlock:", error);
     return (
       <DynamicCodeBlock
         lang="text"
