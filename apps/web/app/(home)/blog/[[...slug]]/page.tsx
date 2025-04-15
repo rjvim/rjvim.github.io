@@ -13,6 +13,7 @@ import Link from "next/link";
 import { createMetadata } from "@/lib/metadata";
 import { blogsMetaImage } from "@/lib/metadata-image";
 import type { Metadata } from "next";
+import { getCategoryBySlug } from "@/lib/categories";
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
@@ -138,17 +139,19 @@ export async function generateMetadata(props: {
 
     const canonicalUrl = `/blog/series/${seriesSlug}`;
 
-    return createMetadata({
-      title: `${series.label} - Blog Series`,
-      description:
-        series.description || `Articles in the ${series.label} series`,
-      openGraph: {
-        url: canonicalUrl,
-      },
-      alternates: {
-        canonical: canonicalUrl,
-      },
-    });
+    return createMetadata(
+      blogsMetaImage.withImage(["series", seriesSlug], {
+        title: `${series.label} - Blog Series`,
+        description:
+          series.description || `Articles in the ${series.label} series`,
+        openGraph: {
+          url: canonicalUrl,
+        },
+        alternates: {
+          canonical: canonicalUrl,
+        },
+      })
+    );
   }
 
   // Handle category page
@@ -168,17 +171,22 @@ export async function generateMetadata(props: {
     }
 
     const canonicalUrl = `/blog/${category}`;
+    const categoryInfo = getCategoryBySlug(category);
 
-    return createMetadata({
-      title: `${category.charAt(0).toUpperCase() + category.slice(1)} - Blog`,
-      description: `Articles in the ${category} category`,
-      openGraph: {
-        url: canonicalUrl,
-      },
-      alternates: {
-        canonical: canonicalUrl,
-      },
-    });
+    return createMetadata(
+      blogsMetaImage.withImage([category], {
+        title: `${categoryInfo.label} - Blog`,
+        description:
+          categoryInfo.description ||
+          `Articles in the ${categoryInfo.label} category`,
+        openGraph: {
+          url: canonicalUrl,
+        },
+        alternates: {
+          canonical: canonicalUrl,
+        },
+      })
+    );
   }
 
   // Handle paginated root blog page
