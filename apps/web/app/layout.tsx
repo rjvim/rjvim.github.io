@@ -35,6 +35,13 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable}`}
       suppressHydrationWarning
     >
+      <head>
+        <script
+          crossOrigin="anonymous"
+          src="//cdn.jsdelivr.net/npm/meta-scan@0.12.1/dist/auto.global.js"
+          data-auto-enable={"false"}
+        />
+      </head>
       <body
         className={cn("relative flex min-h-svh flex-col overflow-x-hidden")}
       >
