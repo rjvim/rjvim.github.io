@@ -14,7 +14,7 @@ interface GithubCodeBlockProps {
   url: string;
   extractLines?: boolean;
   highlightLines?: string;
-  useLocForHighlight?: boolean;
+  // Removed useLocForHighlight prop as it's no longer needed
 }
 
 interface GitHubReference {
@@ -40,10 +40,7 @@ function getLanguageFromUrl(url: string): string {
   }
 }
 
-function parseGitHubUrl(
-  url: string,
-  useLocForHighlight = true
-): GitHubReference {
+function parseGitHubUrl(url: string): GitHubReference {
   try {
     // Split the URL to separate the line reference part
     const [githubUrl, loc] = url.split("#");
@@ -70,12 +67,9 @@ function parseGitHubUrl(
           toLine = fromLine;
         }
 
-        // Generate highlight lines from location if enabled
-        if (
-          useLocForHighlight &&
-          fromLine !== undefined &&
-          toLine !== undefined
-        ) {
+        // Always generate highlight lines from location
+        // These will be used if no explicit highlightLines prop is provided
+        if (fromLine !== undefined && toLine !== undefined) {
           const startLine = fromLine + 1;
           const endLine = toLine + 1;
           highlightLines =
@@ -190,7 +184,6 @@ export default async function GithubCodeBlock({
   url,
   extractLines = false,
   highlightLines,
-  useLocForHighlight = true,
 }: GithubCodeBlockProps) {
   try {
     // Validate GitHub URL
@@ -199,13 +192,13 @@ export default async function GithubCodeBlock({
     }
 
     // Parse GitHub URL to get raw URL and line info
-    const reference = parseGitHubUrl(url, useLocForHighlight);
+    const reference = parseGitHubUrl(url);
 
-    // Format highlight lines for Shiki, but only if we're not extracting lines
+    // Format highlight lines for Shiki
     // Priority: explicitly provided highlightLines prop > lines from URL loc
-    const formattedHighlightLines = !extractLines
-      ? formatHighlightLines(highlightLines || reference.highlightLines)
-      : undefined;
+    const formattedHighlightLines = formatHighlightLines(
+      highlightLines || reference.highlightLines
+    );
 
     // Fetch the code content, extracting specific lines if needed
     const code = await fetchCode(
