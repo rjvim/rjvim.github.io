@@ -1,7 +1,7 @@
 import { blogSource } from "@/lib/source";
 import { getSeriesNames } from "@/lib/series";
 
-export async function generateAllParams() {
+export async function generateAllParams(includeBlogPosts = true) {
   const blogPostsParams = await blogSource.generateParams();
 
   // Generate series page params
@@ -14,12 +14,12 @@ export async function generateAllParams() {
   const categoryParams = generateCategoryPathParams(blogPostsParams);
 
   // Combine all params
-  const allParams = [
-    ...rootParams,
-    ...categoryParams,
-    ...seriesParams,
-    ...blogPostsParams,
-  ];
+  const allParams = [...rootParams, ...categoryParams, ...seriesParams];
+
+  // Include individual blog posts if requested
+  if (includeBlogPosts) {
+    allParams.push(...blogPostsParams);
+  }
 
   console.log("generateStaticParams", allParams);
 
@@ -34,7 +34,7 @@ export async function generateAllParams() {
  * - Pagination for root and category pages
  */
 export async function generateBlogStaticParams() {
-  return await generateAllParams();
+  return await generateAllParams(true);
 }
 
 /**
