@@ -2,37 +2,12 @@ import * as Base from "fumadocs-ui/components/codeblock";
 import { highlight } from "fumadocs-core/highlight";
 import { transformerMetaHighlight } from "@shikijs/transformers";
 
+// Types
 export interface CodeBlockProps {
   code: string;
   wrapper?: Base.CodeBlockProps;
   lang: string;
   highlightLines?: string;
-}
-
-export async function CodeBlock({
-  code,
-  lang,
-  wrapper,
-  highlightLines,
-}: CodeBlockProps) {
-  const rendered = await highlight(code, {
-    lang,
-    meta: highlightLines
-      ? {
-          __raw: highlightLines,
-        }
-      : undefined,
-    themes: {
-      light: "github-light",
-      dark: "vesper",
-    },
-    components: {
-      pre: Base.Pre,
-    },
-    transformers: [transformerMetaHighlight()],
-  });
-
-  return <Base.CodeBlock {...wrapper}>{rendered}</Base.CodeBlock>;
 }
 
 interface GithubCodeBlockProps {
@@ -49,63 +24,69 @@ interface GitHubReference {
   highlightLines?: string;
 }
 
+// Helper functions
+function formatHighlightLines(highlightLines?: string): string | undefined {
+  if (!highlightLines) return undefined;
+  return highlightLines.startsWith("{") && highlightLines.endsWith("}")
+    ? highlightLines
+    : `{${highlightLines}}`;
+}
+
+function getLanguageFromUrl(url: string): string {
+  try {
+    return url.split(".").pop()?.toLowerCase() || "";
+  } catch {
+    return "";
+  }
+}
+
 function parseGitHubUrl(
   url: string,
-  useLocForHighlight?: boolean
+  useLocForHighlight = true
 ): GitHubReference {
   try {
     // Split the URL to separate the line reference part
     const [githubUrl, loc] = url.split("#");
 
-    // Parse line references if present
+    if (!githubUrl) {
+      throw new Error("Invalid GitHub URL");
+    }
+
+    // Initialize line reference variables
     let fromLine: number | undefined;
     let toLine: number | undefined;
     let highlightLines: string | undefined;
 
+    // Parse line references if present
     if (loc) {
       const lineParts = loc.split("-");
-      // Make sure lineParts[0] exists and starts with 'L'
-      if (
-        lineParts.length > 0 &&
-        lineParts[0] &&
-        lineParts[0].startsWith("L")
-      ) {
+
+      if (lineParts[0]?.startsWith("L")) {
         fromLine = parseInt(lineParts[0].slice(1), 10) - 1;
-        // Make sure lineParts[1] exists and starts with 'L'
-        if (
-          lineParts.length > 1 &&
-          lineParts[1] &&
-          lineParts[1].startsWith("L")
-        ) {
+
+        if (lineParts[1]?.startsWith("L")) {
           toLine = parseInt(lineParts[1].slice(1), 10) - 1;
         } else {
           toLine = fromLine;
         }
 
-        // If useLocForHighlight is true, generate highlight lines from loc
+        // Generate highlight lines from location if enabled
         if (
           useLocForHighlight &&
           fromLine !== undefined &&
           toLine !== undefined
         ) {
-          // Convert to 1-based for highlighting (fromLine and toLine are 0-based)
           const startLine = fromLine + 1;
           const endLine = toLine + 1;
-
-          if (startLine === endLine) {
-            highlightLines = `{${startLine}}`;
-          } else {
-            highlightLines = `{${startLine}-${endLine}}`;
-          }
+          highlightLines =
+            startLine === endLine
+              ? `{${startLine}}`
+              : `{${startLine}-${endLine}}`;
         }
       }
     }
 
-    // Parse the GitHub URL to create raw URL
-    if (!githubUrl) {
-      throw new Error("Invalid GitHub URL");
-    }
-
+    // Parse GitHub URL to create raw URL
     const urlObj = new URL(githubUrl);
     const pathParts = urlObj.pathname.split("/").slice(1);
 
@@ -113,22 +94,15 @@ function parseGitHubUrl(
       throw new Error("Invalid GitHub repository path");
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [org, repo, blob, branch, ...pathSeg] = pathParts;
+    const [org, repo, _, branch, ...pathSeg] = pathParts;
 
     if (!org || !repo || !branch || pathSeg.length === 0) {
       throw new Error("Missing required GitHub path components");
     }
 
-    // Ensure these values are defined
-    const safeOrg = org;
-    const safeRepo = repo;
-    const safeBranch = branch;
-    const safePathSeg = pathSeg;
-
     // Create reference object with raw URL and line info
     return {
-      rawUrl: `https://raw.githubusercontent.com/${safeOrg}/${safeRepo}/${safeBranch}/${safePathSeg.join("/")}`,
+      rawUrl: `https://raw.githubusercontent.com/${org}/${repo}/${branch}/${pathSeg.join("/")}`,
       fromLine,
       toLine,
       highlightLines,
@@ -139,18 +113,6 @@ function parseGitHubUrl(
       `Invalid GitHub URL: ${error instanceof Error ? error.message : String(error)}`
     );
   }
-}
-
-function formatHighlightLines(highlightLines?: string): string | undefined {
-  if (!highlightLines) return undefined;
-
-  // If the highlightLines already starts with '{' and ends with '}', return it as is
-  if (highlightLines.startsWith("{") && highlightLines.endsWith("}")) {
-    return highlightLines;
-  }
-
-  // Otherwise, wrap it with curly braces
-  return `{${highlightLines}}`;
 }
 
 async function fetchCode(url: string, fromLine?: number, toLine?: number) {
@@ -165,53 +127,63 @@ async function fetchCode(url: string, fromLine?: number, toLine?: number) {
 
     const content = await response.text();
 
-    // Extract specific lines if line numbers are provided
-    if (fromLine !== undefined && toLine !== undefined) {
-      const lines = content.split("\n");
-      const selectedLines = lines.slice(fromLine, toLine + 1);
-
-      if (selectedLines.length === 0) {
-        return content;
-      }
-
-      // Handle indentation
-      const preceedingSpace = selectedLines.reduce(
-        (prev: number, line: string) => {
-          if (line.length === 0) return prev;
-
-          const spaces = line.match(/^\s+/);
-          if (spaces) return Math.min(prev, spaces[0].length);
-
-          return 0;
-        },
-        Infinity
-      );
-
-      // Handle indentation only
-      return selectedLines
-        .map((line) => {
-          if (line.length > 0) {
-            return line.slice(preceedingSpace < Infinity ? preceedingSpace : 0);
-          }
-          return line;
-        })
-        .join("\n");
+    // Return full content if no line numbers are specified
+    if (fromLine === undefined || toLine === undefined) {
+      return content;
     }
 
-    return content;
+    // Extract specific lines
+    const lines = content.split("\n");
+    const selectedLines = lines.slice(fromLine, toLine + 1);
+
+    if (selectedLines.length === 0) {
+      return content;
+    }
+
+    // Calculate common indentation to remove
+    const commonIndent = selectedLines.reduce(
+      (indent: number, line: string) => {
+        if (line.length === 0) return indent;
+        const spaces = line.match(/^\s+/);
+        return spaces ? Math.min(indent, spaces[0].length) : 0;
+      },
+      Infinity
+    );
+
+    // Remove common indentation and join lines
+    return selectedLines
+      .map((line) => {
+        if (line.length === 0) return line;
+        return line.slice(commonIndent < Infinity ? commonIndent : 0);
+      })
+      .join("\n");
   } catch (error) {
     console.error("Error fetching code:", error);
     return `// Error fetching code: ${error instanceof Error ? error.message : String(error)}`;
   }
 }
 
-function getLanguageFromUrl(url: string): string {
-  try {
-    const extension = url.split(".").pop()?.toLowerCase() || "";
-    return extension;
-  } catch {
-    return "";
-  }
+// Components
+export async function CodeBlock({
+  code,
+  lang,
+  wrapper,
+  highlightLines,
+}: CodeBlockProps) {
+  const rendered = await highlight(code, {
+    lang,
+    meta: highlightLines ? { __raw: highlightLines } : undefined,
+    themes: {
+      light: "github-light",
+      dark: "github-dark",
+    },
+    components: {
+      pre: Base.Pre,
+    },
+    transformers: [transformerMetaHighlight()],
+  });
+
+  return <Base.CodeBlock {...wrapper}>{rendered}</Base.CodeBlock>;
 }
 
 export default async function GithubCodeBlock({
@@ -221,7 +193,7 @@ export default async function GithubCodeBlock({
   useLocForHighlight = true,
 }: GithubCodeBlockProps) {
   try {
-    // Validate that it's a GitHub URL
+    // Validate GitHub URL
     if (!url.includes("github.com")) {
       throw new Error("This component only supports GitHub URLs");
     }
