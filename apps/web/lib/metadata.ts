@@ -19,6 +19,7 @@ export function createMetadata(override: Metadata): Metadata {
     },
     twitter: {
       card: "summary_large_image",
+      site: "@rjv_im",
       creator: "@rjv_im",
       title: override.title ?? undefined,
       description: override.description ?? undefined,
