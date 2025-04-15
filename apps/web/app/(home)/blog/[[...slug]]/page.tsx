@@ -24,7 +24,7 @@ import {
   getSeriesSlug,
   getCategorySlug,
   getPageNumber,
-} from "./utils/page-type";
+} from "./(components)/page-type";
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
