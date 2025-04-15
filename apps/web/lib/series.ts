@@ -3,10 +3,11 @@ import { getSortedByDatePosts } from "./source";
 
 export const getSeriesBySlug = (slug: string) => {
   const series = {
-    "x": {
+    x: {
       label: "Series X",
       icon: Book,
-      description: "A comprehensive series on Zero Trust security architecture.",
+      description:
+        "A comprehensive series on Zero Trust security architecture.",
     },
     // Add more series here as needed
   };
@@ -15,26 +16,8 @@ export const getSeriesBySlug = (slug: string) => {
     series[slug as keyof typeof series] || {
       label: slug.charAt(0).toUpperCase() + slug.slice(1),
       icon: Book,
-      description: `Articles in the ${slug.charAt(0).toUpperCase() + slug.slice(1)} series.`
+      description: `Articles in the ${slug.charAt(0).toUpperCase() + slug.slice(1)} series.`,
     }
-  );
-};
-
-export const getPostsByCategory = (category: string) => {
-  return getSortedByDatePosts()
-    .filter((post) => post.slugs && post.slugs[0] === category)
-    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
-};
-
-export const getPostsByCategoryAndSlug = (category: string, slug: string) => {
-  return (
-    getSortedByDatePosts()
-      .filter(
-        (post) =>
-          post.slugs && post.slugs[0] === category && post.slugs[1] === slug
-      )
-      .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())[0] ||
-    undefined
   );
 };
 
@@ -65,20 +48,20 @@ export const getPostsBySeries = (seriesName: string) => {
 export const getSeriesInfo = (seriesName: string) => {
   const posts = getPostsBySeries(seriesName);
   if (posts.length === 0) return null;
-  
+
   // Use the first post's title to extract series name if possible
   const firstPost = posts[0];
   if (!firstPost) return null;
-  
-  const title = firstPost.data.title || '';
-  const seriesTitle = title.includes('Part') ? 
-    title.split('Part')[0].trim() : 
-    seriesName.charAt(0).toUpperCase() + seriesName.slice(1);
-  
+
+  const title = firstPost.data.title || "";
+  const seriesTitle = title.includes("Part")
+    ? title.split("Part")[0].trim()
+    : seriesName.charAt(0).toUpperCase() + seriesName.slice(1);
+
   return {
     name: seriesName,
     title: seriesTitle,
     posts: posts,
-    totalParts: posts.length
+    totalParts: posts.length,
   };
 };
