@@ -71,8 +71,8 @@ export default function Hero() {
             </h1>
 
             <p className="text-lg md:text-xl leading-relaxed tracking-tight text-muted-foreground max-w-2xl text-center">
-              Welcome to rjv.im - This is where I articulate my work, open
-              source projects,thoughts, ideas, work, commentary and opinions.
+              Welcome to rjv.im - This is where I document my work on open
+              source projects, company and articulate thoughts and ideas.
             </p>
           </div>
           <div className="flex flex-row gap-3">

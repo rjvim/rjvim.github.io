@@ -2,10 +2,10 @@ import { Icons } from "@/components/icons";
 import type { BaseLayoutProps, LinkItemType } from "fumadocs-ui/layouts/shared";
 import Image from "next/image";
 
-export const title = "mfstack";
+export const title = "rjv.im";
 export const description =
-  "Personal website of MFStack. This is where I articulate my work, open source projects, thoughts, ideas, work, commentary and opinions.";
-export const owner = "MFStack";
+  "Personal website of rjv.im. This is where I articulate my work, open source projects, thoughts, ideas, work, commentary and opinions.";
+export const owner = "rjv.im";
 /**
  * Shared layout configurations
  *
