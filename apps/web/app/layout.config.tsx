@@ -49,18 +49,18 @@ export const linkItems: LinkItemType[] = [
     url: "/about",
     active: "url",
   },
-  {
-    icon: <Icons.posts />,
-    text: "Me",
-    url: "/me",
-    active: "url",
-  },
-  {
-    icon: <Icons.tags />,
-    text: "Tags",
-    url: "/tags",
-    active: "url",
-  },
+  // {
+  //   icon: <Icons.posts />,
+  //   text: "Me",
+  //   url: "/me",
+  //   active: "url",
+  // },
+  // {
+  //   icon: <Icons.tags />,
+  //   text: "Tags",
+  //   url: "/tags",
+  //   active: "url",
+  // },
 ];
 
 export const postsPerPage = 5;

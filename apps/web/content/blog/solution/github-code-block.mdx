@@ -1,6 +1,6 @@
 ---
 title: GithubCodeBlock Component
-description: A codeblock component to display code from public GitHub repositories
+description: A codeblock component to display code from public GitHub repositories in Fuma Docs
 date: 2025-04-15
 author: rajiv
 tags: [react, component]
@@ -9,7 +9,7 @@ image: https://shadcnblocks.com/images/block/placeholder-5.svg
 
 # GithubCodeBlock Component
 
-The `GithubCodeBlock` component allows you to embed and display code from GitHub repositories directly in your application. It supports line extraction, syntax highlighting, and line highlighting features.
+The `GithubCodeBlock` component allows you to embed and display code from GitHub repositories directly in your Fuma Docs application. It supports line extraction, syntax highlighting, and line highlighting features.
 
 ## Installation
 
@@ -54,12 +54,12 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
 
 The component accepts the following props:
 
-| Prop             | Type      | Default     | Description                                         |
-| ---------------- | --------- | ----------- | --------------------------------------------------- |
-| `url`            | `string`  | (required)  | GitHub URL to the file you want to display          |
-| `extractLines`   | `boolean` | `false`     | Whether to extract specific lines from the file     |
-| `highlightLines` | `string`  | `undefined` | Lines to highlight in the format `"{1,3-4}"`        |
-| `wrapper`        | `object`  | `undefined` | Props to pass to the underlying CodeBlock component |
+| Prop             | Type      | Default     | Description                                                  |
+| ---------------- | --------- | ----------- | ------------------------------------------------------------ |
+| `url`            | `string`  | (required)  | GitHub URL to the file you want to display                   |
+| `extractLines`   | `boolean` | `false`     | Whether to extract specific lines from the file              |
+| `highlightLines` | `string`  | `undefined` | Lines to highlight in the format `"{1,3-4}"`                 |
+| `wrapper`        | `object`  | `undefined` | CodeBlockProps to pass to the underlying CodeBlock component |
 
 ## Examples
 
@@ -166,38 +166,3 @@ The `highlightLines` prop accepts a string in the format `"{lineNumber,lineRange
 - Single lines are specified as numbers: `"{1,3,5}"`
 - Ranges are specified with a hyphen: `"{1-3,5-7}"`
 - You can combine both: `"{1,3-5,7,9-11}"`
-
-## How It Works
-
-The component follows these rules:
-
-1. **Display Entire File**: If no line references are in the URL and `extractLines` is `false`, the entire file is displayed.
-
-2. **Extract Lines**: If line references are in the URL (e.g., `#L8-L16`) and `extractLines` is `true`, only those lines are displayed.
-
-3. **Highlighting**: Highlighting is applied using:
-
-   - The `highlightLines` prop if provided (takes precedence)
-   - The line references from the URL if no `highlightLines` prop is provided
-
-4. **No Highlighting**: If you don't want any highlighting, simply don't include line references in the URL and don't provide a `highlightLines` prop.
-
-## Example with Multiple Features
-
-```tsx title="usage"
-<GithubCodeBlock
-  url="https://github.com/rjvim/react-component-library-starter/blob/main/lerna.json#L2-L4"
-  extractLines={false}
-  highlightLines="{1,5}"
-  wrapper={{ filename: "lerna.json" }}
-/>
-```
-
-This will display the entire file from the GitHub URL but highlight lines 1 and 5 (the `highlightLines` prop takes precedence over the URL line references):
-
-<GithubCodeBlock
-  url="https://github.com/rjvim/react-component-library-starter/blob/main/lerna.json#L2-L4"
-  extractLines={false}
-  highlightLines="{1,5}"
-  wrapper={{ title: "result", filename: "lerna.json" }}
-/>
