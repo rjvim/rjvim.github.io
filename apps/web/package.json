@@ -15,6 +15,7 @@
     "postbuild": "pnpm sitemap"
   },
   "dependencies": {
+    "@next/third-parties": "^15.3.0",
     "@repo/shadcn": "workspace:*",
     "@repo/ui": "workspace:*",
     "@shikijs/transformers": "^3.2.2",
@@ -28,6 +29,7 @@
     "fumadocs-mdx": "^11.5.8",
     "fumadocs-twoslash": "^3.1.0",
     "fumadocs-ui": "^15.2.6",
+    "install": "^0.13.0",
     "katex": "^0.16.22",
     "lucide-react": "^0.488.0",
     "mermaid": "^11.6.0",
