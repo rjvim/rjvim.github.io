@@ -13,6 +13,7 @@ import {
   transformerNotationFocus,
   transformerMetaHighlight,
 } from "@shikijs/transformers";
+import { remarkInstall } from "fumadocs-docgen";
 import { rehypeCodeDefaultOptions } from "fumadocs-core/mdx-plugins";
 
 export const blog = defineCollections({
@@ -60,7 +61,7 @@ export default defineConfig({
         transformerMetaHighlight(),
       ],
     },
-    remarkPlugins: [remarkMath],
+    remarkPlugins: [remarkMath, remarkInstall],
     rehypePlugins: (v) => [rehypeKatex, ...v],
   },
 });
