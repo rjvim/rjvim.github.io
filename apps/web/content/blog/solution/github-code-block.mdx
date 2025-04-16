@@ -19,11 +19,13 @@ You need to have fumadocs setup ready and running
 
 _I am still working on a better way if there is one like using shadcn cli_
 
-<include>../../../components/github-code-block.tsx</include>
+<include lang="tsx" meta='title="github-code-block.tsx"'>
+  ../../../components/github-code-block.tsx
+</include>
 
 ### Step 2: Add to MDX Components
 
-```tsx
+```tsx title="mdx-components.tsx"
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import type { MDXComponents } from "mdx/types";
 import GithubCodeBlock from "./components/github-code-block";
@@ -39,23 +41,25 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
 
 ## Basic Usage
 
-```tsx
+```tsx title="usage"
 <GithubCodeBlock url="https://github.com/rjvim/react-component-library-starter/blob/main/lerna.json" />
 ```
 
-### Result
-
-<GithubCodeBlock url="https://github.com/rjvim/react-component-library-starter/blob/main/lerna.json" />
+<GithubCodeBlock
+  url="https://github.com/rjvim/react-component-library-starter/blob/main/lerna.json"
+  wrapper={{ title: "result" }}
+/>
 
 ## Props
 
 The component accepts the following props:
 
-| Prop             | Type      | Default     | Description                                     |
-| ---------------- | --------- | ----------- | ----------------------------------------------- |
-| `url`            | `string`  | (required)  | GitHub URL to the file you want to display      |
-| `extractLines`   | `boolean` | `false`     | Whether to extract specific lines from the file |
-| `highlightLines` | `string`  | `undefined` | Lines to highlight in the format `"{1,3-4}"`    |
+| Prop             | Type      | Default     | Description                                         |
+| ---------------- | --------- | ----------- | --------------------------------------------------- |
+| `url`            | `string`  | (required)  | GitHub URL to the file you want to display          |
+| `extractLines`   | `boolean` | `false`     | Whether to extract specific lines from the file     |
+| `highlightLines` | `string`  | `undefined` | Lines to highlight in the format `"{1,3-4}"`        |
+| `wrapper`        | `object`  | `undefined` | Props to pass to the underlying CodeBlock component |
 
 ## Examples
 
@@ -74,7 +78,7 @@ The component accepts the following props:
 
 You can extract specific lines from a file by adding a line reference to the URL and setting `extractLines` to `true`:
 
-```tsx
+```tsx title="usage"
 <GithubCodeBlock
   url="https://github.com/rjvim/react-component-library-starter/blob/main/lerna.json#L2-L4"
   extractLines={true}
@@ -84,13 +88,14 @@ You can extract specific lines from a file by adding a line reference to the URL
 <GithubCodeBlock
   url="https://github.com/rjvim/react-component-library-starter/blob/main/lerna.json#L2-L4"
   extractLines={true}
+  wrapper={{ title: "result" }}
 />
 
 ### Highlight Specific Lines
 
 You can highlight specific lines using the `highlightLines` prop:
 
-```tsx
+```tsx title="usage"
 <GithubCodeBlock
   url="https://github.com/rjvim/react-component-library-starter/blob/main/lerna.json"
   highlightLines="{2,4}"
@@ -100,13 +105,14 @@ You can highlight specific lines using the `highlightLines` prop:
 <GithubCodeBlock
   url="https://github.com/rjvim/react-component-library-starter/blob/main/lerna.json"
   highlightLines="{2,4}"
+  wrapper={{ title: "result" }}
 />
 
 ### Extract and Highlight Lines
 
 You can extract specific lines and highlight them at the same time:
 
-```tsx
+```tsx title="usage"
 <GithubCodeBlock
   url="https://github.com/rjvim/react-component-library-starter/blob/main/lerna.json#L2-L4"
   extractLines={true}
@@ -118,25 +124,29 @@ You can extract specific lines and highlight them at the same time:
   url="https://github.com/rjvim/react-component-library-starter/blob/main/lerna.json#L2-L4"
   extractLines={true}
   highlightLines="{2}"
+  wrapper={{ title: "result" }}
 />
 
 ### Automatic Highlighting from URL
 
 The component will automatically use line references in the URL hash for highlighting if no `highlightLines` prop is provided:
 
-```tsx
+```tsx title="usage"
 <GithubCodeBlock url="https://github.com/rjvim/react-component-library-starter/blob/main/lerna.json#L2-L4" />
 ```
 
 This will highlight lines 2-4 if `extractLines` is `false`:
 
-<GithubCodeBlock url="https://github.com/rjvim/react-component-library-starter/blob/main/lerna.json#L2-L4" />
+<GithubCodeBlock
+  url="https://github.com/rjvim/react-component-library-starter/blob/main/lerna.json#L2-L4"
+  wrapper={{ title: "result" }}
+/>
 
 ### Override URL Highlighting
 
 You can override the automatic URL-based highlighting by providing your own `highlightLines` prop:
 
-```tsx
+```tsx title="usage"
 <GithubCodeBlock
   url="https://github.com/rjvim/react-component-library-starter/blob/main/lerna.json#L2-L4"
   highlightLines="{3}"
@@ -146,6 +156,7 @@ You can override the automatic URL-based highlighting by providing your own `hig
 <GithubCodeBlock
   url="https://github.com/rjvim/react-component-library-starter/blob/main/lerna.json#L2-L4"
   highlightLines="{3}"
+  wrapper={{ title: "result" }}
 />
 
 ## Highlight Format
@@ -173,11 +184,12 @@ The component follows these rules:
 
 ## Example with Multiple Features
 
-```tsx
+```tsx title="usage"
 <GithubCodeBlock
   url="https://github.com/rjvim/react-component-library-starter/blob/main/lerna.json#L2-L4"
   extractLines={false}
   highlightLines="{1,5}"
+  wrapper={{ filename: "lerna.json" }}
 />
 ```
 
@@ -187,4 +199,5 @@ This will display the entire file from the GitHub URL but highlight lines 1 and 
   url="https://github.com/rjvim/react-component-library-starter/blob/main/lerna.json#L2-L4"
   extractLines={false}
   highlightLines="{1,5}"
+  wrapper={{ title: "result", filename: "lerna.json" }}
 />

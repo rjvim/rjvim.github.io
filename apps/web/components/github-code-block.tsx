@@ -15,7 +15,6 @@ interface GithubCodeBlockProps {
   extractLines?: boolean;
   highlightLines?: string;
   wrapper?: Base.CodeBlockProps;
-  // Removed useLocForHighlight prop as it's no longer needed
 }
 
 interface GitHubReference {
