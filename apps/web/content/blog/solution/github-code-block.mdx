@@ -1,15 +1,41 @@
 ---
 title: GithubCodeBlock Component
-description: Why modern security architectures assume breach and verify everything
+description: A codeblock component to display code from public GitHub repositories
 date: 2025-04-15
 author: rajiv
-tags: [react, component-library]
+tags: [react, component]
 image: https://shadcnblocks.com/images/block/placeholder-5.svg
 ---
 
 # GithubCodeBlock Component
 
 The `GithubCodeBlock` component allows you to embed and display code from GitHub repositories directly in your application. It supports line extraction, syntax highlighting, and line highlighting features.
+
+## Installation
+
+You need to have fumadocs setup ready and running
+
+### Step 1: Copy following code anywhere into your components
+
+_I am still working on a better way if there is one like using shadcn cli_
+
+<include>../../../components/github-code-block.tsx</include>
+
+### Step 2: Add to MDX Components
+
+```tsx
+import defaultMdxComponents from "fumadocs-ui/mdx";
+import type { MDXComponents } from "mdx/types";
+import GithubCodeBlock from "./components/github-code-block";
+
+export function getMDXComponents(components?: MDXComponents): MDXComponents {
+  return {
+    ...defaultMdxComponents,
+    GithubCodeBlock: GithubCodeBlock,
+    ...components,
+  };
+}
+```
 
 ## Basic Usage
 
@@ -136,6 +162,7 @@ The component follows these rules:
 2. **Extract Lines**: If line references are in the URL (e.g., `#L8-L16`) and `extractLines` is `true`, only those lines are displayed.
 
 3. **Highlighting**: Highlighting is applied using:
+
    - The `highlightLines` prop if provided (takes precedence)
    - The line references from the URL if no `highlightLines` prop is provided
 

@@ -14,6 +14,7 @@ interface GithubCodeBlockProps {
   url: string;
   extractLines?: boolean;
   highlightLines?: string;
+  wrapper?: Base.CodeBlockProps;
   // Removed useLocForHighlight prop as it's no longer needed
 }
 
@@ -184,6 +185,7 @@ export default async function GithubCodeBlock({
   url,
   extractLines = false,
   highlightLines,
+  wrapper,
 }: GithubCodeBlockProps) {
   try {
     // Validate GitHub URL
@@ -214,6 +216,7 @@ export default async function GithubCodeBlock({
         lang={lang}
         code={code}
         highlightLines={formattedHighlightLines}
+        wrapper={wrapper}
       />
     );
   } catch (error) {
@@ -222,6 +225,7 @@ export default async function GithubCodeBlock({
       <CodeBlock
         lang="text"
         code={`// Error: ${error instanceof Error ? error.message : String(error)}`}
+        wrapper={wrapper}
       />
     );
   }
