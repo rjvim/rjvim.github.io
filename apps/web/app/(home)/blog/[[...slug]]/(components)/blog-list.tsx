@@ -14,7 +14,7 @@ export function RecentPosts() {
       currentPage={1}
       totalPages={totalPages}
       disablePagination={true}
-      heading="Recent Articles"
+      heading="Recent Posts"
       description="Check out my latest thoughts, tutorials, and insights on web development and design."
     />
   );

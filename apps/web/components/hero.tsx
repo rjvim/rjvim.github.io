@@ -31,13 +31,13 @@ export default function Hero() {
       <div className="container mx-auto">
         <div className="flex gap-8 py-20 lg:py-40 items-center justify-center flex-col">
           <div>
-            <Link href="https://x.com/rjv_im" target="_blank">
+            <Link href="blog/solution/github-code-block">
               <Button
                 variant="secondary"
                 size="sm"
                 className="gap-4 cursor-pointer"
               >
-                Follow along on X <MoveRight className="w-4 h-4" />
+                GithubCodeBlock Component <MoveRight className="w-4 h-4" />
               </Button>
             </Link>
           </div>
@@ -81,7 +81,7 @@ export default function Hero() {
                 Let's Connect <SocialIcons.x className="w-4 h-4" />
               </Button>
             </Link>
-            <Link href="https://x.com/rjv_im" target="_blank">
+            <Link href="blog" target="_blank">
               <Button size="lg" className="gap-4">
                 View Posts <MoveRight className="w-4 h-4" />
               </Button>
