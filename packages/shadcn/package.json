@@ -77,6 +77,7 @@
     "./lib/*": "./src/lib/*.ts",
     "./components/*": "./src/components/*.tsx",
     "./kanban": "./src/components/ui/kibo-ui/kanban/index.tsx",
+    "./announcement": "./src/components/ui/kibo-ui/announcement/index.tsx",
     "./hooks/*": "./src/hooks/*.ts"
   }
 }

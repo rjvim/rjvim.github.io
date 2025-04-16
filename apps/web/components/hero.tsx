@@ -7,6 +7,12 @@ import Link from "next/link";
 import { Button } from "@repo/shadcn/components/button";
 import { Icons } from "./icons";
 import { SocialIcons } from "@repo/ui/components/social-icons";
+import {
+  Announcement,
+  AnnouncementTag,
+  AnnouncementTitle,
+} from "@repo/shadcn/announcement";
+import { ArrowUpRightIcon } from "lucide-react";
 
 export default function Hero() {
   const [titleNumber, setTitleNumber] = useState(0);
@@ -31,15 +37,18 @@ export default function Hero() {
       <div className="container mx-auto">
         <div className="flex gap-8 py-20 lg:py-40 items-center justify-center flex-col">
           <div>
-            <Link href="blog/solution/github-code-block">
-              <Button
-                variant="secondary"
-                size="sm"
-                className="gap-4 cursor-pointer"
-              >
-                GithubCodeBlock Component <MoveRight className="w-4 h-4" />
-              </Button>
-            </Link>
+            <Announcement>
+              <AnnouncementTag>Latest Component</AnnouncementTag>
+              <Link href="blog/solution/github-code-block">
+                <AnnouncementTitle>
+                  GithubCodeBlock Component
+                  <ArrowUpRightIcon
+                    size={16}
+                    className="shrink-0 text-muted-foreground"
+                  />
+                </AnnouncementTitle>
+              </Link>
+            </Announcement>
           </div>
           <div className="flex gap-4 flex-col">
             <h1 className="text-5xl md:text-7xl max-w-2xl tracking-tighter text-center font-regular">
