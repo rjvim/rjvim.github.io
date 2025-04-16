@@ -49,7 +49,7 @@ export default function VanillaMdx({
             single: false,
           }}
         >
-          {children}
+          <div className="prose min-w-0">{children}</div>
         </DocsPage>
       </DocsLayout>
     </>
