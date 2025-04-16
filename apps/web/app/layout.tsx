@@ -5,6 +5,7 @@ import { cn } from "@repo/shadcn/lib/utils";
 import { RootProvider } from "fumadocs-ui/provider";
 import { description } from "./layout.config";
 import { baseUrl, createMetadata } from "@/lib/metadata";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -55,6 +56,7 @@ export default function RootLayout({
           {children}
         </RootProvider>
       </body>
+      <GoogleAnalytics gaId="G-F0RQ63PF3G" />
     </html>
   );
 }
