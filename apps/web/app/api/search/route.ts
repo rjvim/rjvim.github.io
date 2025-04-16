@@ -5,7 +5,8 @@ export const revalidate = false;
 
 export const { staticGET: GET } = createSearchAPI("advanced", {
   indexes: [
-    ...blogSource.getPages()
+    ...blogSource
+      .getPages()
       .filter((page) => !page.data.draft) // Filter out draft posts
       .map((page) => {
         return {
