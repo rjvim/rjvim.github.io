@@ -2,6 +2,8 @@ import React from "react";
 import Link from "next/link";
 import { GridBackground } from "@repo/ui/components/grid-background";
 import { getSeriesBySlug, getPostsBySeries } from "@/lib/series";
+import { Book } from "@repo/shadcn/components/ui/book";
+import { BookOpen } from "lucide-react";
 
 interface SeriesListProps {
   seriesSlug: string;
@@ -15,12 +17,27 @@ export function SeriesList({ seriesSlug }: SeriesListProps) {
     <div className="container px-4 py-8 lg:py-12 lg:px-6">
       <GridBackground maxWidthClass="container" />
       <div className="relative">
-        <h1 className="text-3xl font-bold mb-2 text-gray-900 dark:text-white">
-          {seriesInfo.label}
-        </h1>
-        <p className="text-gray-600 dark:text-gray-400 mb-8">
-          {seriesInfo.description}
-        </p>
+        <div className="flex flex-col md:flex-row gap-8 mb-8 items-start">
+          <Book 
+            color="#3b82f6" 
+            depth={6}
+            width={150}
+            illustration={<div className="flex items-center justify-center h-full w-full p-4"><BookOpen size={32} className="text-white" /></div>}
+          >
+            <div className="p-3 mb-2 grid gap-2">
+              <h3 className="font-semibold text-sm">{seriesInfo.label}</h3>
+              <div className="text-xs">{posts.length} Parts</div>
+            </div>
+          </Book>
+          <div>
+            <h1 className="text-3xl font-bold mb-2 text-gray-900 dark:text-white">
+              {seriesInfo.label}
+            </h1>
+            <p className="text-gray-600 dark:text-gray-400">
+              {seriesInfo.description}
+            </p>
+          </div>
+        </div>
 
         <div className="space-y-6">
           {posts.map((post) => (

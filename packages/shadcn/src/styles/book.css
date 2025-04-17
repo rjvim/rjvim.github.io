@@ -1,0 +1,16 @@
+/* Book component styles */
+.bg-book-bind-bg {
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.bg-book-pages {
+  background: linear-gradient(90deg, #f1f1f1 0%, #ffffff 100%);
+}
+
+.shadow-book {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.book-bg {
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
+}
