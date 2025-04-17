@@ -1,0 +1,72 @@
+---
+title: Building Blog with Fuma Docs
+description: A guide to embed X posts in your Fumadocs site
+date: 2025-04-16
+author: rajiv
+tags: [tutorial, social-media, x-twitter, component]
+image: https://shadcnblocks.com/images/block/placeholder-5.svg
+---
+
+This tutorial will guide you through the process of embedding X (formerly Twitter) posts in your Fumadocs site. We'll cover installation, component setup, and usage in MDX files.
+
+## Step 1: Install the Required Package
+
+First, you need to install the `react-social-media-embed` package:
+
+```package-install
+react-social-media-embed
+```
+
+## Step 2: Create the XEmbedClient Component
+
+Create a client component wrapper for the XEmbed component. This needs to be a client component because it interacts with the X embed script.
+
+<include lang="tsx" meta='title="XEmbedClient.tsx"'>
+  ../../../components/XEmbedClient.tsx
+</include>
+
+The client component wrapper:
+
+- Uses the "use client" directive to ensure it runs on the client side
+- Wraps the XEmbed component from react-social-media-embed
+- Adds a flex container with center alignment for better display
+- Maintains the same API as the original XEmbed component
+
+## Step 3: Add the Component to MDX Components
+
+Update your `mdx-components.tsx` file to include the XEmbedClient component:
+
+```jsx
+import defaultMdxComponents from "fumadocs-ui/mdx";
+import type { MDXComponents } from "mdx/types";
+import { XEmbedClient } from "./components/XEmbedClient";
+
+export function getMDXComponents(components?: MDXComponents): MDXComponents {
+  return {
+    ...defaultMdxComponents,
+    XEmbed: XEmbedClient,
+    ...components,
+  };
+}
+
+```
+
+## Step 4: Use the XEmbed Component in Your MDX Files
+
+Now you can use the XEmbed component in your MDX files:
+
+```jsx
+<XEmbed url="https://x.com/rjv_im/status/1912033485285376492" width={325} />
+```
+
+## Example
+
+Here's an example of an embedded X post:
+
+<div className="flex justify-center my-6">
+  <XEmbed url="https://x.com/rjv_im/status/1912033485285376492" width={325} />
+</div>
+
+## Documentation
+
+You can also embed Facebook, LinkedIn etc., too. Refer to [react-social-media-embed](https://www.npmjs.com/package/react-social-media-embed) for more details.

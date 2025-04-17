@@ -6,7 +6,7 @@ import { generateAllParams } from "@/app/(home)/blog/[[...slug]]/(components)/bl
 export const GET = blogsMetaImage.createAPI((page: any): ImageResponse => {
   return generateOGImage({
     title: page.data.title,
-    description: page.data.description,
+    // description: page.data.description,
     site: "rjv.im",
   });
 });
