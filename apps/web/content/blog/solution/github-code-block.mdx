@@ -17,7 +17,7 @@ The `GithubCodeBlock` component allows you to embed and display code from GitHub
 
 You need to have fumadocs setup ready and running
 
-### Step 1: Copy following code anywhere into your components
+### 1. Copy following code anywhere into your components
 
 _I am still working on a better way if there is one like using shadcn cli_
 
@@ -25,7 +25,7 @@ _I am still working on a better way if there is one like using shadcn cli_
   ../../../components/github-code-block.tsx
 </include>
 
-### Step 2: Add to MDX Components
+### 2. Add to MDX Components
 
 ```tsx title="mdx-components.tsx"
 import defaultMdxComponents from "fumadocs-ui/mdx";
@@ -41,7 +41,7 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
 }
 ```
 
-## Basic Usage
+### 3. Basic Usage
 
 ```tsx title="usage"
 <GithubCodeBlock url="https://github.com/rjvim/react-component-library-starter/blob/main/lerna.json" />

@@ -5,6 +5,7 @@ import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
 import GithubCodeBlock from "./components/github-code-block";
 import { XEmbedClient } from "./components/XEmbedClient";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Step, Steps } from "fumadocs-ui/components/steps";
 
 export function getMDXComponents(components?: MDXComponents): MDXComponents {
   return {
@@ -16,6 +17,8 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     ),
     Tab,
     Tabs,
+    Step,
+    Steps,
     XEmbed: XEmbedClient,
     GithubCodeBlock: GithubCodeBlock,
     ...components,

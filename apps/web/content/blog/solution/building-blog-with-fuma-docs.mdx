@@ -1,73 +1,152 @@
 ---
-title: Building Blog with Fuma Docs
-description: A guide to embed X posts in your Fumadocs site
+title: Building a Blog with NextJS & Fuma Docs
+description: A guide to build a blog using Fuma Docs
 date: 2025-04-16
 author: rajiv
 tags: [tutorial, social-media, x-twitter, component]
 image: https://shadcnblocks.com/images/block/placeholder-5.svg
-draft: true
+draft: false
 ---
 
-This tutorial will guide you through the process of embedding X (formerly Twitter) posts in your Fumadocs site. We'll cover installation, component setup, and usage in MDX files.
+I was using docusaraurus for my blog before and I was not satisfied, I think the itch was to have more control - particularly from styling or features perspective. What features would you want on your blog? I went for following:
 
-## Step 1: Install the Required Package
+## Features
 
-First, you need to install the `react-social-media-embed` package:
+- [x] Static Site which I can publish to Github Pages
+- [x] MDX Support: I code frontend too, so I need something where I can embed React Components
+- [x] Search
+- [x] Table of Contents: The clerk style
+
+### Other Features
+
+- [x] A Blog Post (Duh!)
+- [x] List of Posts with Pagination (More Duh!)
+- [x] Categories
+- [ ] Tags
+- [x] Sitemap
+- [x] Metadata with Social Images
+- [x] Static (I am repeating for effect)
+
+## Why FumaDocs
+
+Fuma Docs - A library to help you build docs, but doesn't have it's own domain (:D). Though on surface it looks like docs site - @fuma_name has done a great job making it composable, so internally it's just bunch of components - which can used/re-used. After exploring several, I went with it fumadocs because it felt worth it to invest time into understanding how to use it.
+
+And - simply put - It covered by basic features: mdx, search, toc, ai chat.
+
+## Setup
+
+Now how do we setup? The typical setup docs of fuma docs cover instructions for a docs site. There is a blog though which guides with some basic setup - This is of this post and this entire repo as an extension to it.
+
+If you just want to get to the part where you want to use it for your blog, just clone the current repo, you will get the exact same site you are currently on! But if you want setup something similar on your existing nextjs site, you can follow along.
+
+### Install and Configure Fuma Docs
+
+<Steps>
+
+<Step>
+
+### Install Fuma Packages
 
 ```package-install
-react-social-media-embed
+fumadocs-ui fumadocs-core fumadocs-mdx @types/mdx @shikijs/transformers fumadocs-docgen fumadocs-twoslash katex rehype-katex remark-math shiki twoslash zod
 ```
 
-## Step 2: Create the XEmbedClient Component
+The above installs more packages than installation guide of fumadocs, but we will configure them later.
 
-Create a client component wrapper for the XEmbed component. This needs to be a client component because it interacts with the X embed script.
+</Step>
 
-<include lang="tsx" meta='title="XEmbedClient.tsx"'>
-  ../../../components/XEmbedClient.tsx
-</include>
+<Step>
 
-The client component wrapper:
+### Add mdx-components
 
-- Uses the "use client" directive to ensure it runs on the client side
-- Wraps the XEmbed component from react-social-media-embed
-- Adds a flex container with center alignment for better display
-- Maintains the same API as the original XEmbed component
-
-## Step 3: Add the Component to MDX Components
-
-Update your `mdx-components.tsx` file to include the XEmbedClient component:
-
-```jsx
+```tsx title="mdx-components.tsx"
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import type { MDXComponents } from "mdx/types";
-import { XEmbedClient } from "./components/XEmbedClient";
 
 export function getMDXComponents(components?: MDXComponents): MDXComponents {
   return {
     ...defaultMdxComponents,
-    XEmbed: XEmbedClient,
     ...components,
   };
 }
-
 ```
 
-## Step 4: Use the XEmbed Component in Your MDX Files
+</Step>
 
-Now you can use the XEmbed component in your MDX files:
+<Step>
 
-```jsx
-<XEmbed url="https://x.com/rjv_im/status/1912033485285376492" width={325} />
+### Configure next.config.mjs
+
+_Yes, it's .mjs_
+
+Remember we are building a static blog, so we need to set "export"
+
+```ts title="next.config.mjs"
+import { createMDX } from "fumadocs-mdx/next";
+
+const withMDX = createMDX();
+
+/** @type {import('next').NextConfig} */
+const config = {
+  reactStrictMode: true,
+  output: "export",
+  images: { unoptimized: true },
+};
+
+export default withMDX(config);
 ```
 
-## Example
+</Step>
 
-Here's an example of an embedded X post:
+<Step>
 
-<div className="flex justify-center my-6">
-  <XEmbed url="https://x.com/rjv_im/status/1912033485285376492" width={325} />
-</div>
+### Configure RootProvider
 
-## Documentation
+```tsx title="app/layout.tsx"
+import { RootProvider } from "fumadocs-ui/provider";
 
-You can also embed Facebook, LinkedIn etc., too. Refer to [react-social-media-embed](https://www.npmjs.com/package/react-social-media-embed) for more details.
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <RootProvider
+      search={{
+        options: {
+          type: "static",
+        },
+      }}
+    >
+      {children}
+    </RootProvider>
+  );
+}
+```
+
+</Step>
+
+<Step>
+
+### Add source.config.ts
+
+Here we declare `dir: "content/blog",` which is the directory where our markdown files are located.
+
+<include lang="ts" meta='title="source.config.ts"'>
+  ../../../source.config.ts
+</include>
+
+</Step>
+
+<Step>
+
+### Add source.ts
+
+The meat of the solution. Here we are using `loader` to create a source for our blog.
+
+<include lang="ts" meta='title="source.ts"'>
+  ../../../lib/source.ts
+</include>  
+</Step>
+
+</Steps>

@@ -40,23 +40,3 @@ export const sortedByDatePageTree: PageTree.Root = {
 
 export const getSortedByDatePosts = () =>
   [...posts].sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
-
-export const getTags = () => {
-  const tagSet = new Set<string>();
-
-  for (const post of posts) {
-    if (post.data.tags) {
-      for (const tag of post.data.tags) {
-        tagSet.add(tag);
-      }
-    }
-  }
-
-  return Array.from(tagSet).sort();
-};
-
-export const getPostsByTag = (tag: string) => {
-  return [...posts]
-    .filter((post) => post.data.tags?.includes(tag))
-    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
-};
