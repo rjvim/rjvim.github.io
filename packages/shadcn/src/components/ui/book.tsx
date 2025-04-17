@@ -13,7 +13,7 @@ interface BookProps {
   width?: number;
 }
 
-export function Book(props: BookProps) {
+function Book(props: BookProps) {
   const {
     children,
     color = "#f50537",
