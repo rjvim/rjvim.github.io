@@ -17,7 +17,7 @@ export function SeriesList({ seriesSlug }: SeriesListProps) {
     <div className="container px-4 py-8 lg:py-12 lg:px-6">
       <GridBackground maxWidthClass="container" />
       <div className="relative">
-        <div className="flex flex-col md:flex-row gap-8 mb-8 items-start">
+        <div className="flex flex-col md:flex-row gap-8 mb-8 md:items-center items-start">
           <Book 
             color="#3b82f6" 
             depth={6}
@@ -29,11 +29,11 @@ export function SeriesList({ seriesSlug }: SeriesListProps) {
               <div className="text-xs">{posts.length} Parts</div>
             </div>
           </Book>
-          <div>
-            <h1 className="text-3xl font-bold mb-2 text-gray-900 dark:text-white">
+          <div className="flex flex-col justify-center">
+            <h1 className="text-4xl font-bold mb-3 text-gray-900 dark:text-white leading-tight">
               {seriesInfo.label}
             </h1>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-lg text-gray-600 dark:text-gray-400">
               {seriesInfo.description}
             </p>
           </div>
