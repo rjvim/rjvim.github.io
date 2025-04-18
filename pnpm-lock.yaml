@@ -25,7 +25,7 @@ importers:
         version: 15.3.0(next@15.3.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
       '@repo/shadverse':
         specifier: workspace:*
-        version: link:../../packages/shadcn
+        version: link:../../packages/shadverse
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -181,7 +181,7 @@ importers:
         specifier: ^8.29.0
         version: 8.29.0(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.2)
 
-  packages/shadcn:
+  packages/shadverse:
     dependencies:
       '@dnd-kit/core':
         specifier: ^6.3.1
@@ -384,7 +384,7 @@ importers:
         version: link:../eslint-config
       '@repo/shadverse':
         specifier: workspace:*
-        version: link:../shadcn
+        version: link:../shadverse
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -1709,6 +1709,7 @@ packages:
 
   '@turbo/workspaces@2.5.0':
     resolution: {integrity: sha512-u/IOgWVJ6orFG0MDJ8UeIEOWjhfEBsMskhxC8pg2nRlu1qbEAGIerjhZFk+bEqSTHW1o+fxYr8ix0KEtX4M9Vg==}
+    hasBin: true
 
   '@types/d3-array@3.2.1':
     resolution: {integrity: sha512-Y2Jn2idRrLzUfAKV2LyRImR+y4oa2AntrgID95SHJxuMUrkNXmanDSed71sRNZysveJVt1hLLemQZIady0FpEg==}
@@ -6245,7 +6246,7 @@ snapshots:
 
   '@types/through@0.0.33':
     dependencies:
-      '@types/node': 20.17.30
+      '@types/node': 22.14.0
 
   '@types/tinycolor2@1.4.6': {}
 
