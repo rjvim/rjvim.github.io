@@ -1,4 +1,4 @@
-import { cn } from "@repo/shadcn/lib/utils";
+import { cn } from "@repo/shadverse/lib/utils";
 import type { GradientLayer, PatternLayer, PositionedElement } from "./types";
 
 /**

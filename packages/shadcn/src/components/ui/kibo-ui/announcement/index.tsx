@@ -1,5 +1,5 @@
-import { Badge, badgeVariants } from "@repo/shadcn/components/badge";
-import { cn } from "@repo/shadcn/lib/utils";
+import { Badge, badgeVariants } from "@repo/shadverse/components/badge";
+import { cn } from "@repo/shadverse/lib/utils";
 import type { HTMLAttributes } from "react";
 import { VariantProps } from "class-variance-authority";
 

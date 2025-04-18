@@ -3,7 +3,7 @@
 import { PlusIcon } from "lucide-react";
 import type { HTMLAttributes } from "react";
 import { GridBackground } from "./grid-background";
-import { cn } from "@repo/shadcn/lib/utils";
+import { cn } from "@repo/shadverse/lib/utils";
 
 type SectionProps = {
   sectionClassName?: string;

@@ -1,14 +1,17 @@
 import React from "react";
 import Link from "next/link";
 import { getSeriesInfo } from "@/lib/series";
-import { cn } from "@repo/shadcn/lib/utils";
+import { cn } from "@repo/shadverse/lib/utils";
 
 interface SeriesComponentProps {
   seriesName: string;
   currentPart: number;
 }
 
-export function SeriesPopoverContent({ seriesName, currentPart }: SeriesComponentProps) {
+export function SeriesPopoverContent({
+  seriesName,
+  currentPart,
+}: SeriesComponentProps) {
   const seriesInfo = getSeriesInfo(seriesName);
   if (!seriesInfo) return null;
 

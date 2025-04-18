@@ -1,7 +1,7 @@
 "use client";
 
 import Link, { type LinkProps } from "fumadocs-core/link";
-import { cn } from "@repo/shadcn/lib/utils";
+import { cn } from "@repo/shadverse/lib/utils";
 import {
   NavigationMenu,
   NavigationMenuLink,

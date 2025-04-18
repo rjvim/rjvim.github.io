@@ -4,14 +4,14 @@ import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { MoveRight } from "lucide-react";
 import Link from "next/link";
-import { Button } from "@repo/shadcn/components/button";
+import { Button } from "@repo/shadverse/components/button";
 import { Icons } from "./icons";
 import { SocialIcons } from "@repo/ui/components/social-icons";
 import {
   Announcement,
   AnnouncementTag,
   AnnouncementTitle,
-} from "@repo/shadcn/announcement";
+} from "@repo/shadverse/announcement";
 import { ArrowUpRightIcon } from "lucide-react";
 
 export default function Hero() {

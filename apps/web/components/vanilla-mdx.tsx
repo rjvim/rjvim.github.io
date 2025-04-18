@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import type { TableOfContents } from "fumadocs-core/server";
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import { DocsPage } from "fumadocs-ui/page";
-import { cn } from "@repo/shadcn/lib/utils";
+import { cn } from "@repo/shadverse/lib/utils";
 import { GridBackground } from "@repo/ui/components/grid-background";
 import { Section } from "@repo/ui/components/section";
 

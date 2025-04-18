@@ -1,7 +1,7 @@
 "use client";
 
-import { Card } from "@repo/shadcn/components/card";
-import { cn } from "@repo/shadcn/lib/utils";
+import { Card } from "@repo/shadverse/components/card";
+import { cn } from "@repo/shadverse/lib/utils";
 import {
   DndContext,
   rectIntersection,

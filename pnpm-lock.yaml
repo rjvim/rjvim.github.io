@@ -23,7 +23,7 @@ importers:
       '@next/third-parties':
         specifier: ^15.3.0
         version: 15.3.0(next@15.3.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
-      '@repo/shadcn':
+      '@repo/shadverse':
         specifier: workspace:*
         version: link:../../packages/shadcn
       '@repo/ui':
@@ -382,7 +382,7 @@ importers:
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
-      '@repo/shadcn':
+      '@repo/shadverse':
         specifier: workspace:*
         version: link:../shadcn
       '@repo/typescript-config':

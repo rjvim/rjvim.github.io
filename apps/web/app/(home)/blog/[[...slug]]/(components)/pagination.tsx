@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Button } from "@repo/shadcn/components/button";
+import { Button } from "@repo/shadverse/components/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export type PaginationProps = {

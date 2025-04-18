@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { BlogPost } from "@/lib/source";
-import { Card } from "@repo/shadcn/components/card";
+import { Card } from "@repo/shadverse/components/card";
 import { ArrowRight } from "lucide-react";
 import { GridBackground } from "@repo/ui/components/grid-background";
 import { Pagination } from "./pagination";

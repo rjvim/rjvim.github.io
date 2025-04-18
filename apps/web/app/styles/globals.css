@@ -9,7 +9,7 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@import "@repo/shadcn/globals.css";
+@import "@repo/shadverse/globals.css";
 @import "@repo/ui/globals.css";
 
 @source '../../node_modules/fumadocs-ui/dist/**/*.js';

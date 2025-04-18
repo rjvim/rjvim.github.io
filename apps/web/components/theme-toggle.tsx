@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@repo/shadcn/lib/utils";
+import { cn } from "@repo/shadverse/lib/utils";
 import { cva } from "class-variance-authority";
 import { Airplay, Moon, Sun } from "lucide-react";
 import { motion } from "motion/react";

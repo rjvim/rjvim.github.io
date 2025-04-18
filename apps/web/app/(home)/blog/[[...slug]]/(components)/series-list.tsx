@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { GridBackground } from "@repo/ui/components/grid-background";
 import { getSeriesBySlug, getPostsBySeries } from "@/lib/series";
-import { Book } from "@repo/shadcn/components/ui/book";
+import { Book } from "@repo/shadverse/components/ui/book";
 import { BookOpen } from "lucide-react";
 
 interface SeriesListProps {
@@ -12,17 +12,21 @@ interface SeriesListProps {
 export function SeriesList({ seriesSlug }: SeriesListProps) {
   const seriesInfo = getSeriesBySlug(seriesSlug);
   const posts = getPostsBySeries(seriesSlug);
-  
+
   return (
     <div className="container px-4 py-8 lg:py-12 lg:px-6">
       <GridBackground maxWidthClass="container" />
       <div className="relative">
         <div className="flex flex-col md:flex-row gap-8 mb-8 md:items-center items-start">
-          <Book 
-            color="#3b82f6" 
+          <Book
+            color="#3b82f6"
             depth={6}
             width={150}
-            illustration={<div className="flex items-center justify-center h-full w-full p-4"><BookOpen size={32} className="text-white" /></div>}
+            illustration={
+              <div className="flex items-center justify-center h-full w-full p-4">
+                <BookOpen size={32} className="text-white" />
+              </div>
+            }
           >
             <div className="p-3 mb-2 grid gap-2">
               <h3 className="font-semibold text-sm">{seriesInfo.label}</h3>

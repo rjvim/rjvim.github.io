@@ -3,9 +3,9 @@
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import * as React from "react";
 
-import { Button } from "@repo/shadcn/components/button";
-import { Input } from "@repo/shadcn/components/input";
-import { cn } from "@repo/shadcn/lib/utils";
+import { Button } from "@repo/shadverse/components/button";
+import { Input } from "@repo/shadverse/components/input";
+import { cn } from "@repo/shadverse/lib/utils";
 
 const PasswordInput = ({
   ref,

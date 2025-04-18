@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@next/third-parties": "^15.3.0",
-    "@repo/shadcn": "workspace:*",
+    "@repo/shadverse": "workspace:*",
     "@repo/ui": "workspace:*",
     "@shikijs/transformers": "^3.2.2",
     "@tailwindcss/postcss": "^4.1.4",

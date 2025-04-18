@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@repo/shadcn/lib/utils";
+import { cn } from "@repo/shadverse/lib/utils";
 import { FC } from "react";
 
 interface GridBackgroundProps {

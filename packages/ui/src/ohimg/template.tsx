@@ -4,7 +4,7 @@ import {
   type PatternLayer,
 } from "./types";
 import { getGradientStyle, getPatternStyle } from "./helpers";
-import { cn } from "@repo/shadcn/lib/utils";
+import { cn } from "@repo/shadverse/lib/utils";
 
 export const ohimgConfig: OhImgBaseTemplateProps = {
   content: {
