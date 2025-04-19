@@ -1,0 +1,30 @@
+{
+  "name": "@repo/fumadocs-blog",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    "./blog": "./src/index.ts",
+    "./globals.css": "./src/styles/globals.css"
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "generate:component": "turbo gen react-component",
+    "check-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/shadverse": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@turbo/gen": "^2.5.0",
+    "@types/node": "^22.14.0",
+    "@types/react": "19.1.2",
+    "@types/react-dom": "19.1.2",
+    "eslint": "^9.24.0",
+    "typescript": "5.8.2"
+  },
+  "dependencies": {
+    "lucide-react": "^0.488.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  }
+}

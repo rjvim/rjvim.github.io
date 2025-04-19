@@ -24,7 +24,7 @@ import {
   getSeriesSlug,
   getCategorySlug,
   getPageNumber,
-} from "./(components)/page-type";
+} from "@repo/fumadocs-blog/blog";
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
