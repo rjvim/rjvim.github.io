@@ -15,6 +15,7 @@ export type BlogPost = {
 
 export interface PostCardProps {
   post: NonNullable<BlogPost>;
+  components?: BlogComponents;
 }
 
 // Define BlogComponents as an interface that extends Record<string, any>

@@ -1,6 +1,5 @@
 import { Pagination } from "./pagination";
 import { DocsTitle, DocsDescription } from "fumadocs-ui/page";
-import { PostCard } from "./post-card";
 import { BlogComponents, type BlogPost } from "./types";
 import { slot } from "./shared";
 
@@ -53,9 +52,14 @@ export function PostList({
               // Pass the actual post data to the PostCard component
               // return <PostCard key={post.url} post={post} />;
               if (components?.PostCard) {
-                return <components.PostCard key={post.url} post={post} components={components} />;
+                return (
+                  <components.PostCard
+                    key={post.url}
+                    post={post}
+                    components={components}
+                  />
+                );
               }
-              return <PostCard key={post.url} post={post} components={components} />;
             })}
         </div>
 
