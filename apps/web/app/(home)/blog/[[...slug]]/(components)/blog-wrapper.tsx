@@ -22,15 +22,26 @@ import { getBlogComponents } from "./types";
 interface BlogWrapperProps {
   params: { slug?: string[] };
   blogSource: ReturnType<typeof loader>;
+  getSortedByDatePosts: any;
 }
 
-export async function BlogWrapper({ params, blogSource }: BlogWrapperProps) {
+export async function BlogWrapper({
+  params,
+  blogSource,
+  getSortedByDatePosts,
+}: BlogWrapperProps) {
   // Get blog components
   const components = getBlogComponents();
 
   // Handle blog root page
   if (isBlogRootPage(params)) {
-    return <BlogList page={1} components={components} />;
+    return (
+      <BlogList
+        page={1}
+        components={components}
+        getSortedByDatePosts={getSortedByDatePosts}
+      />
+    );
   }
 
   // Handle series page
@@ -59,7 +70,11 @@ export async function BlogWrapper({ params, blogSource }: BlogWrapperProps) {
     }
 
     return (
-      <CategoryBlogList category={category} page={getPageNumber(params)} components={components} />
+      <CategoryBlogList
+        category={category}
+        page={getPageNumber(params)}
+        components={components}
+      />
     );
   }
 

@@ -1,9 +1,12 @@
-import { getSortedByDatePosts } from "@/lib/source";
 import { getCategoryBySlug, getPostsByCategory } from "@/lib/categories";
 import { PostList } from "./post-list";
 import { BlogComponents } from "./types";
 
-export function RecentPosts() {
+export function RecentPosts({
+  getSortedByDatePosts,
+}: {
+  getSortedByDatePosts: any;
+}) {
   const recentPostsPageSize = 3;
   const allPosts = getSortedByDatePosts();
   const posts = allPosts.slice(0, recentPostsPageSize);
@@ -25,10 +28,12 @@ export function BlogList({
   page = 1,
   disablePagination = false,
   components,
+  getSortedByDatePosts,
 }: {
   page?: number;
   disablePagination?: boolean;
   components?: any;
+  getSortedByDatePosts?: any;
 }) {
   const pageSize = 5;
   const allPosts = getSortedByDatePosts();
