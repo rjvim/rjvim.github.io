@@ -15,6 +15,7 @@ import {
   getSeriesSlug,
   getCategorySlug,
 } from "@repo/fumadocs-blog/blog";
+import { createBlogMetadata, blogConstants } from "@/blog-components";
 
 export async function generateBlogMetadata(props: {
   params: Promise<{ slug?: string[] }>;
@@ -23,14 +24,14 @@ export async function generateBlogMetadata(props: {
 
   // Default for root blog page or when slug is undefined
   if (isBlogRootPage(params)) {
-    return createMetadata({
-      title: "Blog",
-      description: "Articles and thoughts",
+    return createBlogMetadata({
+      title: blogConstants.blogTitle,
+      description: blogConstants.blogDescription,
       openGraph: {
-        url: "/blog",
+        url: blogConstants.urls.blogBase,
       },
       alternates: {
-        canonical: "/blog",
+        canonical: blogConstants.urls.blogBase,
       },
     });
   }
@@ -40,7 +41,7 @@ export async function generateBlogMetadata(props: {
     const page = blogSource.getPage(params.slug);
     if (!page) notFound();
 
-    const metadata = createMetadata(
+    const metadata = createBlogMetadata(
       blogsMetaImage.withImage(page.slugs, {
         title: page.data.title,
         description: page.data.description,
@@ -61,12 +62,13 @@ export async function generateBlogMetadata(props: {
     const seriesSlug = getSeriesSlug(params)!;
     const series = getSeriesBySlug(seriesSlug);
 
-    const canonicalUrl = `/blog/series/${seriesSlug}`;
+    const canonicalUrl = blogConstants.urls.getSeriesUrl(seriesSlug);
 
-    return createMetadata({
-      title: `${series.label} - Blog Series`,
+    return createBlogMetadata({
+      title: `${series.label} - ${blogConstants.seriesSuffix}`,
       description:
-        series.description || `Articles in the ${series.label} series`,
+        series.description ||
+        blogConstants.seriesDefaultDescription(series.label),
       openGraph: {
         url: canonicalUrl,
       },
@@ -80,14 +82,14 @@ export async function generateBlogMetadata(props: {
   if (isCategoryPage(params)) {
     const category = getCategorySlug(params);
     if (!category) {
-      return createMetadata({
-        title: "Blog",
-        description: "Articles and thoughts",
+      return createBlogMetadata({
+        title: blogConstants.blogTitle,
+        description: blogConstants.blogDescription,
         openGraph: {
-          url: "/blog",
+          url: blogConstants.urls.blogBase,
         },
         alternates: {
-          canonical: "/blog",
+          canonical: blogConstants.urls.blogBase,
         },
       });
     }
@@ -95,26 +97,26 @@ export async function generateBlogMetadata(props: {
     const canonicalUrl = `/blog/${category}`;
     const categoryInfo = getCategoryBySlug(category);
 
-    const metadata = createMetadata({
-      title: `${categoryInfo.label} - Blog`,
+    const metadata = createBlogMetadata({
+      title: `${categoryInfo.label} - ${blogConstants.categorySuffix}`,
       description:
         categoryInfo.description ||
-        `Articles in the ${categoryInfo.label} category`,
+        blogConstants.categoryDefaultDescription(categoryInfo.label),
       openGraph: {
         url: canonicalUrl,
         images: {
-          alt: "Banner",
-          url: `/blog-og/${category}/image.png`,
-          width: 1200,
-          height: 630,
+          alt: blogConstants.images.altText,
+          url: blogConstants.urls.getBlogOgImageUrl(category),
+          width: blogConstants.images.ogImageDimensions.width,
+          height: blogConstants.images.ogImageDimensions.height,
         },
       },
       twitter: {
         images: {
-          alt: "Banner",
-          url: `/blog-og/${category}/image.png`,
-          width: 1200,
-          height: 630,
+          alt: blogConstants.images.altText,
+          url: blogConstants.urls.getBlogOgImageUrl(category),
+          width: blogConstants.images.ogImageDimensions.width,
+          height: blogConstants.images.ogImageDimensions.height,
         },
       },
       alternates: {
@@ -128,11 +130,11 @@ export async function generateBlogMetadata(props: {
   // Handle paginated root blog page
   if (isPaginatedBlogPage(params) && params.slug) {
     const page = Number(params.slug[1]);
-    const canonicalUrl = `/blog`; // Use main blog URL as canonical for all paginated pages
+    const canonicalUrl = blogConstants.urls.blogBase; // Use main blog URL as canonical for all paginated pages
 
-    return createMetadata({
-      title: `Blog - Page ${page}`,
-      description: `Articles and thoughts - Page ${page}`,
+    return createBlogMetadata({
+      title: blogConstants.paginationTitle(page),
+      description: blogConstants.paginationDescription(page),
       openGraph: {
         url: canonicalUrl,
       },
@@ -146,24 +148,24 @@ export async function generateBlogMetadata(props: {
   if (isPaginatedCategoryPage(params) && params.slug) {
     const category = params.slug[0];
     if (!category) {
-      return createMetadata({
-        title: "Blog",
-        description: "Articles and thoughts",
+      return createBlogMetadata({
+        title: blogConstants.blogTitle,
+        description: blogConstants.blogDescription,
         openGraph: {
-          url: "/blog",
+          url: blogConstants.urls.blogBase,
         },
         alternates: {
-          canonical: "/blog",
+          canonical: blogConstants.urls.blogBase,
         },
       });
     }
 
     const page = Number(params.slug[2]);
-    const canonicalUrl = `/blog/${category}`; // Use main category URL as canonical
+    const canonicalUrl = blogConstants.urls.getCategoryUrl(category); // Use main category URL as canonical
 
-    return createMetadata({
-      title: `${category.charAt(0).toUpperCase() + category.slice(1)} - Page ${page}`,
-      description: `Articles in the ${category} category - Page ${page}`,
+    return createBlogMetadata({
+      title: blogConstants.categoryPaginationTitle(category, page),
+      description: blogConstants.categoryPaginationDescription(category, page),
       openGraph: {
         url: canonicalUrl,
       },
@@ -174,14 +176,14 @@ export async function generateBlogMetadata(props: {
   }
 
   // Default fallback
-  return createMetadata({
-    title: "Blog",
-    description: "Articles and thoughts",
+  return createBlogMetadata({
+    title: blogConstants.blogTitle,
+    description: blogConstants.blogDescription,
     openGraph: {
-      url: "/blog",
+      url: blogConstants.urls.blogBase,
     },
     alternates: {
-      canonical: "/blog",
+      canonical: blogConstants.urls.blogBase,
     },
   });
 }
