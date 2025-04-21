@@ -1,9 +1,6 @@
-import { blogSource } from "@/lib/source";
 import { notFound } from "next/navigation";
 import { blogsMetaImage } from "@/lib/metadata-image";
 import type { Metadata } from "next";
-import { getCategoryBySlug } from "@/lib/categories";
-import { getSeriesBySlug } from "@/lib/series";
 import {
   isBlogRootPage,
   isSeriesPage,
@@ -19,8 +16,18 @@ export async function generateBlogMetadata(props: {
   params: { slug?: string[] };
   createBlogMetadata: (override: Metadata) => Metadata;
   blogConstants: any;
+  blogSource: any;
+  getCategoryBySlug: (slug: string) => any;
+  getSeriesBySlug: (slug: string) => any;
 }): Promise<Metadata> {
-  const { params, createBlogMetadata, blogConstants } = props;
+  const {
+    params,
+    createBlogMetadata,
+    blogConstants,
+    blogSource,
+    getCategoryBySlug,
+    getSeriesBySlug,
+  } = props;
 
   // Default for root blog page or when slug is undefined
   if (isBlogRootPage(params)) {

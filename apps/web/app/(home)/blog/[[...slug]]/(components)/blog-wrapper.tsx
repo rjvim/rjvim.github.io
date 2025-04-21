@@ -18,24 +18,27 @@ import {
   getPageNumber,
 } from "@repo/fumadocs-blog/blog";
 import { getBlogComponents } from "./types";
-import { getSortedByDatePosts } from "./post-utils";
+
 
 interface BlogWrapperProps {
   params: { slug?: string[] };
   blogSource: ReturnType<typeof loader>;
-  getBlogPosts: any;
+  posts: any[];
+  getCategoryBySlug: (slug: string) => any;
+  getSeriesInfo: (seriesName: string, posts?: any[] | (() => any[])) => any;
+  getMDXComponents: () => any;
 }
 
 export async function BlogWrapper({
   params,
   blogSource,
-  getBlogPosts,
+  posts,
+  getCategoryBySlug,
+  getSeriesInfo,
+  getMDXComponents,
 }: BlogWrapperProps) {
   // Get blog components
   const components = getBlogComponents();
-  
-  // Get sorted posts once
-  const sortedPosts = getSortedByDatePosts(getBlogPosts);
 
   // Handle blog root page
   if (isBlogRootPage(params)) {
@@ -43,7 +46,7 @@ export async function BlogWrapper({
       <BlogList
         page={1}
         components={components}
-        posts={sortedPosts}
+        posts={posts}
       />
     );
   }
@@ -55,7 +58,7 @@ export async function BlogWrapper({
       <SeriesList
         seriesSlug={seriesSlug}
         components={components}
-        posts={sortedPosts}
+        posts={posts}
       />
     );
   }
@@ -67,7 +70,8 @@ export async function BlogWrapper({
       <CategoryBlogList
         category={category}
         components={components}
-        posts={sortedPosts}
+        posts={posts}
+        getCategoryBySlug={getCategoryBySlug}
       />
     );
   }
@@ -78,7 +82,7 @@ export async function BlogWrapper({
       <BlogList
         page={getPageNumber(params)}
         components={components}
-        posts={sortedPosts}
+        posts={posts}
       />
     );
   }
@@ -96,7 +100,8 @@ export async function BlogWrapper({
         category={category}
         page={getPageNumber(params)}
         components={components}
-        posts={sortedPosts}
+        posts={posts}
+        getCategoryBySlug={getCategoryBySlug}
       />
     );
   }
@@ -119,6 +124,9 @@ export async function BlogWrapper({
         lastUpdate={lastUpdate}
         tags={tags}
         components={components}
+        getCategoryBySlug={getCategoryBySlug}
+        getSeriesInfo={getSeriesInfo}
+        getMDXComponents={getMDXComponents}
       />
     );
   }

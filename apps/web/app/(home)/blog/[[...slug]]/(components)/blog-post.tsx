@@ -6,14 +6,13 @@ import {
   DocsTitle,
 } from "fumadocs-ui/page";
 import { BlogComponents } from "./types";
-import { getMDXComponents } from "@/mdx-components";
+
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import { Calendar, BookOpen } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@repo/shadverse/lib/utils";
 import { GridBackground } from "@repo/ui/components/grid-background";
-import { getCategoryBySlug } from "@/lib/categories";
-import { getSeriesInfo } from "@/lib/series";
+
 import {
   Popover,
   PopoverContent,
@@ -29,9 +28,12 @@ interface BlogPostProps {
   lastUpdate?: Date;
   tags: string[];
   components?: BlogComponents;
+  getCategoryBySlug: (slug: string) => any;
+  getSeriesInfo: (seriesName: string, posts?: any[] | (() => any[])) => any;
+  getMDXComponents: () => any;
 }
 
-export function BlogPost({ page, category, lastUpdate, tags }: BlogPostProps) {
+export function BlogPost({ page, category, lastUpdate, tags, getCategoryBySlug, getSeriesInfo, getMDXComponents }: BlogPostProps) {
   const MDX = page.data.body;
 
   return (
@@ -76,7 +78,7 @@ export function BlogPost({ page, category, lastUpdate, tags }: BlogPostProps) {
                   <BookOpen className="size-5" aria-hidden="true" />
                   <Badge className="absolute -top-2 left-full min-w-5 -translate-x-1/2 px-1 text-xs">
                     {page.data.seriesPart}/
-                    {getSeriesInfo(page.data.series)?.totalParts || 0}
+                    {getSeriesInfo(page.data.series, [])?.totalParts || 0}
                   </Badge>
                 </Button>
               </PopoverTrigger>
@@ -84,6 +86,7 @@ export function BlogPost({ page, category, lastUpdate, tags }: BlogPostProps) {
                 <SeriesPopoverContent
                   seriesName={page.data.series}
                   currentPart={page.data.seriesPart}
+                  getSeriesInfo={getSeriesInfo}
                 />
               </PopoverContent>
             </Popover>

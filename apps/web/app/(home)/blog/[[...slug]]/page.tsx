@@ -2,17 +2,26 @@ import { blogSource, getBlogPosts } from "@/lib/source";
 import { BlogWrapper } from "@/app/(home)/blog/[[...slug]]/(components)/blog-wrapper";
 import { generateBlogMetadata } from "@/app/(home)/blog/[[...slug]]/(components)/blog-metadata";
 import { createBlogMetadata, blogConstants } from "@/blog-components";
+import { getCategoryBySlug } from "@/lib/categories";
+import { getSeriesBySlug } from "@/lib/series";
+import { getSeriesInfo } from "@/app/(home)/blog/[[...slug]]/(components)/series-utils";
+import { getMDXComponents } from "@/mdx-components";
 import type { Metadata } from "next";
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
 }) {
   const params = await props.params;
+  const posts = getBlogPosts();
+
   return (
     <BlogWrapper
       params={params}
       blogSource={blogSource}
-      getBlogPosts={getBlogPosts}
+      posts={posts}
+      getCategoryBySlug={getCategoryBySlug}
+      getSeriesInfo={getSeriesInfo}
+      getMDXComponents={getMDXComponents}
     />
   );
 }
@@ -30,5 +39,8 @@ export async function generateMetadata(props: {
     params,
     createBlogMetadata,
     blogConstants,
+    blogSource,
+    getCategoryBySlug,
+    getSeriesBySlug,
   });
 }

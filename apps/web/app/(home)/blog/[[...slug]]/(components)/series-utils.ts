@@ -31,9 +31,9 @@ export const getPostsBySeries = (
 
 export const getSeriesInfo = (
   seriesName: string,
-  postsOrGetter: any[] | (() => any[])
+  postsOrGetter?: any[] | (() => any[])
 ) => {
-  const posts = getPostsBySeries(seriesName, postsOrGetter);
+  const posts = postsOrGetter ? getPostsBySeries(seriesName, postsOrGetter) : [];
   if (posts.length === 0) return null;
 
   // Use the first post's title to extract series name if possible
