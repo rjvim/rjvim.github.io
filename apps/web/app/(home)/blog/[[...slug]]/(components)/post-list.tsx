@@ -1,10 +1,8 @@
-"use client";
-
 import { BlogPost } from "@/lib/source";
 import { GridBackground } from "@repo/ui/components/grid-background";
 import { Pagination } from "./pagination";
 import { DocsTitle, DocsDescription } from "fumadocs-ui/page";
-import { useBlog, PostCard } from "./blog-provider";
+import { PostCard } from "@/app/(home)/blog/[[...slug]]/(components)/post-card";
 
 export type PostListProps = {
   posts: BlogPost[];

@@ -25,8 +25,6 @@ import {
   getCategorySlug,
   getPageNumber,
 } from "@repo/fumadocs-blog/blog";
-import BlogProvider from "./(components)/blog-provider";
-import { CustomPostCard } from "./(components)/custom-post-card";
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
@@ -35,14 +33,7 @@ export default async function Page(props: {
 
   // Handle blog root page
   if (isBlogRootPage(params)) {
-    return (
-      <BlogProvider
-        pageSize={5}
-        useCustomPostCard={true}
-      >
-        <BlogList page={1} />
-      </BlogProvider>
-    );
+    return <BlogList page={1} />;
   }
 
   // Handle series page
@@ -54,20 +45,12 @@ export default async function Page(props: {
   // Handle category page
   if (isCategoryPage(params)) {
     const category = getCategorySlug(params);
-    return (
-      <BlogProvider useCustomPostCard={true}>
-        <CategoryBlogList category={category} />
-      </BlogProvider>
-    );
+    return <CategoryBlogList category={category} />;
   }
 
   // Handle paginated blog page
   if (isPaginatedBlogPage(params)) {
-    return (
-      <BlogProvider useCustomPostCard={true}>
-        <BlogList page={getPageNumber(params)} />
-      </BlogProvider>
-    );
+    return <BlogList page={getPageNumber(params)} />;
   }
 
   // Handle paginated category page
@@ -79,9 +62,7 @@ export default async function Page(props: {
     }
 
     return (
-      <BlogProvider useCustomPostCard={true}>
-        <CategoryBlogList category={category} page={getPageNumber(params)} />
-      </BlogProvider>
+      <CategoryBlogList category={category} page={getPageNumber(params)} />
     );
   }
 

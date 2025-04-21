@@ -1,12 +1,9 @@
-"use client";
-
 import { getSortedByDatePosts } from "@/lib/source";
 import { getCategoryBySlug, getPostsByCategory } from "@/lib/categories";
 import { PostList } from "./post-list";
-import { useBlog } from "./blog-provider";
 
 export function RecentPosts() {
-  const { recentPostsPageSize } = useBlog();
+  const recentPostsPageSize = 3;
   const allPosts = getSortedByDatePosts();
   const posts = allPosts.slice(0, recentPostsPageSize);
   const totalPages = 1;
@@ -30,7 +27,7 @@ export function BlogList({
   page?: number;
   disablePagination?: boolean;
 }) {
-  const { pageSize } = useBlog();
+  const pageSize = 5;
   const allPosts = getSortedByDatePosts();
   const posts = allPosts.slice((page - 1) * pageSize, page * pageSize);
   const totalPages = Math.ceil(allPosts.length / pageSize);
@@ -54,7 +51,7 @@ export function CategoryBlogList({
   page?: number;
   disablePagination?: boolean;
 }) {
-  const { pageSize } = useBlog();
+  const pageSize = 5;
   const categoryInfo = getCategoryBySlug(category);
   const allPosts = getPostsByCategory(category);
   const posts = allPosts.slice((page - 1) * pageSize, page * pageSize);
