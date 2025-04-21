@@ -55,11 +55,14 @@ export default async function Page(props: {
 
   // Handle paginated category page
   if (isPaginatedCategoryPage(params)) {
+    const category = params.slug?.[0];
+
+    if (!category) {
+      return notFound();
+    }
+
     return (
-      <CategoryBlogList
-        category={params.slug![0]}
-        page={getPageNumber(params)}
-      />
+      <CategoryBlogList category={category} page={getPageNumber(params)} />
     );
   }
 
