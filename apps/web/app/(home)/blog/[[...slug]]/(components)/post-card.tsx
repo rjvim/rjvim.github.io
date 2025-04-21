@@ -1,18 +1,19 @@
 import Link from "next/link";
-import { Card } from "@repo/shadverse/components/card";
 import { ArrowRight } from "lucide-react";
-import type { BlogPost } from "./types";
+import type { BlogPost, BlogComponents } from "./types";
+import { cn } from "./utils";
 
 interface PostCardProps {
   post: NonNullable<BlogPost>;
+  components?: BlogComponents;
 }
 
-export function PostCard({ post }: PostCardProps) {
-  return (
-    <Card
-      key={post.url}
-      className="order-last border-0 bg-transparent shadow-none sm:order-first sm:col-span-12 lg:col-span-10 lg:col-start-2"
-    >
+export function PostCard({ post, components = {} }: PostCardProps) {
+  const CardComponent = components.Card || null;
+  const cardClassName = "order-last border-0 bg-transparent shadow-none sm:order-first sm:col-span-12 lg:col-span-10 lg:col-start-2";
+  
+  const cardContent = (
+
       <div className="grid gap-y-6 sm:grid-cols-10 sm:gap-x-5 sm:gap-y-0 md:items-center md:gap-x-8 lg:gap-x-12">
         <div className="sm:col-span-5">
           <div className="mb-4 md:mb-6">
@@ -59,6 +60,15 @@ export function PostCard({ post }: PostCardProps) {
           </Link>
         </div>
       </div>
-    </Card>
+  );
+
+  return CardComponent ? (
+    <CardComponent key={post.url} className={cardClassName}>
+      {cardContent}
+    </CardComponent>
+  ) : (
+    <div key={post.url} className={cardClassName}>
+      {cardContent}
+    </div>
   );
 }

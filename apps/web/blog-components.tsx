@@ -2,6 +2,7 @@ import { PostCard2 } from "./app/(home)/blog/[[...slug]]/(components)/post-card-
 import type { Metadata } from "next/types";
 import { GridBackground } from "@repo/ui/components/grid-background";
 import type { BlogComponents } from "./app/(home)/blog/[[...slug]]/(components)/types";
+import { cn } from "@repo/shadverse/lib/utils";
 import { Button } from "@repo/shadverse/components/button";
 import {
   Popover,
@@ -10,6 +11,7 @@ import {
 } from "@repo/shadverse/components/popover";
 import { Badge } from "@repo/shadverse/components/badge";
 import { Book } from "@repo/shadverse/components/ui/book";
+import { Card } from "@repo/shadverse/components/card";
 import { PostCard } from "./app/(home)/blog/[[...slug]]/(components)/post-card";
 
 // Blog text constants that can be customized
@@ -123,6 +125,8 @@ export function getBlogComponents(): BlogComponents {
     PopoverTrigger,
     Badge,
     Book,
+    Card,
+    cn,
   };
 }
 

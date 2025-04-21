@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import { GridBackground } from "@repo/ui/components/grid-background";
 import { getSeriesBySlug } from "@/lib/series";
 import { getPostsBySeries } from "./utils";
 // Book component comes from components context

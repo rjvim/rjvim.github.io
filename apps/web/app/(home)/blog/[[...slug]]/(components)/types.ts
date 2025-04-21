@@ -27,6 +27,8 @@ export interface BlogComponents extends Record<string, any> {
   PopoverTrigger?: React.ComponentType<any>;
   Badge?: React.ComponentType<any>;
   Book?: React.ComponentType<any>;
+  Card?: React.ComponentType<any>;
+  cn?: (...inputs: any[]) => string;
   backgroundPattern?: {
     enabled: boolean;
     component: React.ReactNode;
