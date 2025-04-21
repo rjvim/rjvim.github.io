@@ -30,11 +30,19 @@ interface BlogPostProps {
   tags: string[];
   components?: BlogComponents;
   getCategoryBySlug: (slug: string) => any;
-  getMDXComponents: () => any;
+  mdxComponents: any;
   posts?: any[];
 }
 
-export function BlogPost({ page, category, lastUpdate, tags, getCategoryBySlug, getMDXComponents, posts = [] }: BlogPostProps) {
+export function BlogPost({
+  page,
+  category,
+  lastUpdate,
+  tags,
+  getCategoryBySlug,
+  mdxComponents,
+  posts = [],
+}: BlogPostProps) {
   const MDX = page.data.body;
 
   return (
@@ -144,7 +152,7 @@ export function BlogPost({ page, category, lastUpdate, tags, getCategoryBySlug, 
             }}
           >
             <DocsBody>
-              <MDX components={getMDXComponents()} />
+              <MDX components={mdxComponents} />
             </DocsBody>
           </DocsPage>
         </div>

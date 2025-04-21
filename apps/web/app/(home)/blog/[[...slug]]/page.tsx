@@ -24,7 +24,7 @@ export default async function Page(props: {
       blogSource={blogSource}
       posts={posts}
       getCategoryBySlug={getCategoryBySlug}
-      getMDXComponents={getMDXComponents}
+      mdxComponents={getMDXComponents()}
       components={getBlogComponents()}
     />
   );

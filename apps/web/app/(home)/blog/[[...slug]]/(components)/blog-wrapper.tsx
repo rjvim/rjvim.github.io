@@ -25,7 +25,7 @@ interface BlogWrapperProps {
   posts: any[];
   components: BlogComponents;
   getCategoryBySlug: (slug: string) => any;
-  getMDXComponents: () => any;
+  mdxComponents: any;
 }
 
 export async function BlogWrapper({
@@ -34,7 +34,7 @@ export async function BlogWrapper({
   posts,
   components,
   getCategoryBySlug,
-  getMDXComponents,
+  mdxComponents,
 }: BlogWrapperProps) {
   // Handle blog root page
   if (isBlogRootPage(params)) {
@@ -115,7 +115,7 @@ export async function BlogWrapper({
         tags={tags}
         components={components}
         getCategoryBySlug={getCategoryBySlug}
-        getMDXComponents={getMDXComponents}
+        mdxComponents={mdxComponents}
       />
     );
   }
