@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { BlogPost } from "@/lib/source";
 import { Card } from "@repo/shadverse/components/card";
 import { ArrowRight, Calendar, User, Tag } from "lucide-react";
+import type { BlogPost } from "./types";
 
 interface PostCardProps {
   post: NonNullable<BlogPost>;

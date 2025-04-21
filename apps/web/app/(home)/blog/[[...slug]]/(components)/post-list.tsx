@@ -1,9 +1,8 @@
-import { BlogPost } from "@/lib/source";
 import { GridBackground } from "@repo/ui/components/grid-background";
 import { Pagination } from "./pagination";
 import { DocsTitle, DocsDescription } from "fumadocs-ui/page";
 import { PostCard } from "@/app/(home)/blog/[[...slug]]/(components)/post-card";
-import { BlogComponents } from "./types";
+import { BlogComponents, type BlogPost } from "./types";
 
 export type PostListProps = {
   posts: BlogPost[];

@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { BlogPost } from "@/lib/source";
 import { Card } from "@repo/shadverse/components/card";
 import { ArrowRight } from "lucide-react";
+import type { BlogPost } from "./types";
 
 interface PostCardProps {
   post: NonNullable<BlogPost>;
@@ -17,16 +17,11 @@ export function PostCard({ post }: PostCardProps) {
         <div className="sm:col-span-5">
           <div className="mb-4 md:mb-6">
             <div className="flex flex-wrap gap-3 text-xs uppercase tracking-wider text-muted-foreground md:gap-5 lg:gap-6">
-              {post.data.tags?.map((tag) => (
-                <span key={tag}>{tag}</span>
-              ))}
+              {post.data.tags?.map((tag) => <span key={tag}>{tag}</span>)}
             </div>
           </div>
           <h3 className="text-xl font-semibold md:text-2xl lg:text-3xl text-left">
-            <Link
-              href={post.url}
-              className="hover:underline cursor-pointer"
-            >
+            <Link href={post.url} className="hover:underline cursor-pointer">
               {post.data.title}
             </Link>
           </h3>
