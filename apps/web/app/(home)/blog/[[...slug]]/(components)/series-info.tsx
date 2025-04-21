@@ -1,21 +1,23 @@
 import React from "react";
 import Link from "next/link";
-import { getSeriesInfo } from "./series-utils";
+import { getSeriesInfo } from "./utils";
 import { cn } from "@repo/shadverse/lib/utils";
 
 interface SeriesComponentProps {
   seriesName: string;
   currentPart: number;
+  posts: any[];
 }
 
 export function SeriesPopoverContent({
   seriesName,
   currentPart,
+  posts,
 }: SeriesComponentProps) {
-  const seriesInfo = getSeriesInfo(seriesName);
+  const seriesInfo = getSeriesInfo(seriesName, posts);
   if (!seriesInfo) return null;
 
-  const { title, posts, totalParts } = seriesInfo;
+  const { title, posts: seriesPosts, totalParts } = seriesInfo;
 
   return (
     <div className="p-4">
@@ -29,7 +31,7 @@ export function SeriesPopoverContent({
         </Link>
       </div>
       <div className="space-y-1">
-        {posts.map((post, index) => (
+        {seriesPosts.map((post, index) => (
           <div
             key={post.url}
             className={cn(
@@ -60,11 +62,11 @@ export function SeriesPopoverContent({
   );
 }
 
-export function SeriesInfo({ seriesName, currentPart }: SeriesComponentProps) {
-  const seriesInfo = getSeriesInfo(seriesName);
+export function SeriesInfo({ seriesName, currentPart, posts }: SeriesComponentProps) {
+  const seriesInfo = getSeriesInfo(seriesName, posts);
   if (!seriesInfo) return null;
 
-  const { title, posts, totalParts } = seriesInfo;
+  const { title, posts: seriesPosts, totalParts } = seriesInfo;
 
   return (
     <div className="my-6 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
@@ -78,7 +80,7 @@ export function SeriesInfo({ seriesName, currentPart }: SeriesComponentProps) {
         </Link>
       </div>
       <div className="space-y-1">
-        {posts.map((post, index) => (
+        {seriesPosts.map((post, index) => (
           <div
             key={post.url}
             className={cn(

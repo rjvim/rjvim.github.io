@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { GridBackground } from "@repo/ui/components/grid-background";
 import { getSeriesBySlug } from "@/lib/series";
-import { getPostsBySeries } from "./series-utils";
+import { getPostsBySeries } from "./utils";
 import { Book } from "@repo/shadverse/components/ui/book";
 import { BookOpen } from "lucide-react";
 import { BlogComponents } from "./types";

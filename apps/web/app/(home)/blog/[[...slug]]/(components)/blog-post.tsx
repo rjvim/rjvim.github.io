@@ -21,7 +21,7 @@ import {
 import { Button } from "@repo/shadverse/components/button";
 import { Badge } from "@repo/shadverse/components/badge";
 import { SeriesPopoverContent } from "./series-info";
-import { getSeriesInfo } from "./series-utils";
+import { getSeriesInfo } from "./utils";
 
 interface BlogPostProps {
   page: any;
@@ -31,9 +31,10 @@ interface BlogPostProps {
   components?: BlogComponents;
   getCategoryBySlug: (slug: string) => any;
   getMDXComponents: () => any;
+  posts?: any[];
 }
 
-export function BlogPost({ page, category, lastUpdate, tags, getCategoryBySlug, getMDXComponents }: BlogPostProps) {
+export function BlogPost({ page, category, lastUpdate, tags, getCategoryBySlug, getMDXComponents, posts = [] }: BlogPostProps) {
   const MDX = page.data.body;
 
   return (
@@ -78,7 +79,7 @@ export function BlogPost({ page, category, lastUpdate, tags, getCategoryBySlug, 
                   <BookOpen className="size-5" aria-hidden="true" />
                   <Badge className="absolute -top-2 left-full min-w-5 -translate-x-1/2 px-1 text-xs">
                     {page.data.seriesPart}/
-                    {getSeriesInfo(page.data.series)?.totalParts || 0}
+                    {getSeriesInfo(page.data.series, posts)?.totalParts || 0}
                   </Badge>
                 </Button>
               </PopoverTrigger>
@@ -86,6 +87,7 @@ export function BlogPost({ page, category, lastUpdate, tags, getCategoryBySlug, 
                 <SeriesPopoverContent
                   seriesName={page.data.series}
                   currentPart={page.data.seriesPart}
+                  posts={posts}
                 />
               </PopoverContent>
             </Popover>
