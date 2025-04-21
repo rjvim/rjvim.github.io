@@ -1,20 +1,18 @@
 import React from "react";
 import Link from "next/link";
-
+import { getSeriesInfo } from "./series-utils";
 import { cn } from "@repo/shadverse/lib/utils";
 
 interface SeriesComponentProps {
   seriesName: string;
   currentPart: number;
-  getSeriesInfo: (seriesName: string, posts?: any[] | (() => any[])) => any;
 }
 
 export function SeriesPopoverContent({
   seriesName,
   currentPart,
-  getSeriesInfo,
 }: SeriesComponentProps) {
-  const seriesInfo = getSeriesInfo(seriesName, []);
+  const seriesInfo = getSeriesInfo(seriesName);
   if (!seriesInfo) return null;
 
   const { title, posts, totalParts } = seriesInfo;
@@ -62,8 +60,8 @@ export function SeriesPopoverContent({
   );
 }
 
-export function SeriesInfo({ seriesName, currentPart, getSeriesInfo }: SeriesComponentProps) {
-  const seriesInfo = getSeriesInfo(seriesName, []);
+export function SeriesInfo({ seriesName, currentPart }: SeriesComponentProps) {
+  const seriesInfo = getSeriesInfo(seriesName);
   if (!seriesInfo) return null;
 
   const { title, posts, totalParts } = seriesInfo;

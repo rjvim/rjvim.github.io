@@ -4,7 +4,6 @@ import { generateBlogMetadata } from "@/app/(home)/blog/[[...slug]]/(components)
 import { createBlogMetadata, blogConstants } from "@/blog-components";
 import { getCategoryBySlug } from "@/lib/categories";
 import { getSeriesBySlug } from "@/lib/series";
-import { getSeriesInfo } from "@/app/(home)/blog/[[...slug]]/(components)/series-utils";
 import { getMDXComponents } from "@/mdx-components";
 import type { Metadata } from "next";
 
@@ -20,7 +19,6 @@ export default async function Page(props: {
       blogSource={blogSource}
       posts={posts}
       getCategoryBySlug={getCategoryBySlug}
-      getSeriesInfo={getSeriesInfo}
       getMDXComponents={getMDXComponents}
     />
   );
