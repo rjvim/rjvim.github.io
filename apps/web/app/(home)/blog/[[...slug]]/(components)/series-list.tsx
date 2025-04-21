@@ -4,7 +4,7 @@ import { GridBackground } from "@repo/ui/components/grid-background";
 import { getSeriesBySlug, getPostsBySeries } from "@/lib/series";
 import { Book } from "@repo/shadverse/components/ui/book";
 import { BookOpen } from "lucide-react";
-import { BlogComponents } from "@/blog-components";
+import { BlogComponents } from "./types";
 
 interface SeriesListProps {
   seriesSlug: string;

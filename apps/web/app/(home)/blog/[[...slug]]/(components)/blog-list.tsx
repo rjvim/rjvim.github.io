@@ -1,7 +1,7 @@
 import { getSortedByDatePosts } from "@/lib/source";
 import { getCategoryBySlug, getPostsByCategory } from "@/lib/categories";
 import { PostList } from "./post-list";
-import { BlogComponents } from "@/blog-components";
+import { BlogComponents } from "./types";
 
 export function RecentPosts() {
   const recentPostsPageSize = 3;

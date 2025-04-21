@@ -5,7 +5,7 @@ import {
   DocsDescription,
   DocsTitle,
 } from "fumadocs-ui/page";
-import { BlogComponents } from "@/blog-components";
+import { BlogComponents } from "./types";
 import { getMDXComponents } from "@/mdx-components";
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import { Calendar, BookOpen } from "lucide-react";
