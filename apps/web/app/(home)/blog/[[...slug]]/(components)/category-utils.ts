@@ -1,10 +1,11 @@
-import { BlogPost } from "./types";
+import { getSortedByDatePosts } from "./post-utils";
 
 export const getPostsByCategory = (
   category: string,
-  getSortedByDatePosts: () => BlogPost[]
+  postsOrGetter: any[] | (() => any[])
 ) => {
-  return getSortedByDatePosts()
+  const posts = Array.isArray(postsOrGetter) ? postsOrGetter : getSortedByDatePosts(postsOrGetter);
+  return posts
     .filter((post) => post.slugs && post.slugs[0] === category)
     .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 };
@@ -12,10 +13,11 @@ export const getPostsByCategory = (
 export const getPostsByCategoryAndSlug = (
   category: string,
   slug: string,
-  getSortedByDatePosts: () => BlogPost[]
+  postsOrGetter: any[] | (() => any[])
 ) => {
+  const posts = Array.isArray(postsOrGetter) ? postsOrGetter : getSortedByDatePosts(postsOrGetter);
   return (
-    getSortedByDatePosts()
+    posts
       .filter(
         (post) =>
           post.slugs && post.slugs[0] === category && post.slugs[1] === slug

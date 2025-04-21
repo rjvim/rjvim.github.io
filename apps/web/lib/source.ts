@@ -16,8 +16,3 @@ export const {
 } = blogSource;
 
 export type BlogPost = ReturnType<typeof getBlogPost>;
-
-const posts = getBlogPosts().filter((post) => !post.data.draft);
-
-export const getSortedByDatePosts = () =>
-  [...posts].sort((a, b) => b.data.date.getTime() - a.data.date.getTime());

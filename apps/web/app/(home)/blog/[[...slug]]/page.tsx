@@ -1,9 +1,8 @@
-import { blogSource } from "@/lib/source";
+import { blogSource, getBlogPosts } from "@/lib/source";
 import { BlogWrapper } from "@/app/(home)/blog/[[...slug]]/(components)/blog-wrapper";
 import { generateBlogMetadata } from "@/app/(home)/blog/[[...slug]]/(components)/blog-metadata";
 import { createBlogMetadata, blogConstants } from "@/blog-components";
 import type { Metadata } from "next";
-import { getSortedByDatePosts } from "@/lib/source";
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
@@ -13,7 +12,7 @@ export default async function Page(props: {
     <BlogWrapper
       params={params}
       blogSource={blogSource}
-      getSortedByDatePosts={getSortedByDatePosts}
+      getBlogPosts={getBlogPosts}
     />
   );
 }

@@ -18,20 +18,24 @@ import {
   getPageNumber,
 } from "@repo/fumadocs-blog/blog";
 import { getBlogComponents } from "./types";
+import { getSortedByDatePosts } from "./post-utils";
 
 interface BlogWrapperProps {
   params: { slug?: string[] };
   blogSource: ReturnType<typeof loader>;
-  getSortedByDatePosts: any;
+  getBlogPosts: any;
 }
 
 export async function BlogWrapper({
   params,
   blogSource,
-  getSortedByDatePosts,
+  getBlogPosts,
 }: BlogWrapperProps) {
   // Get blog components
   const components = getBlogComponents();
+  
+  // Get sorted posts once
+  const sortedPosts = getSortedByDatePosts(getBlogPosts);
 
   // Handle blog root page
   if (isBlogRootPage(params)) {
@@ -39,7 +43,7 @@ export async function BlogWrapper({
       <BlogList
         page={1}
         components={components}
-        getSortedByDatePosts={getSortedByDatePosts}
+        posts={sortedPosts}
       />
     );
   }
@@ -51,7 +55,7 @@ export async function BlogWrapper({
       <SeriesList
         seriesSlug={seriesSlug}
         components={components}
-        getSortedByDatePosts={getSortedByDatePosts}
+        posts={sortedPosts}
       />
     );
   }
@@ -63,7 +67,7 @@ export async function BlogWrapper({
       <CategoryBlogList
         category={category}
         components={components}
-        getSortedByDatePosts={getSortedByDatePosts}
+        posts={sortedPosts}
       />
     );
   }
@@ -74,7 +78,7 @@ export async function BlogWrapper({
       <BlogList
         page={getPageNumber(params)}
         components={components}
-        getSortedByDatePosts={getSortedByDatePosts}
+        posts={sortedPosts}
       />
     );
   }
@@ -92,7 +96,7 @@ export async function BlogWrapper({
         category={category}
         page={getPageNumber(params)}
         components={components}
-        getSortedByDatePosts={getSortedByDatePosts}
+        posts={sortedPosts}
       />
     );
   }

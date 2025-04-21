@@ -10,12 +10,22 @@ import { BlogComponents } from "./types";
 interface SeriesListProps {
   seriesSlug: string;
   components?: BlogComponents;
+  posts?: any[];
   getSortedByDatePosts?: any;
 }
 
-export function SeriesList({ seriesSlug, components, getSortedByDatePosts }: SeriesListProps) {
+export function SeriesList({ seriesSlug, components, posts = [], getSortedByDatePosts }: SeriesListProps) {
   const seriesInfo = getSeriesBySlug(seriesSlug);
-  const posts = getPostsBySeries(seriesSlug, getSortedByDatePosts);
+  const seriesPosts = posts.length > 0 
+    ? posts.filter(post => post.data.series === seriesSlug)
+      .sort((a, b) => {
+        // Sort by seriesPart if available, otherwise by date
+        if (a.data.seriesPart && b.data.seriesPart) {
+          return a.data.seriesPart - b.data.seriesPart;
+        }
+        return a.data.date.getTime() - b.data.date.getTime();
+      })
+    : getPostsBySeries(seriesSlug, getSortedByDatePosts);
 
   return (
     <div className="container px-4 py-8 lg:py-12 lg:px-6">
@@ -48,7 +58,7 @@ export function SeriesList({ seriesSlug, components, getSortedByDatePosts }: Ser
         </div>
 
         <div className="space-y-6">
-          {posts.map((post) => (
+          {seriesPosts.map((post) => (
             <div
               key={post.url}
               className="p-6 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow"

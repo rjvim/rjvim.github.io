@@ -1,8 +1,8 @@
-import { BlogPost } from "./types";
+import { getSortedByDatePosts } from "./post-utils";
 
-export const getTags = (getSortedByDatePosts: () => BlogPost[]) => {
+export const getTags = (getBlogPosts: () => any[]) => {
   const tagSet = new Set<string>();
-  const posts = getSortedByDatePosts();
+  const posts = getSortedByDatePosts(getBlogPosts);
 
   for (const post of posts) {
     if (post.data.tags) {
@@ -17,9 +17,9 @@ export const getTags = (getSortedByDatePosts: () => BlogPost[]) => {
 
 export const getPostsByTag = (
   tag: string,
-  getSortedByDatePosts: () => BlogPost[]
+  getBlogPosts: () => any[]
 ) => {
-  return [...getSortedByDatePosts()]
+  return [...getSortedByDatePosts(getBlogPosts)]
     .filter((post) => post.data.tags?.includes(tag))
     .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 };

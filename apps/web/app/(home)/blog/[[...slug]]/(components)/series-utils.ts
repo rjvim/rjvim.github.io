@@ -1,9 +1,10 @@
-import { BlogPost } from "./types";
+import { getSortedByDatePosts } from "./post-utils";
 
-export const getSeriesNames = (getSortedByDatePosts: () => BlogPost[]) => {
+export const getSeriesNames = (postsOrGetter: any[] | (() => any[])) => {
   const seriesSet = new Set<string>();
+  const posts = Array.isArray(postsOrGetter) ? postsOrGetter : getSortedByDatePosts(postsOrGetter);
 
-  for (const post of getSortedByDatePosts()) {
+  for (const post of posts) {
     if (post.data.series) {
       seriesSet.add(post.data.series);
     }
@@ -14,9 +15,10 @@ export const getSeriesNames = (getSortedByDatePosts: () => BlogPost[]) => {
 
 export const getPostsBySeries = (
   seriesName: string,
-  getSortedByDatePosts: () => BlogPost[]
+  postsOrGetter: any[] | (() => any[])
 ) => {
-  return getSortedByDatePosts()
+  const posts = Array.isArray(postsOrGetter) ? postsOrGetter : getSortedByDatePosts(postsOrGetter);
+  return posts
     .filter((post) => post.data.series === seriesName)
     .sort((a, b) => {
       // Sort by seriesPart if available, otherwise by date
@@ -29,9 +31,9 @@ export const getPostsBySeries = (
 
 export const getSeriesInfo = (
   seriesName: string,
-  getSortedByDatePosts: () => BlogPost[]
+  postsOrGetter: any[] | (() => any[])
 ) => {
-  const posts = getPostsBySeries(seriesName, getSortedByDatePosts);
+  const posts = getPostsBySeries(seriesName, postsOrGetter);
   if (posts.length === 0) return null;
 
   // Use the first post's title to extract series name if possible
