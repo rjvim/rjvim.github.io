@@ -53,7 +53,7 @@ export async function BlogWrapper({
   // Handle category page
   if (isCategoryPage(params)) {
     const category = getCategorySlug(params);
-    return <CategoryBlogList category={category} components={components} />;
+    return <CategoryBlogList category={category} components={components} getSortedByDatePosts={getSortedByDatePosts} />;
   }
 
   // Handle paginated blog page
@@ -74,6 +74,7 @@ export async function BlogWrapper({
         category={category}
         page={getPageNumber(params)}
         components={components}
+        getSortedByDatePosts={getSortedByDatePosts}
       />
     );
   }

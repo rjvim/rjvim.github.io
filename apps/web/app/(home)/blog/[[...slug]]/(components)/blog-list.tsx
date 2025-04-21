@@ -1,4 +1,5 @@
-import { getCategoryBySlug, getPostsByCategory } from "@/lib/categories";
+import { getCategoryBySlug } from "@/lib/categories";
+import { getPostsByCategory } from "./category-utils";
 import { PostList } from "./post-list";
 import { BlogComponents } from "./types";
 
@@ -56,15 +57,17 @@ export function CategoryBlogList({
   page = 1,
   disablePagination = false,
   components,
+  getSortedByDatePosts,
 }: {
   category: string;
   page?: number;
   disablePagination?: boolean;
   components?: BlogComponents;
+  getSortedByDatePosts?: any;
 }) {
   const pageSize = 5;
   const categoryInfo = getCategoryBySlug(category);
-  const allPosts = getPostsByCategory(category);
+  const allPosts = getPostsByCategory(category, getSortedByDatePosts);
   const posts = allPosts.slice((page - 1) * pageSize, page * pageSize);
   const totalPages = Math.ceil(allPosts.length / pageSize);
 
