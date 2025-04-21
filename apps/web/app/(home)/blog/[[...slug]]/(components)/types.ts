@@ -8,6 +8,8 @@ export type BlogPost = {
   data: {
     date: Date;
     tags?: string[];
+    series?: string;
+    seriesPart?: number;
     [key: string]: any;
   };
   [key: string]: any;
