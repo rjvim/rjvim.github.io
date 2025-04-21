@@ -26,6 +26,7 @@ import {
   getPageNumber,
 } from "@repo/fumadocs-blog/blog";
 
+
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
 }) {

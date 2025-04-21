@@ -1,6 +1,6 @@
 # Blog Component Registry
 
-This directory contains a simple component registry pattern that allows overriding default components with custom implementations.
+This directory contains a simple registry pattern that allows overriding default components with custom implementations.
 
 ## How to Use
 
@@ -23,7 +23,7 @@ export function CustomPostCard({ post }: CustomPostCardProps) {
 }
 ```
 
-### 2. Update the component registry
+### 2. Configure the registry in component-registry.tsx
 
 Edit the `component-registry.tsx` file to use your custom component:
 
@@ -32,8 +32,25 @@ Edit the `component-registry.tsx` file to use your custom component:
 import { PostCard as DefaultPostCard } from './post-card';
 import { CustomPostCard } from './custom-post-card';
 
-// Use the custom component instead of the default
-export const PostCard = CustomPostCard;
+// Registry configuration
+type ComponentRegistry = {
+  PostCard: typeof DefaultPostCard;
+};
+
+// Default registry
+const defaultRegistry: ComponentRegistry = {
+  PostCard: DefaultPostCard,
+};
+
+// Custom registry - this is what you would modify to override components
+const customRegistry: ComponentRegistry = {
+  // Uncomment the line below to use the custom post card
+  PostCard: CustomPostCard,
+  ...defaultRegistry,
+};
+
+// Export the components from the registry
+export const PostCard = customRegistry.PostCard;
 ```
 
 ### 3. That's it!
@@ -50,5 +67,6 @@ The following components can be overridden:
 
 To make more components overridable:
 
-1. Add the component to the registry with its default implementation
-2. Update imports in the files that use the component to import from the registry instead
+1. Add the component to the ComponentRegistry type in component-registry.tsx
+2. Add the component to the default registry
+3. Export the component from the registry
