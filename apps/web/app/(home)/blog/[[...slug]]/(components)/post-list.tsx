@@ -25,6 +25,8 @@ export function PostList({
   basePath = "/blog",
   disablePagination = false,
 }: PostListProps) {
+  const { PostCard } = useBlog();
+
   return (
     <>
       <section className="relative container px-4 py-8 lg:py-12 lg:px-6 text-left bg-zinc-50/50 dark:bg-zinc-900/50">
@@ -48,7 +50,6 @@ export function PostList({
               (post): post is NonNullable<typeof post> => post !== undefined
             )
             .map((post) => {
-              const { PostCard } = useBlog();
               return <PostCard key={post.url} post={post} />;
             })}
         </div>

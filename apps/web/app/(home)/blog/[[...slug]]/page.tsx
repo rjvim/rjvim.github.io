@@ -36,7 +36,7 @@ export default async function Page(props: {
   // Handle blog root page
   if (isBlogRootPage(params)) {
     return (
-      <BlogProvider pageSize={5} PostCard={CustomPostCard}>
+      <BlogProvider pageSize={5}>
         <BlogList page={1} />
       </BlogProvider>
     );
