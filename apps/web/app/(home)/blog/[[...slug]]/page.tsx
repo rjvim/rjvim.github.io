@@ -25,7 +25,7 @@ import {
   getCategorySlug,
   getPageNumber,
 } from "@repo/fumadocs-blog/blog";
-
+import BlogProvider from "./(components)/blog-provider";
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
@@ -34,7 +34,11 @@ export default async function Page(props: {
 
   // Handle blog root page
   if (isBlogRootPage(params)) {
-    return <BlogList page={1} />;
+    return (
+      <BlogProvider>
+        <BlogList page={1} />
+      </BlogProvider>
+    );
   }
 
   // Handle series page
