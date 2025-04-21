@@ -94,6 +94,7 @@ export async function generateBlogMetadata(props: {
       });
     }
 
+    // TODO: Solve the url problem much better
     const canonicalUrl = `/blog/${category}`;
     const categoryInfo = getCategoryBySlug(category);
 
