@@ -1,4 +1,6 @@
 import { PostCard2 } from "./post-card-2";
+import type { MDXComponents } from "mdx/types";
+import React from "react";
 
 // Define a type for blog posts that matches the structure used in the app
 export type BlogPost = {
@@ -15,12 +17,7 @@ export interface PostCardProps {
   post: NonNullable<BlogPost>;
 }
 
-export interface BlogComponents {
-  PostCard: typeof PostCard2;
-}
-
-export function getBlogComponents(): BlogComponents {
-  return {
-    PostCard: PostCard2,
-  };
+// Define BlogComponents as an interface that extends Record<string, any>
+export interface BlogComponents extends Record<string, any> {
+  GridBackground?: React.ComponentType<{ maxWidthClass?: string }>;
 }

@@ -1,6 +1,9 @@
 import { PostCard } from "./app/(home)/blog/[[...slug]]/(components)/post-card";
 import { PostCard2 } from "./app/(home)/blog/[[...slug]]/(components)/post-card-2";
 import type { Metadata } from "next/types";
+import { GridBackground } from "@repo/ui/components/grid-background";
+import type { Component, ReactElement, ReactNode } from "react";
+import type { MDXComponents } from "mdx/types";
 
 // Blog text constants that can be customized
 export const blogConstants = {
@@ -100,13 +103,15 @@ export function createBlogMetadata(override: Metadata): Metadata {
   };
 }
 
-export interface BlogComponents {
-  PostCard: typeof PostCard;
-}
+// export interface BlogComponents {
+//   PostCard: typeof PostCard;
+//   GridBackground: Component<any>;
+// }
 
-export function getBlogComponents(): BlogComponents {
+export function getBlogComponents(): MDXComponents {
   return {
     PostCard: PostCard2,
+    GridBackground,
   };
 }
 
