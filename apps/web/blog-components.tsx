@@ -1,16 +1,7 @@
-import { PostCard } from "./app/(home)/blog/[[...slug]]/(components)/post-card";
 import { PostCard2 } from "./app/(home)/blog/[[...slug]]/(components)/post-card-2";
 import type { Metadata } from "next/types";
 import { GridBackground } from "@repo/ui/components/grid-background";
-import type { Component, ReactElement, ReactNode } from "react";
-import type { MDXComponents } from "mdx/types";
 import type { BlogComponents } from "./app/(home)/blog/[[...slug]]/(components)/types";
-import {
-  DocsPage,
-  DocsBody,
-  DocsDescription,
-  DocsTitle,
-} from "fumadocs-ui/page";
 import { Button } from "@repo/shadverse/components/button";
 import {
   Popover,
