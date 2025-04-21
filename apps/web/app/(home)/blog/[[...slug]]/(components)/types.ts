@@ -22,6 +22,10 @@ export interface BlogComponents extends Record<string, any> {
   GridBackground?: React.ComponentType<{ maxWidthClass?: string }>;
   PostCard?: React.ComponentType<PostCardProps>;
   Button?: React.ComponentType<any>;
+  Popover?: React.ComponentType<any>;
+  PopoverContent?: React.ComponentType<any>;
+  PopoverTrigger?: React.ComponentType<any>;
+  Badge?: React.ComponentType<any>;
   backgroundPattern?: {
     enabled: boolean;
     component: React.ReactNode;

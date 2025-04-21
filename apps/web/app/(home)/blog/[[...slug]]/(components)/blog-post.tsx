@@ -12,12 +12,7 @@ import { Calendar, BookOpen } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@repo/shadverse/lib/utils";
 
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@repo/shadverse/components/popover";
-import { Badge } from "@repo/shadverse/components/badge";
+// Popover and Badge components come from components context
 import { SeriesPopoverContent } from "./series-info";
 import { getSeriesInfo } from "./utils";
 import { slot } from "./shared";
@@ -76,9 +71,9 @@ export function BlogPost({
         <DocsTitle className="text-left dark:text-white flex items-center gap-2">
           {page.data.title}
 
-          {page.data.series && page.data.seriesPart && (
-            <Popover>
-              <PopoverTrigger asChild>
+          {page.data.series && page.data.seriesPart && components?.Popover && components?.PopoverTrigger && components?.PopoverContent && components?.Badge && (
+            <components.Popover>
+              <components.PopoverTrigger asChild>
                 {components?.Button && (
                   <components.Button
                     size="icon"
@@ -87,21 +82,21 @@ export function BlogPost({
                     aria-label="View series information"
                   >
                     <BookOpen className="size-5" aria-hidden="true" />
-                    <Badge className="absolute -top-2 left-full min-w-5 -translate-x-1/2 px-1 text-xs">
+                    <components.Badge className="absolute -top-2 left-full min-w-5 -translate-x-1/2 px-1 text-xs">
                       {page.data.seriesPart}/
                       {getSeriesInfo(page.data.series, posts)?.totalParts || 0}
-                    </Badge>
+                    </components.Badge>
                   </components.Button>
                 )}
-              </PopoverTrigger>
-              <PopoverContent className="w-80 p-0">
+              </components.PopoverTrigger>
+              <components.PopoverContent className="w-80 p-0">
                 <SeriesPopoverContent
                   seriesName={page.data.series}
                   currentPart={page.data.seriesPart}
                   posts={posts}
                 />
-              </PopoverContent>
-            </Popover>
+              </components.PopoverContent>
+            </components.Popover>
           )}
         </DocsTitle>
         <DocsDescription className="text-left mt-3 dark:text-gray-300">

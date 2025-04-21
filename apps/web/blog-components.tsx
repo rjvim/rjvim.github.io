@@ -12,6 +12,12 @@ import {
   DocsTitle,
 } from "fumadocs-ui/page";
 import { Button } from "@repo/shadverse/components/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@repo/shadverse/components/popover";
+import { Badge } from "@repo/shadverse/components/badge";
 
 // Blog text constants that can be customized
 export const blogConstants = {
@@ -119,6 +125,10 @@ export function getBlogComponents(): BlogComponents {
       component: <GridBackground maxWidthClass="container" />,
     },
     Button,
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+    Badge,
   };
 }
 
