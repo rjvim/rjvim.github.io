@@ -25,26 +25,29 @@ interface BlogWrapperProps {
 }
 
 export async function BlogWrapper({ params, blogSource }: BlogWrapperProps) {
+  // Get blog components
+  const components = getBlogComponents();
+
   // Handle blog root page
   if (isBlogRootPage(params)) {
-    return <BlogList page={1} components={getBlogComponents()} />;
+    return <BlogList page={1} components={components} />;
   }
 
   // Handle series page
   if (isSeriesPage(params)) {
     const seriesSlug = getSeriesSlug(params)!;
-    return <SeriesList seriesSlug={seriesSlug} />;
+    return <SeriesList seriesSlug={seriesSlug} components={components} />;
   }
 
   // Handle category page
   if (isCategoryPage(params)) {
     const category = getCategorySlug(params);
-    return <CategoryBlogList category={category} />;
+    return <CategoryBlogList category={category} components={components} />;
   }
 
   // Handle paginated blog page
   if (isPaginatedBlogPage(params)) {
-    return <BlogList page={getPageNumber(params)} />;
+    return <BlogList page={getPageNumber(params)} components={components} />;
   }
 
   // Handle paginated category page
@@ -56,7 +59,7 @@ export async function BlogWrapper({ params, blogSource }: BlogWrapperProps) {
     }
 
     return (
-      <CategoryBlogList category={category} page={getPageNumber(params)} />
+      <CategoryBlogList category={category} page={getPageNumber(params)} components={components} />
     );
   }
 
@@ -77,6 +80,7 @@ export async function BlogWrapper({ params, blogSource }: BlogWrapperProps) {
         category={category}
         lastUpdate={lastUpdate}
         tags={tags}
+        components={components}
       />
     );
   }

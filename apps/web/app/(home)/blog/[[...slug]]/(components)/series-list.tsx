@@ -4,12 +4,14 @@ import { GridBackground } from "@repo/ui/components/grid-background";
 import { getSeriesBySlug, getPostsBySeries } from "@/lib/series";
 import { Book } from "@repo/shadverse/components/ui/book";
 import { BookOpen } from "lucide-react";
+import { BlogComponents } from "@/blog-components";
 
 interface SeriesListProps {
   seriesSlug: string;
+  components?: BlogComponents;
 }
 
-export function SeriesList({ seriesSlug }: SeriesListProps) {
+export function SeriesList({ seriesSlug, components }: SeriesListProps) {
   const seriesInfo = getSeriesBySlug(seriesSlug);
   const posts = getPostsBySeries(seriesSlug);
 

@@ -1,6 +1,7 @@
 import { getSortedByDatePosts } from "@/lib/source";
 import { getCategoryBySlug, getPostsByCategory } from "@/lib/categories";
 import { PostList } from "./post-list";
+import { BlogComponents } from "@/blog-components";
 
 export function RecentPosts() {
   const recentPostsPageSize = 3;
@@ -49,10 +50,12 @@ export function CategoryBlogList({
   category,
   page = 1,
   disablePagination = false,
+  components,
 }: {
   category: string;
   page?: number;
   disablePagination?: boolean;
+  components?: BlogComponents;
 }) {
   const pageSize = 5;
   const categoryInfo = getCategoryBySlug(category);
@@ -69,6 +72,7 @@ export function CategoryBlogList({
       description={categoryInfo.description}
       basePath={`/blog/${category}`}
       disablePagination={disablePagination}
+      components={components}
     />
   );
 }

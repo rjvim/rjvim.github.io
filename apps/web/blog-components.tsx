@@ -95,7 +95,11 @@ export function createBlogMetadata(override: Metadata): Metadata {
   };
 }
 
-export function getBlogComponents() {
+export interface BlogComponents {
+  PostCard: typeof PostCard2;
+}
+
+export function getBlogComponents(): BlogComponents {
   return {
     PostCard: PostCard2,
   };

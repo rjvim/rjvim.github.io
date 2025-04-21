@@ -3,6 +3,7 @@ import { GridBackground } from "@repo/ui/components/grid-background";
 import { Pagination } from "./pagination";
 import { DocsTitle, DocsDescription } from "fumadocs-ui/page";
 import { PostCard } from "@/app/(home)/blog/[[...slug]]/(components)/post-card";
+import { BlogComponents } from "@/blog-components";
 
 export type PostListProps = {
   posts: BlogPost[];
@@ -12,7 +13,7 @@ export type PostListProps = {
   description?: string;
   basePath?: string;
   disablePagination?: boolean;
-  components?: any;
+  components?: BlogComponents;
 };
 
 export function PostList({
@@ -52,7 +53,11 @@ export function PostList({
             .map((post) => {
               // Pass the actual post data to the PostCard component
               // return <PostCard key={post.url} post={post} />;
-              return <components.PostCard key={post.url} post={post} />;
+              return components ? (
+                <components.PostCard key={post.url} post={post} />
+              ) : (
+                <PostCard key={post.url} post={post} />
+              );
             })}
         </div>
 

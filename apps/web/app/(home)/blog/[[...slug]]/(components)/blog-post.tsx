@@ -5,6 +5,7 @@ import {
   DocsDescription,
   DocsTitle,
 } from "fumadocs-ui/page";
+import { BlogComponents } from "@/blog-components";
 import { getMDXComponents } from "@/mdx-components";
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import { Calendar, BookOpen } from "lucide-react";
@@ -27,6 +28,7 @@ interface BlogPostProps {
   category?: string;
   lastUpdate?: Date;
   tags: string[];
+  components?: BlogComponents;
 }
 
 export function BlogPost({ page, category, lastUpdate, tags }: BlogPostProps) {
