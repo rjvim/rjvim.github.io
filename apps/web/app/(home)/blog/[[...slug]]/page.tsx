@@ -1,15 +1,6 @@
 import { blogSource } from "@/lib/source";
-import React from "react";
 import { notFound } from "next/navigation";
-import {
-  BlogList,
-  CategoryBlogList,
-} from "@/app/(home)/blog/[[...slug]]/(components)/blog-list";
-import { BlogPost } from "@/app/(home)/blog/[[...slug]]/(components)/blog-post";
-import { SeriesList } from "@/app/(home)/blog/[[...slug]]/(components)/series-list";
-import { getSeriesBySlug, getPostsBySeries } from "@/lib/series";
-import { GridBackground } from "@repo/ui/components/grid-background";
-import Link from "next/link";
+import { getSeriesBySlug } from "@/lib/series";
 import { createMetadata } from "@/lib/metadata";
 import { blogsMetaImage } from "@/lib/metadata-image";
 import type { Metadata } from "next";
@@ -23,71 +14,16 @@ import {
   isBlogPostPage,
   getSeriesSlug,
   getCategorySlug,
-  getPageNumber,
 } from "@repo/fumadocs-blog/blog";
-import { getMDXComponents } from "@/mdx-components";
-import { getBlogComponents } from "@/blog-components";
+import { BlogWrapper } from "@/app/(home)/blog/[[...slug]]/(components)/blog-wrapper";
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
 }) {
   const params = await props.params;
 
-  // Handle blog root page
-  if (isBlogRootPage(params)) {
-    return <BlogList page={1} components={getBlogComponents()} />;
-  }
-
-  // Handle series page
-  if (isSeriesPage(params)) {
-    const seriesSlug = getSeriesSlug(params)!;
-    return <SeriesList seriesSlug={seriesSlug} />;
-  }
-
-  // Handle category page
-  if (isCategoryPage(params)) {
-    const category = getCategorySlug(params);
-    return <CategoryBlogList category={category} />;
-  }
-
-  // Handle paginated blog page
-  if (isPaginatedBlogPage(params)) {
-    return <BlogList page={getPageNumber(params)} />;
-  }
-
-  // Handle paginated category page
-  if (isPaginatedCategoryPage(params)) {
-    const category = params.slug?.[0];
-
-    if (!category) {
-      return notFound();
-    }
-
-    return (
-      <CategoryBlogList category={category} page={getPageNumber(params)} />
-    );
-  }
-
-  // Handle blog post page
-  if (isBlogPostPage(params)) {
-    const page = blogSource.getPage(params.slug);
-    const category = params.slug?.[0] || undefined;
-
-    if (!page) notFound();
-
-    const lastModified = page?.data.lastModified;
-    const lastUpdate = lastModified ? new Date(lastModified) : undefined;
-    const tags = page?.data.tags ?? [];
-
-    return (
-      <BlogPost
-        page={page}
-        category={category}
-        lastUpdate={lastUpdate}
-        tags={tags}
-      />
-    );
-  }
+  // Use the BlogWrapper component to handle all blog routes
+  return <BlogWrapper params={params} blogSource={blogSource} />;
 }
 
 export { generateBlogStaticParams as generateStaticParams } from "@/app/(home)/blog/[[...slug]]/(components)/blog-static-params";
