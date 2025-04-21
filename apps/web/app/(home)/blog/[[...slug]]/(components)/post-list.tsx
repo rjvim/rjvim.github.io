@@ -1,8 +1,10 @@
+"use client";
+
 import { BlogPost } from "@/lib/source";
 import { GridBackground } from "@repo/ui/components/grid-background";
 import { Pagination } from "./pagination";
 import { DocsTitle, DocsDescription } from "fumadocs-ui/page";
-import { PostCard } from "./component-registry";
+import { useBlog } from "./blog-provider";
 
 export type PostListProps = {
   posts: BlogPost[];
@@ -45,9 +47,10 @@ export function PostList({
             .filter(
               (post): post is NonNullable<typeof post> => post !== undefined
             )
-            .map((post) => (
-              <PostCard key={post.url} post={post} />
-            ))}
+            .map((post) => {
+              const { PostCard } = useBlog();
+              return <PostCard key={post.url} post={post} />;
+            })}
         </div>
 
         {!disablePagination && (

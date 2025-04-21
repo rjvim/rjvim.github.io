@@ -26,6 +26,7 @@ import {
   getPageNumber,
 } from "@repo/fumadocs-blog/blog";
 import BlogProvider from "./(components)/blog-provider";
+import { CustomPostCard } from "./(components)/custom-post-card";
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
@@ -35,7 +36,7 @@ export default async function Page(props: {
   // Handle blog root page
   if (isBlogRootPage(params)) {
     return (
-      <BlogProvider pageSize={5}>
+      <BlogProvider pageSize={5} PostCard={CustomPostCard}>
         <BlogList page={1} />
       </BlogProvider>
     );
