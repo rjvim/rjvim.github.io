@@ -38,9 +38,7 @@ export default async function Page(props: {
     return (
       <BlogProvider 
         pageSize={5}
-        postCardComponent={{
-          component: true
-        }}
+        customPostCardPath="./(components)/custom-post-card"
       >
         <BlogList page={1} />
       </BlogProvider>
@@ -58,9 +56,7 @@ export default async function Page(props: {
     const category = getCategorySlug(params);
     return (
       <BlogProvider
-        postCardComponent={{
-          component: true
-        }}
+        customPostCardPath="./(components)/custom-post-card"
       >
         <CategoryBlogList category={category} />
       </BlogProvider>
@@ -71,9 +67,7 @@ export default async function Page(props: {
   if (isPaginatedBlogPage(params)) {
     return (
       <BlogProvider
-        postCardComponent={{
-          component: true
-        }}
+        customPostCardPath="./(components)/custom-post-card"
       >
         <BlogList page={getPageNumber(params)} />
       </BlogProvider>
@@ -90,9 +84,7 @@ export default async function Page(props: {
 
     return (
       <BlogProvider
-        postCardComponent={{
-          component: true
-        }}
+        customPostCardPath="./(components)/custom-post-card"
       >
         <CategoryBlogList category={category} page={getPageNumber(params)} />
       </BlogProvider>

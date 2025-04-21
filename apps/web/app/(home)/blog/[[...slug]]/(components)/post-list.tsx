@@ -50,6 +50,7 @@ export function PostList({
               (post): post is NonNullable<typeof post> => post !== undefined
             )
             .map((post) => {
+              // Pass the actual post data to the PostCard component
               return <PostCard key={post.url} post={post} />;
             })}
         </div>

@@ -1,14 +1,16 @@
-
+"use client";
 
 import Link from "next/link";
 import { Card } from "@repo/shadverse/components/card";
 import { ArrowRight, Calendar, User, Tag } from "lucide-react";
+import { forwardRef } from "react";
 
 interface CustomPostCardProps {
   post: any;
 }
 
-export function CustomPostCard({ post }: CustomPostCardProps) {
+export const CustomPostCard = forwardRef<HTMLDivElement, CustomPostCardProps>(
+  function CustomPostCard({ post }, ref) {
   return (
     <Card
       key={post.url}
@@ -76,4 +78,6 @@ export function CustomPostCard({ post }: CustomPostCardProps) {
       </div>
     </Card>
   );
-}
+});
+
+CustomPostCard.displayName = "CustomPostCard";
