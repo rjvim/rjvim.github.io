@@ -17,12 +17,13 @@ import {
   getCategorySlug,
   getPageNumber,
 } from "@repo/fumadocs-blog/blog";
-import { getBlogComponents } from "./types";
+import { getBlogComponents, type BlogComponents } from "./types";
 
 interface BlogWrapperProps {
   params: { slug?: string[] };
   blogSource: ReturnType<typeof loader>;
   posts: any[];
+  components: BlogComponents;
   getCategoryBySlug: (slug: string) => any;
   getMDXComponents: () => any;
 }
@@ -31,12 +32,10 @@ export async function BlogWrapper({
   params,
   blogSource,
   posts,
+  components,
   getCategoryBySlug,
   getMDXComponents,
 }: BlogWrapperProps) {
-  // Get blog components
-  const components = getBlogComponents();
-
   // Handle blog root page
   if (isBlogRootPage(params)) {
     return <BlogList page={1} components={components} posts={posts} />;

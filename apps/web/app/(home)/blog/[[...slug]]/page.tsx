@@ -1,7 +1,11 @@
 import { blogSource, getBlogPosts } from "@/lib/source";
 import { BlogWrapper } from "@/app/(home)/blog/[[...slug]]/(components)/blog-wrapper";
 import { generateBlogMetadata } from "@/app/(home)/blog/[[...slug]]/(components)/blog-metadata";
-import { createBlogMetadata, blogConstants } from "@/blog-components";
+import {
+  createBlogMetadata,
+  blogConstants,
+  getBlogComponents,
+} from "@/blog-components";
 import { getCategoryBySlug } from "@/lib/categories";
 import { getSeriesBySlug } from "@/lib/series";
 import { getMDXComponents } from "@/mdx-components";
@@ -21,6 +25,7 @@ export default async function Page(props: {
       posts={posts}
       getCategoryBySlug={getCategoryBySlug}
       getMDXComponents={getMDXComponents}
+      components={getBlogComponents()}
     />
   );
 }

@@ -7,42 +7,47 @@ export const blogConstants = {
   // General
   blogTitle: "Blog",
   blogDescription: "Articles and thoughts",
-  
+
   // Series
   seriesSuffix: "Blog Series",
-  seriesDefaultDescription: (seriesLabel: string) => `Articles in the ${seriesLabel} series`,
-  
+  seriesDefaultDescription: (seriesLabel: string) =>
+    `Articles in the ${seriesLabel} series`,
+
   // Category
   categorySuffix: "Blog",
-  categoryDefaultDescription: (categoryLabel: string) => `Articles in the ${categoryLabel} category`,
-  
+  categoryDefaultDescription: (categoryLabel: string) =>
+    `Articles in the ${categoryLabel} category`,
+
   // Pagination
   paginationTitle: (page: number) => `Blog - Page ${page}`,
-  paginationDescription: (page: number) => `Articles and thoughts - Page ${page}`,
-  categoryPaginationTitle: (category: string, page: number) => `${category.charAt(0).toUpperCase() + category.slice(1)} - Page ${page}`,
-  categoryPaginationDescription: (category: string, page: number) => `Articles in the ${category} category - Page ${page}`,
+  paginationDescription: (page: number) =>
+    `Articles and thoughts - Page ${page}`,
+  categoryPaginationTitle: (category: string, page: number) =>
+    `${category.charAt(0).toUpperCase() + category.slice(1)} - Page ${page}`,
+  categoryPaginationDescription: (category: string, page: number) =>
+    `Articles in the ${category} category - Page ${page}`,
 
   // URLs
   urls: {
     // Base URLs
     blogBase: "/blog",
     seriesBase: "/blog/series",
-    
+
     // URL Generators
     getBlogUrl: () => "/blog",
     getSeriesUrl: (seriesSlug: string) => `/blog/series/${seriesSlug}`,
     getCategoryUrl: (category: string) => `/blog/${category}`,
     getBlogOgImageUrl: (category: string) => `/blog-og/${category}/image.png`,
   },
-  
+
   // Image settings
   images: {
     ogImageDimensions: {
       width: 1200,
       height: 630,
     },
-    altText: "Banner"
-  }
+    altText: "Banner",
+  },
 };
 
 // Replicate the createMetadata function from lib/metadata.ts
@@ -96,7 +101,7 @@ export function createBlogMetadata(override: Metadata): Metadata {
 }
 
 export interface BlogComponents {
-  PostCard: typeof PostCard2;
+  PostCard: typeof PostCard;
 }
 
 export function getBlogComponents(): BlogComponents {

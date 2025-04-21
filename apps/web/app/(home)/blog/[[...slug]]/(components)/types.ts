@@ -11,6 +11,10 @@ export type BlogPost = {
   [key: string]: any;
 };
 
+export interface PostCardProps {
+  post: NonNullable<BlogPost>;
+}
+
 export interface BlogComponents {
   PostCard: typeof PostCard2;
 }
