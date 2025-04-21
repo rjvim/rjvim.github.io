@@ -25,6 +25,8 @@ import {
   getCategorySlug,
   getPageNumber,
 } from "@repo/fumadocs-blog/blog";
+import { getMDXComponents } from "@/mdx-components";
+import { getBlogComponents } from "@/blog-components";
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
@@ -33,7 +35,7 @@ export default async function Page(props: {
 
   // Handle blog root page
   if (isBlogRootPage(params)) {
-    return <BlogList page={1} />;
+    return <BlogList page={1} components={getBlogComponents()} />;
   }
 
   // Handle series page

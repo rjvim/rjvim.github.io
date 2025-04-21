@@ -23,9 +23,11 @@ export function RecentPosts() {
 export function BlogList({
   page = 1,
   disablePagination = false,
+  components,
 }: {
   page?: number;
   disablePagination?: boolean;
+  components?: any;
 }) {
   const pageSize = 5;
   const allPosts = getSortedByDatePosts();
@@ -38,6 +40,7 @@ export function BlogList({
       currentPage={page}
       totalPages={totalPages}
       disablePagination={disablePagination}
+      components={components}
     />
   );
 }

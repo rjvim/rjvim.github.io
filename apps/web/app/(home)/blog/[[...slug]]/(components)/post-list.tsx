@@ -12,6 +12,7 @@ export type PostListProps = {
   description?: string;
   basePath?: string;
   disablePagination?: boolean;
+  components?: any;
 };
 
 export function PostList({
@@ -22,6 +23,7 @@ export function PostList({
   description = "Discover the latest insights and tutorials about modern web development, UI design, and component-driven architecture.",
   basePath = "/blog",
   disablePagination = false,
+  components,
 }: PostListProps) {
   // PostCard is now imported directly
 
@@ -49,7 +51,8 @@ export function PostList({
             )
             .map((post) => {
               // Pass the actual post data to the PostCard component
-              return <PostCard key={post.url} post={post} />;
+              // return <PostCard key={post.url} post={post} />;
+              return <components.PostCard key={post.url} post={post} />;
             })}
         </div>
 
