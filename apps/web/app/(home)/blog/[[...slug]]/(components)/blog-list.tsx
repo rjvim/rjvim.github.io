@@ -1,8 +1,8 @@
 import { PostList } from "./post-list";
-import { BlogComponents } from "./types";
+import { BlogComponents, type BlogPost } from "./types";
 import { getSortedByDatePosts } from "./utils";
 
-export function RecentPosts({ posts }: { posts: any[] }) {
+export function RecentPosts({ posts }: { posts: BlogPost[] }) {
   const recentPostsPageSize = 3;
   const sortedPosts = getSortedByDatePosts(posts);
   const displayPosts = sortedPosts.slice(0, recentPostsPageSize);
