@@ -107,7 +107,7 @@ export function createBlogMetadata(override: Metadata): Metadata {
 export function getBlogComponents(): BlogComponents {
   return {
     PostCard: PostCard2,
-    grid: {
+    backgroundPattern: {
       enabled: true,
       component: <GridBackground maxWidthClass="container" />,
     },

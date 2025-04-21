@@ -49,7 +49,7 @@ export function BlogPost({
   return (
     <>
       <div className="relative container px-4 py-8 lg:py-12 lg:px-6 text-left">
-        {slot(components?.grid, null)}
+        {slot(components?.backgroundPattern, null)}
 
         {category && (
           <div className="mb-4 text-gray-600 dark:text-gray-400 text-sm font-medium">
@@ -133,7 +133,7 @@ export function BlogPost({
           ),
         }}
       >
-        {slot(components?.grid, null)}
+        {slot(components?.backgroundPattern, null)}
 
         <div className="grid grid-cols-4">
           <DocsPage

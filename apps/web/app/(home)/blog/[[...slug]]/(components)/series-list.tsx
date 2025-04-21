@@ -37,7 +37,7 @@ export function SeriesList({
 
   return (
     <div className="container px-4 py-8 lg:py-12 lg:px-6">
-      {slot(components?.grid, null)}
+      {slot(components?.backgroundPattern, null)}
       <div className="relative">
         <div className="flex flex-col md:flex-row gap-8 mb-8 md:items-center items-start">
           <Book
