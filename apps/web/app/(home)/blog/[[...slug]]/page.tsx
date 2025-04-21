@@ -1,5 +1,8 @@
 import { blogSource } from "@/lib/source";
 import { BlogWrapper } from "@/app/(home)/blog/[[...slug]]/(components)/blog-wrapper";
+import { generateBlogMetadata } from "@/app/(home)/blog/[[...slug]]/(components)/blog-metadata";
+import { createBlogMetadata, blogConstants } from "@/blog-components";
+import type { Metadata } from "next";
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
@@ -11,4 +14,17 @@ export default async function Page(props: {
 }
 
 export { generateBlogStaticParams as generateStaticParams } from "@/app/(home)/blog/[[...slug]]/(components)/blog-static-params";
-export { generateBlogMetadata as generateMetadata } from "@/app/(home)/blog/[[...slug]]/(components)/blog-metadata";
+
+// Create a custom generateMetadata function that passes the required dependencies
+export async function generateMetadata(props: {
+  params: Promise<{ slug?: string[] }>;
+}): Promise<Metadata> {
+  // Await params here so we don't need to await in blog-metadata.ts
+  const params = await props.params;
+  
+  return generateBlogMetadata({
+    params,
+    createBlogMetadata,
+    blogConstants
+  });
+}

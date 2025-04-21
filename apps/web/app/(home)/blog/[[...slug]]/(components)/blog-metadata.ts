@@ -1,6 +1,5 @@
 import { blogSource } from "@/lib/source";
 import { notFound } from "next/navigation";
-import { createMetadata } from "@/lib/metadata";
 import { blogsMetaImage } from "@/lib/metadata-image";
 import type { Metadata } from "next";
 import { getCategoryBySlug } from "@/lib/categories";
@@ -15,12 +14,13 @@ import {
   getSeriesSlug,
   getCategorySlug,
 } from "@repo/fumadocs-blog/blog";
-import { createBlogMetadata, blogConstants } from "@/blog-components";
 
 export async function generateBlogMetadata(props: {
-  params: Promise<{ slug?: string[] }>;
+  params: { slug?: string[] };
+  createBlogMetadata: (override: Metadata) => Metadata;
+  blogConstants: any;
 }): Promise<Metadata> {
-  const params = await props.params;
+  const { params, createBlogMetadata, blogConstants } = props;
 
   // Default for root blog page or when slug is undefined
   if (isBlogRootPage(params)) {
