@@ -30,7 +30,7 @@ interface BlogPostProps {
 
 export function BlogPost({
   page,
-  components,
+  components = {},
   category,
   lastUpdate,
   tags,
@@ -71,23 +71,21 @@ export function BlogPost({
         <DocsTitle className="text-left dark:text-white flex items-center gap-2">
           {page.data.title}
 
-          {page.data.series && page.data.seriesPart && components?.Popover && components?.PopoverTrigger && components?.PopoverContent && components?.Badge && (
+          {page.data.series && page.data.seriesPart && components.Popover && components.PopoverTrigger && components.PopoverContent && components.Badge && components.Button && (
             <components.Popover>
               <components.PopoverTrigger asChild>
-                {components?.Button && (
-                  <components.Button
-                    size="icon"
-                    variant="ghost"
-                    className="relative ml-1 bg-foreground/5"
-                    aria-label="View series information"
-                  >
-                    <BookOpen className="size-5" aria-hidden="true" />
-                    <components.Badge className="absolute -top-2 left-full min-w-5 -translate-x-1/2 px-1 text-xs">
-                      {page.data.seriesPart}/
-                      {getSeriesInfo(page.data.series, posts)?.totalParts || 0}
-                    </components.Badge>
-                  </components.Button>
-                )}
+                <components.Button
+                  size="icon"
+                  variant="ghost"
+                  className="relative ml-1 bg-foreground/5"
+                  aria-label="View series information"
+                >
+                  <BookOpen className="size-5" aria-hidden="true" />
+                  <components.Badge className="absolute -top-2 left-full min-w-5 -translate-x-1/2 px-1 text-xs">
+                    {page.data.seriesPart}/
+                    {getSeriesInfo(page.data.series, posts)?.totalParts || 0}
+                  </components.Badge>
+                </components.Button>
               </components.PopoverTrigger>
               <components.PopoverContent className="w-80 p-0">
                 <SeriesPopoverContent

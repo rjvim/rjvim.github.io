@@ -3,7 +3,7 @@ import Link from "next/link";
 import { GridBackground } from "@repo/ui/components/grid-background";
 import { getSeriesBySlug } from "@/lib/series";
 import { getPostsBySeries } from "./utils";
-import { Book } from "@repo/shadverse/components/ui/book";
+// Book component comes from components context
 import { BookOpen } from "lucide-react";
 import { BlogComponents } from "./types";
 import { slot } from "./shared";
@@ -17,7 +17,7 @@ interface SeriesListProps {
 
 export function SeriesList({
   seriesSlug,
-  components,
+  components = {},
   posts = [],
   getSortedByDatePosts,
 }: SeriesListProps) {
@@ -40,21 +40,23 @@ export function SeriesList({
       {slot(components?.backgroundPattern, null)}
       <div className="relative">
         <div className="flex flex-col md:flex-row gap-8 mb-8 md:items-center items-start">
-          <Book
-            color="#3b82f6"
-            depth={6}
-            width={150}
-            illustration={
-              <div className="flex items-center justify-center h-full w-full p-4">
-                <BookOpen size={32} className="text-white" />
+          {components.Book && (
+            <components.Book
+              color="#3b82f6"
+              depth={6}
+              width={150}
+              illustration={
+                <div className="flex items-center justify-center h-full w-full p-4">
+                  <BookOpen size={32} className="text-white" />
+                </div>
+              }
+            >
+              <div className="p-3 mb-2 grid gap-2">
+                <h3 className="font-semibold text-sm">{seriesInfo.label}</h3>
+                <div className="text-xs">{posts.length} Parts</div>
               </div>
-            }
-          >
-            <div className="p-3 mb-2 grid gap-2">
-              <h3 className="font-semibold text-sm">{seriesInfo.label}</h3>
-              <div className="text-xs">{posts.length} Parts</div>
-            </div>
-          </Book>
+            </components.Book>
+          )}
           <div className="flex flex-col justify-center">
             <h1 className="text-4xl font-bold mb-3 text-gray-900 dark:text-white leading-tight">
               {seriesInfo.label}

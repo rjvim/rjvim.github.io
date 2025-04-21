@@ -1,17 +1,19 @@
 import Link from "next/link";
-import { Button } from "@repo/shadverse/components/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { BlogComponents } from "./types";
 
 export type PaginationProps = {
   currentPage: number;
   totalPages: number;
   basePath?: string;
+  components?: BlogComponents;
 };
 
 export function Pagination({
   currentPage,
   totalPages,
   basePath = "/blog",
+  components = {},
 }: PaginationProps) {
   const pageIndex = currentPage - 1;
 
@@ -19,10 +21,12 @@ export function Pagination({
     return null;
   }
 
+  if (!components.Button) return null;
+
   return (
     <div className="flex justify-center mt-8 space-x-4">
       <div className="flex items-center gap-2">
-        <Button
+        <components.Button
           variant="outline"
           size="sm"
           disabled={pageIndex === 0}
@@ -44,13 +48,13 @@ export function Pagination({
               Previous
             </>
           )}
-        </Button>
+        </components.Button>
 
         <div className="text-sm text-muted-foreground">
           Page {pageIndex + 1} of {totalPages}
         </div>
 
-        <Button
+        <components.Button
           variant="outline"
           size="sm"
           disabled={pageIndex + 1 >= totalPages}
@@ -67,7 +71,7 @@ export function Pagination({
               <ChevronRight className="h-4 w-4 ml-1" />
             </>
           )}
-        </Button>
+        </components.Button>
       </div>
     </div>
   );

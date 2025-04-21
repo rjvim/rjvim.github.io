@@ -9,6 +9,7 @@ import {
   PopoverTrigger,
 } from "@repo/shadverse/components/popover";
 import { Badge } from "@repo/shadverse/components/badge";
+import { Book } from "@repo/shadverse/components/ui/book";
 
 // Blog text constants that can be customized
 export const blogConstants = {
@@ -120,6 +121,7 @@ export function getBlogComponents(): BlogComponents {
     PopoverContent,
     PopoverTrigger,
     Badge,
+    Book,
   };
 }
 
