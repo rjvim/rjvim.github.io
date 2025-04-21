@@ -1,6 +1,4 @@
-import { getSortedByDatePosts as defaultGetSortedByDatePosts } from "@/lib/source";
-
-export const getTags = (getSortedByDatePosts = defaultGetSortedByDatePosts) => {
+export const getTags = (getSortedByDatePosts: () => any[]) => {
   const tagSet = new Set<string>();
   const posts = getSortedByDatePosts();
 
@@ -17,9 +15,9 @@ export const getTags = (getSortedByDatePosts = defaultGetSortedByDatePosts) => {
 
 export const getPostsByTag = (
   tag: string,
-  getSortedByDatePosts = defaultGetSortedByDatePosts
+  getSortedByDatePosts: () => any[]
 ) => {
   return [...getSortedByDatePosts()]
-    .filter((post) => post.data.tags?.includes(tag))
-    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+    .filter((post: any) => post.data.tags?.includes(tag))
+    .sort((a: any, b: any) => b.data.date.getTime() - a.data.date.getTime());
 };
