@@ -6,6 +6,7 @@ import { getPostsBySeries } from "./utils";
 import { Book } from "@repo/shadverse/components/ui/book";
 import { BookOpen } from "lucide-react";
 import { BlogComponents } from "./types";
+import { slot } from "./shared";
 
 interface SeriesListProps {
   seriesSlug: string;
@@ -14,22 +15,29 @@ interface SeriesListProps {
   getSortedByDatePosts?: any;
 }
 
-export function SeriesList({ seriesSlug, components, posts = [], getSortedByDatePosts }: SeriesListProps) {
+export function SeriesList({
+  seriesSlug,
+  components,
+  posts = [],
+  getSortedByDatePosts,
+}: SeriesListProps) {
   const seriesInfo = getSeriesBySlug(seriesSlug);
-  const seriesPosts = posts.length > 0 
-    ? posts.filter(post => post.data.series === seriesSlug)
-      .sort((a, b) => {
-        // Sort by seriesPart if available, otherwise by date
-        if (a.data.seriesPart && b.data.seriesPart) {
-          return a.data.seriesPart - b.data.seriesPart;
-        }
-        return a.data.date.getTime() - b.data.date.getTime();
-      })
-    : getPostsBySeries(seriesSlug, getSortedByDatePosts);
+  const seriesPosts =
+    posts.length > 0
+      ? posts
+          .filter((post) => post.data.series === seriesSlug)
+          .sort((a, b) => {
+            // Sort by seriesPart if available, otherwise by date
+            if (a.data.seriesPart && b.data.seriesPart) {
+              return a.data.seriesPart - b.data.seriesPart;
+            }
+            return a.data.date.getTime() - b.data.date.getTime();
+          })
+      : getPostsBySeries(seriesSlug, getSortedByDatePosts);
 
   return (
     <div className="container px-4 py-8 lg:py-12 lg:px-6">
-      <GridBackground maxWidthClass="container" />
+      {slot(components?.grid, null)}
       <div className="relative">
         <div className="flex flex-col md:flex-row gap-8 mb-8 md:items-center items-start">
           <Book

@@ -3,6 +3,7 @@ import { Pagination } from "./pagination";
 import { DocsTitle, DocsDescription } from "fumadocs-ui/page";
 import { PostCard } from "@/app/(home)/blog/[[...slug]]/(components)/post-card";
 import { BlogComponents, type BlogPost } from "./types";
+import { slot } from "./shared";
 
 export type PostListProps = {
   posts: BlogPost[];
@@ -30,7 +31,7 @@ export function PostList({
   return (
     <>
       <section className="relative container px-4 py-8 lg:py-12 lg:px-6 text-left bg-zinc-50/50 dark:bg-zinc-900/50">
-        <GridBackground maxWidthClass="container" />
+        {slot(components?.grid, null)}
 
         <div className="text-center">
           <DocsTitle className="dark:text-white capitalize">
@@ -43,7 +44,7 @@ export function PostList({
       </section>
 
       <section className="relative container px-4 py-8 lg:py-12 lg:px-6 text-left">
-        <GridBackground maxWidthClass="container" />
+        {slot(components?.grid, null)}
         <div className="grid gap-y-10 sm:grid-cols-12 sm:gap-y-12 md:gap-y-16 lg:gap-y-20">
           {posts
             .filter(

@@ -11,7 +11,6 @@ import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import { Calendar, BookOpen } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@repo/shadverse/lib/utils";
-import { GridBackground } from "@repo/ui/components/grid-background";
 
 import {
   Popover,
@@ -22,6 +21,7 @@ import { Button } from "@repo/shadverse/components/button";
 import { Badge } from "@repo/shadverse/components/badge";
 import { SeriesPopoverContent } from "./series-info";
 import { getSeriesInfo } from "./utils";
+import { slot } from "./shared";
 
 interface BlogPostProps {
   page: any;
@@ -36,6 +36,7 @@ interface BlogPostProps {
 
 export function BlogPost({
   page,
+  components,
   category,
   lastUpdate,
   tags,
@@ -48,7 +49,8 @@ export function BlogPost({
   return (
     <>
       <div className="relative container px-4 py-8 lg:py-12 lg:px-6 text-left">
-        <GridBackground maxWidthClass="container" />
+        {slot(components?.grid, null)}
+
         {category && (
           <div className="mb-4 text-gray-600 dark:text-gray-400 text-sm font-medium">
             <div className="flex flex-wrap gap-3">
@@ -131,7 +133,7 @@ export function BlogPost({
           ),
         }}
       >
-        <GridBackground maxWidthClass="container" />
+        {slot(components?.grid, null)}
 
         <div className="grid grid-cols-4">
           <DocsPage
