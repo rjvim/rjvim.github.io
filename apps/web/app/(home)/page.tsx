@@ -15,7 +15,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        <RecentPosts getBlogPosts={getBlogPosts} />
+        <RecentPosts posts={getBlogPosts()} />
       </div>
     </div>
   );

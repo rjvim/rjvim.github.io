@@ -10,6 +10,7 @@ import {
 } from "@repo/shadverse/components/popover";
 import { Badge } from "@repo/shadverse/components/badge";
 import { Book } from "@repo/shadverse/components/ui/book";
+import { PostCard } from "./app/(home)/blog/[[...slug]]/(components)/post-card";
 
 // Blog text constants that can be customized
 export const blogConstants = {
@@ -111,7 +112,7 @@ export function createBlogMetadata(override: Metadata): Metadata {
 
 export function getBlogComponents(): BlogComponents {
   return {
-    PostCard: PostCard2,
+    PostCard: PostCard,
     backgroundPattern: {
       enabled: true,
       component: <GridBackground maxWidthClass="container" />,
