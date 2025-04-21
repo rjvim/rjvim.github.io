@@ -10,7 +10,7 @@ import { BlogComponents } from "./types";
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import { Calendar, BookOpen } from "lucide-react";
 import Link from "next/link";
-import { cn } from "@repo/shadverse/lib/utils";
+import { cn } from "./utils";
 
 // Popover and Badge components come from components context
 import { SeriesPopoverContent } from "./series-info";
@@ -38,6 +38,8 @@ export function BlogPost({
   mdxComponents,
   posts = [],
 }: BlogPostProps) {
+  // Use components.cn if available, otherwise use the imported cn
+  const classNames = components?.cn || cn;
   const MDX = page.data.body;
 
   return (
@@ -92,6 +94,7 @@ export function BlogPost({
                   seriesName={page.data.series}
                   currentPart={page.data.seriesPart}
                   posts={posts}
+                  components={components}
                 />
               </components.PopoverContent>
             </components.Popover>
@@ -121,7 +124,7 @@ export function BlogPost({
         }}
         sidebar={{ enabled: false, prefetch: false, tabs: false }}
         containerProps={{
-          className: cn(
+          className: classNames(
             "flex-row-reverse",
             "relative container [--fd-nav-height:calc(var(--spacing)*14)] md:[--fd-nav-height:57px]"
           ),
@@ -142,7 +145,7 @@ export function BlogPost({
               single: false,
             }}
             article={{
-              className: cn(
+              className: classNames(
                 "!m-[unset] max-w-none bg-zinc-50/50 dark:bg-zinc-900/50 py-8 md:py-12"
               ),
             }}

@@ -1,19 +1,23 @@
 import React from "react";
 import Link from "next/link";
 import { getSeriesInfo } from "./utils";
-import { cn } from "@repo/shadverse/lib/utils";
+import { cn } from "./utils";
 
 interface SeriesComponentProps {
   seriesName: string;
   currentPart: number;
   posts: any[];
+  components?: { cn?: (...inputs: any[]) => string };
 }
 
 export function SeriesPopoverContent({
   seriesName,
   currentPart,
   posts,
+  components,
 }: SeriesComponentProps) {
+  // Use components.cn if available, otherwise use the imported cn
+  const classNames = components?.cn || cn;
   const seriesInfo = getSeriesInfo(seriesName, posts);
   if (!seriesInfo) return null;
 
@@ -34,7 +38,7 @@ export function SeriesPopoverContent({
         {seriesPosts.map((post, index) => (
           <div
             key={post.url}
-            className={cn(
+            className={classNames(
               "flex items-center",
               post.data.seriesPart === currentPart
                 ? "font-medium text-blue-600 dark:text-blue-400"
@@ -46,7 +50,7 @@ export function SeriesPopoverContent({
             </span>
             <Link
               href={post.url}
-              className={cn(
+              className={classNames(
                 "hover:underline",
                 post.data.seriesPart === currentPart
                   ? ""
@@ -62,7 +66,9 @@ export function SeriesPopoverContent({
   );
 }
 
-export function SeriesInfo({ seriesName, currentPart, posts }: SeriesComponentProps) {
+export function SeriesInfo({ seriesName, currentPart, posts, components }: SeriesComponentProps) {
+  // Use components.cn if available, otherwise use the imported cn
+  const classNames = components?.cn || cn;
   const seriesInfo = getSeriesInfo(seriesName, posts);
   if (!seriesInfo) return null;
 
@@ -83,7 +89,7 @@ export function SeriesInfo({ seriesName, currentPart, posts }: SeriesComponentPr
         {seriesPosts.map((post, index) => (
           <div
             key={post.url}
-            className={cn(
+            className={classNames(
               "flex items-center",
               post.data.seriesPart === currentPart
                 ? "font-medium text-blue-600 dark:text-blue-400"
@@ -95,7 +101,7 @@ export function SeriesInfo({ seriesName, currentPart, posts }: SeriesComponentPr
             </span>
             <Link
               href={post.url}
-              className={cn(
+              className={classNames(
                 "hover:underline",
                 post.data.seriesPart === currentPart
                   ? ""
