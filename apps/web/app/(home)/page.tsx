@@ -2,6 +2,7 @@ import Hero from "@/components/hero";
 import Link from "next/link";
 import { RecentPosts } from "./blog/[[...slug]]/(components)/blog-list";
 import { GridBackground } from "@repo/ui/components/grid-background";
+import BlogProvider from "./blog/[[...slug]]/(components)/blog-provider";
 
 export default function HomePage() {
   return (
@@ -15,7 +16,9 @@ export default function HomePage() {
           </div>
         </div>
 
-        <RecentPosts />
+        <BlogProvider recentPostsPageSize={3}>
+          <RecentPosts />
+        </BlogProvider>
       </div>
     </div>
   );

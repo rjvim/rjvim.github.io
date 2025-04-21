@@ -6,9 +6,9 @@ import { PostList } from "./post-list";
 import { useBlog } from "./blog-provider";
 
 export function RecentPosts() {
-  const pageSize = 3;
+  const { recentPostsPageSize } = useBlog();
   const allPosts = getSortedByDatePosts();
-  const posts = allPosts.slice(0, pageSize);
+  const posts = allPosts.slice(0, recentPostsPageSize);
   const totalPages = 1;
 
   return (
