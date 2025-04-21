@@ -17,7 +17,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@repo/shadverse/components/popover";
-import { Button } from "@repo/shadverse/components/button";
 import { Badge } from "@repo/shadverse/components/badge";
 import { SeriesPopoverContent } from "./series-info";
 import { getSeriesInfo } from "./utils";
@@ -80,18 +79,20 @@ export function BlogPost({
           {page.data.series && page.data.seriesPart && (
             <Popover>
               <PopoverTrigger asChild>
-                <Button
-                  size="icon"
-                  variant="ghost"
-                  className="relative ml-1 bg-foreground/5"
-                  aria-label="View series information"
-                >
-                  <BookOpen className="size-5" aria-hidden="true" />
-                  <Badge className="absolute -top-2 left-full min-w-5 -translate-x-1/2 px-1 text-xs">
-                    {page.data.seriesPart}/
-                    {getSeriesInfo(page.data.series, posts)?.totalParts || 0}
-                  </Badge>
-                </Button>
+                {components?.Button && (
+                  <components.Button
+                    size="icon"
+                    variant="ghost"
+                    className="relative ml-1 bg-foreground/5"
+                    aria-label="View series information"
+                  >
+                    <BookOpen className="size-5" aria-hidden="true" />
+                    <Badge className="absolute -top-2 left-full min-w-5 -translate-x-1/2 px-1 text-xs">
+                      {page.data.seriesPart}/
+                      {getSeriesInfo(page.data.series, posts)?.totalParts || 0}
+                    </Badge>
+                  </components.Button>
+                )}
               </PopoverTrigger>
               <PopoverContent className="w-80 p-0">
                 <SeriesPopoverContent

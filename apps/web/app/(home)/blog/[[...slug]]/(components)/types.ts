@@ -20,4 +20,10 @@ export interface PostCardProps {
 // Define BlogComponents as an interface that extends Record<string, any>
 export interface BlogComponents extends Record<string, any> {
   GridBackground?: React.ComponentType<{ maxWidthClass?: string }>;
+  PostCard?: React.ComponentType<PostCardProps>;
+  Button?: React.ComponentType<any>;
+  backgroundPattern?: {
+    enabled: boolean;
+    component: React.ReactNode;
+  };
 }
