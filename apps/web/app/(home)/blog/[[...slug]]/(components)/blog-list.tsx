@@ -1,9 +1,11 @@
 import { PostList } from "./post-list";
 import { BlogComponents } from "./types";
+import { getSortedByDatePosts } from "./utils";
 
 export function RecentPosts({ posts }: { posts: any[] }) {
   const recentPostsPageSize = 3;
-  const displayPosts = posts.slice(0, recentPostsPageSize);
+  const sortedPosts = getSortedByDatePosts(posts);
+  const displayPosts = sortedPosts.slice(0, recentPostsPageSize);
   const totalPages = 1;
 
   return (
@@ -30,8 +32,12 @@ export function BlogList({
   posts: any[];
 }) {
   const pageSize = 5;
-  const displayPosts = posts.slice((page - 1) * pageSize, page * pageSize);
-  const totalPages = Math.ceil(posts.length / pageSize);
+  const sortedPosts = getSortedByDatePosts(posts);
+  const displayPosts = sortedPosts.slice(
+    (page - 1) * pageSize,
+    page * pageSize
+  );
+  const totalPages = Math.ceil(sortedPosts.length / pageSize);
 
   return (
     <PostList
@@ -61,7 +67,8 @@ export function CategoryBlogList({
 }) {
   const pageSize = 5;
   const categoryInfo = getCategoryBySlug(category);
-  const filteredPosts = posts.filter(
+  const sortedPosts = getSortedByDatePosts(posts);
+  const filteredPosts = sortedPosts.filter(
     (post) => post.slugs && post.slugs[0] === category
   );
   const displayPosts = filteredPosts.slice(

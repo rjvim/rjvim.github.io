@@ -19,7 +19,6 @@ import {
 } from "@repo/fumadocs-blog/blog";
 import { getBlogComponents } from "./types";
 
-
 interface BlogWrapperProps {
   params: { slug?: string[] };
   blogSource: ReturnType<typeof loader>;
@@ -40,13 +39,7 @@ export async function BlogWrapper({
 
   // Handle blog root page
   if (isBlogRootPage(params)) {
-    return (
-      <BlogList
-        page={1}
-        components={components}
-        posts={posts}
-      />
-    );
+    return <BlogList page={1} components={components} posts={posts} />;
   }
 
   // Handle series page

@@ -1,6 +1,22 @@
 import { BlogPost } from "./types";
 
 /**
+ * Returns posts sorted by date (newest first)
+ */
+export const getSortedByDatePosts = (
+  posts: BlogPost[],
+  includeDrafts: boolean = false
+): BlogPost[] => {
+  const filteredPosts = posts.filter(
+    (post) => includeDrafts || !post.data.draft
+  );
+
+  return [...filteredPosts].sort(
+    (a, b) => b.data.date.getTime() - a.data.date.getTime()
+  );
+};
+
+/**
  * Returns all unique series names from posts
  */
 export const getSeriesNames = (posts: BlogPost[]) => {
@@ -18,10 +34,7 @@ export const getSeriesNames = (posts: BlogPost[]) => {
 /**
  * Returns all posts for a specific series
  */
-export const getPostsBySeries = (
-  seriesName: string,
-  posts: BlogPost[]
-) => {
+export const getPostsBySeries = (seriesName: string, posts: BlogPost[]) => {
   return posts
     .filter((post) => post.data.series === seriesName)
     .sort((a, b) => {
@@ -36,10 +49,7 @@ export const getPostsBySeries = (
 /**
  * Returns comprehensive information about a series
  */
-export const getSeriesInfo = (
-  seriesName: string,
-  posts: BlogPost[]
-) => {
+export const getSeriesInfo = (seriesName: string, posts: BlogPost[]) => {
   const seriesPosts = getPostsBySeries(seriesName, posts);
   if (seriesPosts.length === 0) return null;
 
@@ -63,12 +73,8 @@ export const getSeriesInfo = (
 /**
  * Returns all posts for a specific category
  */
-export const getPostsByCategory = (
-  category: string,
-  posts: BlogPost[]
-) => {
-  return posts
-    .filter((post) => post.slugs && post.slugs[0] === category);
+export const getPostsByCategory = (category: string, posts: BlogPost[]) => {
+  return posts.filter((post) => post.slugs && post.slugs[0] === category);
 };
 
 /**
@@ -80,11 +86,10 @@ export const getPostsByCategoryAndSlug = (
   posts: BlogPost[]
 ) => {
   return (
-    posts
-      .filter(
-        (post) =>
-          post.slugs && post.slugs[0] === category && post.slugs[1] === slug
-      )[0] || undefined
+    posts.filter(
+      (post) =>
+        post.slugs && post.slugs[0] === category && post.slugs[1] === slug
+    )[0] || undefined
   );
 };
 
@@ -108,9 +113,6 @@ export const getTags = (posts: BlogPost[]) => {
 /**
  * Returns all posts for a specific tag
  */
-export const getPostsByTag = (
-  tag: string,
-  posts: BlogPost[]
-) => {
+export const getPostsByTag = (tag: string, posts: BlogPost[]) => {
   return posts.filter((post) => post.data.tags?.includes(tag));
 };
