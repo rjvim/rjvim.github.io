@@ -35,7 +35,7 @@ export default async function Page(props: {
   // Handle blog root page
   if (isBlogRootPage(params)) {
     return (
-      <BlogProvider>
+      <BlogProvider pageSize={5}>
         <BlogList page={1} />
       </BlogProvider>
     );
@@ -50,12 +50,20 @@ export default async function Page(props: {
   // Handle category page
   if (isCategoryPage(params)) {
     const category = getCategorySlug(params);
-    return <CategoryBlogList category={category} />;
+    return (
+      <BlogProvider>
+        <CategoryBlogList category={category} />
+      </BlogProvider>
+    );
   }
 
   // Handle paginated blog page
   if (isPaginatedBlogPage(params)) {
-    return <BlogList page={getPageNumber(params)} />;
+    return (
+      <BlogProvider>
+        <BlogList page={getPageNumber(params)} />
+      </BlogProvider>
+    );
   }
 
   // Handle paginated category page
@@ -67,7 +75,9 @@ export default async function Page(props: {
     }
 
     return (
-      <CategoryBlogList category={category} page={getPageNumber(params)} />
+      <BlogProvider>
+        <CategoryBlogList category={category} page={getPageNumber(params)} />
+      </BlogProvider>
     );
   }
 
