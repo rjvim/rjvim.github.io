@@ -4,7 +4,7 @@ import { BlogPost } from "@/lib/source";
 import { GridBackground } from "@repo/ui/components/grid-background";
 import { Pagination } from "./pagination";
 import { DocsTitle, DocsDescription } from "fumadocs-ui/page";
-import { useBlog } from "./blog-provider";
+import { useBlog, PostCard } from "./blog-provider";
 
 export type PostListProps = {
   posts: BlogPost[];
@@ -25,7 +25,7 @@ export function PostList({
   basePath = "/blog",
   disablePagination = false,
 }: PostListProps) {
-  const { PostCard } = useBlog();
+  // PostCard is now imported directly
 
   return (
     <>
