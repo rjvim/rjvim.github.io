@@ -36,9 +36,9 @@ export default async function Page(props: {
   // Handle blog root page
   if (isBlogRootPage(params)) {
     return (
-      <BlogProvider 
+      <BlogProvider
         pageSize={5}
-        customPostCardPath="./(components)/custom-post-card"
+        useCustomPostCard={true}
       >
         <BlogList page={1} />
       </BlogProvider>
@@ -55,9 +55,7 @@ export default async function Page(props: {
   if (isCategoryPage(params)) {
     const category = getCategorySlug(params);
     return (
-      <BlogProvider
-        customPostCardPath="./(components)/custom-post-card"
-      >
+      <BlogProvider useCustomPostCard={true}>
         <CategoryBlogList category={category} />
       </BlogProvider>
     );
@@ -66,9 +64,7 @@ export default async function Page(props: {
   // Handle paginated blog page
   if (isPaginatedBlogPage(params)) {
     return (
-      <BlogProvider
-        customPostCardPath="./(components)/custom-post-card"
-      >
+      <BlogProvider useCustomPostCard={true}>
         <BlogList page={getPageNumber(params)} />
       </BlogProvider>
     );
@@ -83,9 +79,7 @@ export default async function Page(props: {
     }
 
     return (
-      <BlogProvider
-        customPostCardPath="./(components)/custom-post-card"
-      >
+      <BlogProvider useCustomPostCard={true}>
         <CategoryBlogList category={category} page={getPageNumber(params)} />
       </BlogProvider>
     );
