@@ -1,7 +1,8 @@
 import React from "react";
 import Link from "next/link";
 import { GridBackground } from "@repo/ui/components/grid-background";
-import { getSeriesBySlug, getPostsBySeries } from "@/lib/series";
+import { getSeriesBySlug } from "@/lib/series";
+import { getPostsBySeries } from "./series-utils";
 import { Book } from "@repo/shadverse/components/ui/book";
 import { BookOpen } from "lucide-react";
 import { BlogComponents } from "./types";
@@ -9,11 +10,12 @@ import { BlogComponents } from "./types";
 interface SeriesListProps {
   seriesSlug: string;
   components?: BlogComponents;
+  getSortedByDatePosts?: any;
 }
 
-export function SeriesList({ seriesSlug, components }: SeriesListProps) {
+export function SeriesList({ seriesSlug, components, getSortedByDatePosts }: SeriesListProps) {
   const seriesInfo = getSeriesBySlug(seriesSlug);
-  const posts = getPostsBySeries(seriesSlug);
+  const posts = getPostsBySeries(seriesSlug, getSortedByDatePosts);
 
   return (
     <div className="container px-4 py-8 lg:py-12 lg:px-6">
