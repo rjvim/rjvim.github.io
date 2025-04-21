@@ -1,4 +1,6 @@
-export const getTags = (getSortedByDatePosts: () => any[]) => {
+import { BlogPost } from "./types";
+
+export const getTags = (getSortedByDatePosts: () => BlogPost[]) => {
   const tagSet = new Set<string>();
   const posts = getSortedByDatePosts();
 
@@ -15,9 +17,9 @@ export const getTags = (getSortedByDatePosts: () => any[]) => {
 
 export const getPostsByTag = (
   tag: string,
-  getSortedByDatePosts: () => any[]
+  getSortedByDatePosts: () => BlogPost[]
 ) => {
   return [...getSortedByDatePosts()]
-    .filter((post: any) => post.data.tags?.includes(tag))
-    .sort((a: any, b: any) => b.data.date.getTime() - a.data.date.getTime());
+    .filter((post) => post.data.tags?.includes(tag))
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 };

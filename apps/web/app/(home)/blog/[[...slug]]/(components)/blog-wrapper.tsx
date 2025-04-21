@@ -47,18 +47,36 @@ export async function BlogWrapper({
   // Handle series page
   if (isSeriesPage(params)) {
     const seriesSlug = getSeriesSlug(params)!;
-    return <SeriesList seriesSlug={seriesSlug} components={components} />;
+    return (
+      <SeriesList
+        seriesSlug={seriesSlug}
+        components={components}
+        getSortedByDatePosts={getSortedByDatePosts}
+      />
+    );
   }
 
   // Handle category page
   if (isCategoryPage(params)) {
     const category = getCategorySlug(params);
-    return <CategoryBlogList category={category} components={components} getSortedByDatePosts={getSortedByDatePosts} />;
+    return (
+      <CategoryBlogList
+        category={category}
+        components={components}
+        getSortedByDatePosts={getSortedByDatePosts}
+      />
+    );
   }
 
   // Handle paginated blog page
   if (isPaginatedBlogPage(params)) {
-    return <BlogList page={getPageNumber(params)} components={components} />;
+    return (
+      <BlogList
+        page={getPageNumber(params)}
+        components={components}
+        getSortedByDatePosts={getSortedByDatePosts}
+      />
+    );
   }
 
   // Handle paginated category page
