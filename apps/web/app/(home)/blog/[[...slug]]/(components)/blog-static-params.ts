@@ -1,11 +1,15 @@
-import { blogSource } from "@/lib/source";
-import { getSeriesNames } from "@/lib/series";
+import type { BlogPost } from "./types";
+import { getSeriesNames } from "./utils";
 
-export async function generateAllParams(includeBlogPosts = true) {
+export async function generateAllParams(
+  blogSource: any,
+  posts: BlogPost[],
+  includeBlogPosts = true
+) {
   const blogPostsParams = await blogSource.generateParams();
 
   // Generate series page params
-  const seriesParams = generateSeriesPathParams();
+  const seriesParams = generateSeriesPathParams(posts);
 
   // Get root and pagination params
   const rootParams = generateRootPathParams(blogPostsParams);
@@ -33,8 +37,11 @@ export async function generateAllParams(includeBlogPosts = true) {
  * - Category pages
  * - Pagination for root and category pages
  */
-export async function generateBlogStaticParams() {
-  return await generateAllParams(true);
+export async function generateBlogStaticParams(
+  blogSource: any,
+  posts: BlogPost[]
+) {
+  return await generateAllParams(blogSource, posts, true);
 }
 
 /**
@@ -106,8 +113,8 @@ export function generateCategoryPathParams(
 /**
  * Builds URLs for series pages
  */
-export function generateSeriesPathParams() {
-  return getSeriesNames().map((seriesName) => ({
+export function generateSeriesPathParams(posts: BlogPost[]) {
+  return getSeriesNames(posts).map((seriesName) => ({
     slug: ["series", seriesName],
   }));
 }

@@ -6,6 +6,7 @@ import { getCategoryBySlug } from "@/lib/categories";
 import { getSeriesBySlug } from "@/lib/series";
 import { getMDXComponents } from "@/mdx-components";
 import type { Metadata } from "next";
+import { generateBlogStaticParams } from "@/app/(home)/blog/[[...slug]]/(components)/blog-static-params";
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
@@ -24,13 +25,14 @@ export default async function Page(props: {
   );
 }
 
-export { generateBlogStaticParams as generateStaticParams } from "@/app/(home)/blog/[[...slug]]/(components)/blog-static-params";
+export async function generateStaticParams() {
+  const posts = getBlogPosts();
+  return generateBlogStaticParams(blogSource, posts);
+}
 
-// Create a custom generateMetadata function that passes the required dependencies
 export async function generateMetadata(props: {
   params: Promise<{ slug?: string[] }>;
 }): Promise<Metadata> {
-  // Await params here so we don't need to await in blog-metadata.ts
   const params = await props.params;
 
   return generateBlogMetadata({
