@@ -16,7 +16,6 @@ export function SeriesPopoverContent({
   posts,
   components,
 }: SeriesComponentProps) {
-  // Use components.cn if available, otherwise use the imported cn
   const classNames = components?.cn || cn;
   const seriesInfo = getSeriesInfo(seriesName, posts);
   if (!seriesInfo) return null;
@@ -33,6 +32,7 @@ export function SeriesPopoverContent({
         >
           {title}
         </Link>
+        {/* TODO: basePath should be passed from blog-components */}
       </div>
       <div className="space-y-1">
         {seriesPosts.map((post, index) => (
@@ -66,7 +66,12 @@ export function SeriesPopoverContent({
   );
 }
 
-export function SeriesInfo({ seriesName, currentPart, posts, components }: SeriesComponentProps) {
+export function SeriesInfo({
+  seriesName,
+  currentPart,
+  posts,
+  components,
+}: SeriesComponentProps) {
   // Use components.cn if available, otherwise use the imported cn
   const classNames = components?.cn || cn;
   const seriesInfo = getSeriesInfo(seriesName, posts);
@@ -84,6 +89,7 @@ export function SeriesInfo({ seriesName, currentPart, posts, components }: Serie
         >
           {title}
         </Link>
+        {/* TODO: basePath should be passed from blog-components */}
       </div>
       <div className="space-y-1">
         {seriesPosts.map((post, index) => (

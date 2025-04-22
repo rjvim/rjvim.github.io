@@ -8,6 +8,8 @@ export function RecentPosts({ posts }: { posts: BlogPost[] }) {
   const displayPosts = sortedPosts.slice(0, recentPostsPageSize);
   const totalPages = 1;
 
+  // TODO: heading and description should be accepted from props, without any defaults.
+
   return (
     <PostList
       posts={displayPosts}
@@ -31,6 +33,7 @@ export function BlogList({
   components?: any;
   posts: any[];
 }) {
+  // TODO: pageSize should be coming from blog-components and then passed as prop
   const pageSize = 5;
   const displayPosts = posts.slice((page - 1) * pageSize, page * pageSize);
   const totalPages = Math.ceil(posts.length / pageSize);
@@ -61,6 +64,8 @@ export function CategoryBlogList({
   posts: any[];
   getCategoryBySlug: (slug: string) => any;
 }) {
+  // TODO: pageSize should be coming from blog-components and then passed as prop
+
   const pageSize = 5;
   const categoryInfo = getCategoryBySlug(category);
   const filteredPosts = posts.filter(

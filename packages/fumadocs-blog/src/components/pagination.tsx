@@ -5,14 +5,14 @@ import { BlogComponents } from "./types";
 export type PaginationProps = {
   currentPage: number;
   totalPages: number;
-  basePath?: string;
+  basePath: string;
   components?: BlogComponents;
 };
 
 export function Pagination({
   currentPage,
   totalPages,
-  basePath = "/blog",
+  basePath,
   components = {},
 }: PaginationProps) {
   const pageIndex = currentPage - 1;

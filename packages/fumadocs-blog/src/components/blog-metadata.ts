@@ -136,7 +136,7 @@ export async function generateBlogMetadata(props: {
       });
     }
 
-    // TODO: Solve the url problem much better
+    // TODO: Solve the url problem much better, blogBase should be passed from blog-components
     const canonicalUrl = `/blog/${category}`;
     const categoryInfo = getCategoryBySlug(category);
 

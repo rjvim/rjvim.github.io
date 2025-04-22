@@ -58,6 +58,7 @@ export function SinglePost({
                 <Link href={`/blog/${category}`}>
                   {getCategoryBySlug(category).label}
                 </Link>
+                {/* TODO: basePath should be passed from blog-components */}
               </span>
               <span className="inline-flex items-center gap-1.5">
                 <Calendar className="h-4 w-4" />
