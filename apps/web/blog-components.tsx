@@ -58,6 +58,7 @@ export const blogConstants = {
 
     // URL Generators
     getBlogUrl: () => "/blog",
+    getBlogOgImageUrl: () => "/blog-og/image.png",
     getSeriesUrl: (seriesSlug: string) => `/blog/series/${seriesSlug}`,
     getCategoryUrl: (category: string) => `/blog/${category}`,
     getCategoryOgImageUrl: (category: string) =>
