@@ -43,9 +43,6 @@ export const blogConstants = {
   // URLs
   blogBase: "/blog",
   blogOgImageBase: "blog-og",
-
-  // Image settings
-  images: {},
 };
 
 export function createBlogMetadata(override: Metadata): Metadata {
