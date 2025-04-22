@@ -15,10 +15,10 @@ import { createUrlUtils } from "./url-utils";
 // Helper function to generate image metadata for OpenGraph and Twitter
 function getImageMetadata(url: string, blogConstants: any) {
   return {
-    alt: blogConstants.images.altText,
+    alt: blogConstants.blogTitle,
     url,
-    width: blogConstants.images.ogImageDimensions.width,
-    height: blogConstants.images.ogImageDimensions.height,
+    width: 1200,
+    height: 630,
   };
 }
 

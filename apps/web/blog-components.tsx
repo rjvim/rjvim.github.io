@@ -45,13 +45,7 @@ export const blogConstants = {
   blogOgImageBase: "blog-og",
 
   // Image settings
-  images: {
-    ogImageDimensions: {
-      width: 1200,
-      height: 630,
-    },
-    altText: "Banner",
-  },
+  images: {},
 };
 
 export function createBlogMetadata(override: Metadata): Metadata {
