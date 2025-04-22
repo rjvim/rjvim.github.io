@@ -51,8 +51,10 @@ export function BlogList({
   const pageSize = components?.config?.pageSize || 5;
   const displayPosts = posts.slice((page - 1) * pageSize, page * pageSize);
   const totalPages = Math.ceil(posts.length / pageSize);
-  
-  const urlUtils = components?.config ? createUrlUtils(components.config) : null;
+
+  const urlUtils = components?.config
+    ? createUrlUtils(components.config)
+    : null;
   const basePath = urlUtils?.getBlogUrl() || "/blog";
 
   return (
@@ -94,8 +96,10 @@ export function CategoryBlogList({
     page * pageSize
   );
   const totalPages = Math.ceil(filteredPosts.length / pageSize);
-  
-  const urlUtils = components?.config ? createUrlUtils(components.config) : null;
+
+  const urlUtils = components?.config
+    ? createUrlUtils(components.config)
+    : null;
   const basePath = urlUtils?.getCategoryUrl(category) || `/blog/${category}`;
 
   return (
