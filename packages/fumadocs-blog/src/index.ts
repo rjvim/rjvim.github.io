@@ -13,3 +13,4 @@ export * from "./components/series-list";
 export * from "./components/shared";
 export * from "./components/types";
 export * from "./components/utils";
+export * from "./components/og-image";
