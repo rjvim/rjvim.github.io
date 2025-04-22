@@ -75,7 +75,6 @@ export const blogConstants = {
   },
 };
 
-// Replicate the createMetadata function from lib/metadata.ts
 export function createBlogMetadata(override: Metadata): Metadata {
   return {
     ...override,

@@ -1,12 +1,15 @@
-import { generateOGImage } from "@/components/og-image";
-import { generateAllParams } from "@repo/fumadocs-blog/blog";
+// import { generateOGImage } from "@/components/og-image";
+import { generateOGImage } from "fumadocs-ui/og";
+import {
+  generateAllParams,
+  generateOGImageMetadata,
+} from "@repo/fumadocs-blog/blog";
 import {
   blogConstants,
   getCategoryBySlug,
   getSeriesBySlug,
 } from "@/blog-components";
 import { blogSource, getBlogPosts } from "@/lib/source";
-import { handleOGImageRequest } from "@repo/fumadocs-blog/blog";
 
 export const contentType = "image/png";
 export const dynamic = "force-static";
@@ -19,12 +22,17 @@ export async function GET(
 
   console.log("resolvedParams", resolvedParams);
 
-  return handleOGImageRequest(resolvedParams, {
-    generateOGImage,
+  const metadata = generateOGImageMetadata(resolvedParams, {
     blogConstants,
     getCategoryBySlug,
     getSeriesBySlug,
     blogSource,
+  });
+
+  return generateOGImage({
+    title: metadata.title,
+    description: metadata.description,
+    site: "rjv.im",
   });
 }
 

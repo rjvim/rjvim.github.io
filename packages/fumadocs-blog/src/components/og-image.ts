@@ -10,12 +10,19 @@ import {
   getPageNumber,
 } from "./page-type";
 
-export interface OGImageGeneratorConfig {
+export interface OGImageMetadata {
   /**
-   * Function to generate the OG image
+   * Title for the OG image
    */
-  generateOGImage: (title: string) => Response;
+  title: string;
+  
+  /**
+   * Optional description for the OG image
+   */
+  description?: string;
+}
 
+export interface OGImageGeneratorConfig {
   /**
    * Blog constants from the application
    */
@@ -51,19 +58,21 @@ export function processImageParams(params: { slug?: string[] }) {
 }
 
 /**
- * Generate OG image title based on URL parameters
+ * Generate OG image metadata based on URL parameters
  */
-export function generateOGImageTitle(
+export function generateOGImageMetadata(
   params: { slug?: string[] },
   config: OGImageGeneratorConfig
-): string {
+): OGImageMetadata {
   const processedParams = processImageParams(params);
   const { blogConstants, getCategoryBySlug, getSeriesBySlug, blogSource } =
     config;
 
   // Blog root page
   if (isBlogRootPage(processedParams)) {
-    return blogConstants.blogTitle;
+    return {
+      title: blogConstants.blogTitle
+    };
   }
 
   // Series page
@@ -72,7 +81,10 @@ export function generateOGImageTitle(
     if (seriesSlug) {
       const series = getSeriesBySlug(seriesSlug);
       if (series) {
-        return `${series.label}`;
+        return {
+          title: series.label,
+          description: series.description
+        };
       }
     }
   }
@@ -83,7 +95,10 @@ export function generateOGImageTitle(
     if (categorySlug) {
       const categoryInfo = getCategoryBySlug(categorySlug);
       if (categoryInfo) {
-        return `${categoryInfo.label}`;
+        return {
+          title: categoryInfo.label,
+          description: categoryInfo.description
+        };
       }
     }
   }
@@ -91,7 +106,9 @@ export function generateOGImageTitle(
   // Paginated blog page
   if (isPaginatedBlogPage(processedParams)) {
     const pageNumber = getPageNumber(processedParams);
-    return blogConstants.paginationTitle(pageNumber);
+    return {
+      title: blogConstants.paginationTitle(pageNumber)
+    };
   }
 
   // Paginated category page
@@ -101,7 +118,10 @@ export function generateOGImageTitle(
     const categoryInfo = getCategoryBySlug(categorySlug);
 
     if (categoryInfo) {
-      return blogConstants.categoryPaginationTitle(categorySlug, pageNumber);
+      return {
+        title: blogConstants.categoryPaginationTitle(categorySlug, pageNumber),
+        description: categoryInfo.description
+      };
     }
   }
 
@@ -109,21 +129,17 @@ export function generateOGImageTitle(
   if (processedParams.slug && processedParams.slug.length > 0) {
     const post = blogSource.getPage(processedParams.slug);
     if (post && post.data && post.data.title) {
-      return post.data.title;
+      return {
+        title: post.data.title,
+        description: post.data.description
+      };
     }
   }
 
   // Default fallback
-  return blogConstants.blogTitle;
+  return {
+    title: blogConstants.blogTitle
+  };
 }
 
-/**
- * Handle OG image generation for blog routes
- */
-export function handleOGImageRequest(
-  params: { slug?: string[] },
-  config: OGImageGeneratorConfig
-): Response {
-  const title = generateOGImageTitle(params, config);
-  return config.generateOGImage(title);
-}
+
