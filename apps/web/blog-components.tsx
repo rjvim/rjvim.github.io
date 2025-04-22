@@ -28,16 +28,14 @@ import { SocialIcons } from "@repo/ui/components/social-icons";
 // Blog text constants that can be customized
 export const blogConstants = {
   // General
-  blogTitle: "Blog",
+  blogTitle: "rjv.im",
   blogDescription: "Articles and thoughts",
 
   // Series
-  seriesSuffix: "Blog Series",
   seriesDefaultDescription: (seriesLabel: string) =>
     `Articles in the ${seriesLabel} series`,
 
   // Category
-  categorySuffix: "Blog",
   categoryDefaultDescription: (categoryLabel: string) =>
     `Articles in the ${categoryLabel} category`,
 

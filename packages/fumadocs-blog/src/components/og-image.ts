@@ -15,28 +15,26 @@ export interface OGImageGeneratorConfig {
    * Function to generate the OG image
    */
   generateOGImage: (title: string) => Response;
-  
+
   /**
    * Blog constants from the application
    */
   blogConstants: {
     blogTitle: string;
-    seriesSuffix: string;
-    categorySuffix: string;
     paginationTitle: (page: number) => string;
     categoryPaginationTitle: (category: string, page: number) => string;
   };
-  
+
   /**
    * Function to get category information by slug
    */
   getCategoryBySlug: (slug: string) => { label: string; description?: string };
-  
+
   /**
    * Function to get series information by slug
    */
   getSeriesBySlug: (slug: string) => { label: string; description?: string };
-  
+
   /**
    * Blog source to get post data
    */
@@ -60,7 +58,8 @@ export function generateOGImageTitle(
   config: OGImageGeneratorConfig
 ): string {
   const processedParams = processImageParams(params);
-  const { blogConstants, getCategoryBySlug, getSeriesBySlug, blogSource } = config;
+  const { blogConstants, getCategoryBySlug, getSeriesBySlug, blogSource } =
+    config;
 
   // Blog root page
   if (isBlogRootPage(processedParams)) {
@@ -73,7 +72,7 @@ export function generateOGImageTitle(
     if (seriesSlug) {
       const series = getSeriesBySlug(seriesSlug);
       if (series) {
-        return `${series.label} - ${blogConstants.seriesSuffix}`;
+        return `${series.label}`;
       }
     }
   }
@@ -84,7 +83,7 @@ export function generateOGImageTitle(
     if (categorySlug) {
       const categoryInfo = getCategoryBySlug(categorySlug);
       if (categoryInfo) {
-        return `${categoryInfo.label} - ${blogConstants.categorySuffix}`;
+        return `${categoryInfo.label}`;
       }
     }
   }
@@ -100,7 +99,7 @@ export function generateOGImageTitle(
     const categorySlug = processedParams.slug?.[0] || "";
     const pageNumber = getPageNumber(processedParams);
     const categoryInfo = getCategoryBySlug(categorySlug);
-    
+
     if (categoryInfo) {
       return blogConstants.categoryPaginationTitle(categorySlug, pageNumber);
     }

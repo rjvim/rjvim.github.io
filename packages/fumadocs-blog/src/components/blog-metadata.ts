@@ -110,7 +110,7 @@ export async function generateBlogMetadata(props: {
     );
 
     const metadata = createBlogMetadata({
-      title: `${series.label} - ${blogConstants.seriesSuffix}`,
+      title: `${series.label}`,
       description:
         series.description ||
         blogConstants.seriesDefaultDescription(series.label),
@@ -155,7 +155,7 @@ export async function generateBlogMetadata(props: {
     );
 
     const metadata = createBlogMetadata({
-      title: `${categoryInfo.label} - ${blogConstants.categorySuffix}`,
+      title: `${categoryInfo.label}`,
       description:
         categoryInfo.description ||
         blogConstants.categoryDefaultDescription(categoryInfo.label),

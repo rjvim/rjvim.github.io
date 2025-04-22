@@ -1,6 +1,10 @@
 import { generateOGImage } from "@/components/og-image";
 import { generateAllParams } from "@repo/fumadocs-blog/blog";
-import { blogConstants, getCategoryBySlug, getSeriesBySlug } from "@/blog-components";
+import {
+  blogConstants,
+  getCategoryBySlug,
+  getSeriesBySlug,
+} from "@/blog-components";
 import { blogSource, getBlogPosts } from "@/lib/source";
 import { handleOGImageRequest } from "@repo/fumadocs-blog/blog";
 
