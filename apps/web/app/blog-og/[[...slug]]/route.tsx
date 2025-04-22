@@ -1,6 +1,7 @@
 import { generateOGImage } from "@/components/og-image";
-import { generateAllParams } from "@/app/(home)/blog/[[...slug]]/(components)/blog-static-params";
-import { getCategoryBySlug } from "@/lib/categories";
+import { generateAllParams } from "@repo/fumadocs-blog/blog";
+import { getCategoryBySlug } from "@/blog-components";
+import { blogSource, getBlogPosts } from "@/lib/source";
 
 export const contentType = "image/png";
 export const dynamic = "force-static";
@@ -32,7 +33,9 @@ export async function GET(
 }
 
 export async function generateStaticParams() {
-  const params = await generateAllParams(false);
+  const posts = getBlogPosts();
+
+  const params = await generateAllParams(blogSource, posts, false);
 
   // Create image routes by adding image.png to each existing slug array
   const imageRoutes = params.map((param) => {
