@@ -1,7 +1,7 @@
 import Hero from "@/components/hero";
-import { RecentPosts } from "./blog/[[...slug]]/(components)/blog-list";
 import { GridBackground } from "@repo/ui/components/grid-background";
 import { getBlogPosts } from "@/lib/source";
+import { RecentPosts } from "@repo/fumadocs-blog/blog";
 
 export default function HomePage() {
   return (
