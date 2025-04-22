@@ -11,6 +11,12 @@ export interface BlogConfig {
   blogBase: string;
   
   /**
+   * Base URL for blog OG images (e.g., "blog-og")
+   * If not provided, defaults to blogBase-og
+   */
+  blogOgImageBase?: string;
+  
+  /**
    * Number of posts to display per page
    */
   pageSize: number;

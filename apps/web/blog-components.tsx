@@ -41,24 +41,8 @@ export const blogConstants = {
     `Articles in the ${category} category - Page ${page}`,
 
   // URLs
-  urls: {
-    // Base URLs
-    blogBase: "/blog",
-    seriesBase: "/blog/series",
-
-    // URL Generators
-    getBlogUrl: () => "/blog",
-    getBlogPostUrl: (slug: string) => `/blog/${slug}`,
-    getBlogOgImageUrl: () => "/blog-og/image.png",
-    getBlogPostOgImageUrl: (slug: string[]) =>
-      `/blog-og/${slug.join("/")}/image.png`,
-    getSeriesUrl: (seriesSlug: string) => `/blog/series/${seriesSlug}`,
-    getCategoryUrl: (category: string) => `/blog/${category}`,
-    getCategoryOgImageUrl: (category: string) =>
-      `/blog-og/${category}/image.png`,
-    getSeriesOgImageUrl: (series: string) =>
-      `/blog-og/series/${series}/image.png`,
-  },
+  blogBase: "/blog",
+  blogOgImageBase: "blog-og",
 
   // Image settings
   images: {
@@ -135,7 +119,8 @@ export function getBlogComponents(): BlogComponents {
     Card,
     cn,
     config: {
-      blogBase: blogConstants.urls.blogBase,
+      blogBase: blogConstants.blogBase,
+      blogOgImageBase: blogConstants.blogOgImageBase,
       pageSize: 5,
     },
   };

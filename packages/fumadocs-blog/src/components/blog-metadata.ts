@@ -10,6 +10,7 @@ import {
   getSeriesSlug,
   getCategorySlug,
 } from "./page-type";
+import { createUrlUtils } from "./url-utils";
 
 // Helper function to generate image metadata for OpenGraph and Twitter
 function getImageMetadata(url: string, blogConstants: any) {
@@ -37,11 +38,17 @@ export async function generateBlogMetadata(props: {
     getCategoryBySlug,
     getSeriesBySlug,
   } = props;
+  
+  // Create URL utilities instance
+  const urlUtils = createUrlUtils({
+    blogBase: blogConstants.blogBase,
+    blogOgImageBase: blogConstants.blogOgImageBase
+  });
 
   // Default for root blog page or when slug is undefined
   if (isBlogRootPage(params)) {
     const imageMetaData = getImageMetadata(
-      blogConstants.urls.getBlogOgImageUrl(),
+      urlUtils.getBlogOgImageUrl(),
       blogConstants
     );
 
@@ -49,14 +56,14 @@ export async function generateBlogMetadata(props: {
       title: blogConstants.blogTitle,
       description: blogConstants.blogDescription,
       openGraph: {
-        url: blogConstants.urls.blogBase,
+        url: urlUtils.getBlogUrl(),
         images: imageMetaData,
       },
       twitter: {
         images: imageMetaData,
       },
       alternates: {
-        canonical: blogConstants.urls.blogBase,
+        canonical: urlUtils.getBlogUrl(),
       },
     });
   }
@@ -67,7 +74,7 @@ export async function generateBlogMetadata(props: {
     if (!page) notFound();
 
     const imageMetaData = getImageMetadata(
-      blogConstants.urls.getBlogPostOgImageUrl(params.slug),
+      urlUtils.getBlogPostOgImageUrl(params.slug || []),
       blogConstants
     );
 
@@ -92,10 +99,10 @@ export async function generateBlogMetadata(props: {
     const seriesSlug = getSeriesSlug(params)!;
     const series = getSeriesBySlug(seriesSlug);
 
-    const canonicalUrl = blogConstants.urls.getSeriesUrl(seriesSlug);
+    const canonicalUrl = urlUtils.getSeriesUrl(seriesSlug);
 
     const imageMetaData = getImageMetadata(
-      blogConstants.urls.getSeriesOgImageUrl(seriesSlug),
+      urlUtils.getSeriesOgImageUrl(seriesSlug),
       blogConstants
     );
 
@@ -133,12 +140,11 @@ export async function generateBlogMetadata(props: {
       });
     }
 
-    // TODO: Solve the url problem much better, blogBase should be passed from blog-components
-    const canonicalUrl = `/blog/${category}`;
+    const canonicalUrl = urlUtils.getCategoryUrl(category);
     const categoryInfo = getCategoryBySlug(category);
 
     const imageMetaData = getImageMetadata(
-      blogConstants.urls.getCategoryOgImageUrl(category),
+      urlUtils.getCategoryOgImageUrl(category),
       blogConstants
     );
 
@@ -163,10 +169,10 @@ export async function generateBlogMetadata(props: {
   // Handle paginated root blog page
   if (isPaginatedBlogPage(params) && params.slug) {
     const page = Number(params.slug[1]);
-    const canonicalUrl = blogConstants.urls.blogBase; // Use main blog URL as canonical for all paginated pages
+    const canonicalUrl = urlUtils.getBlogUrl(); // Use main blog URL as canonical for all paginated pages
 
     const imageMetaData = getImageMetadata(
-      blogConstants.urls.getBlogOgImageUrl(),
+      urlUtils.getBlogOgImageUrl(),
       blogConstants
     );
 
@@ -188,12 +194,12 @@ export async function generateBlogMetadata(props: {
 
   // Handle paginated category page
   if (isPaginatedCategoryPage(params) && params.slug) {
-    const category = params.slug[0];
-    const page = Number(params.slug[2]);
-    const canonicalUrl = blogConstants.urls.getCategoryUrl(category); // Use main category URL as canonical
+    const category = params.slug[0] || '';
+    const page = Number(params.slug[2] || '1');
+    const canonicalUrl = urlUtils.getCategoryUrl(category); // Use main category URL as canonical
 
     const imageMetaData = getImageMetadata(
-      blogConstants.urls.getCategoryOgImageUrl(category),
+      urlUtils.getCategoryOgImageUrl(category),
       blogConstants
     );
 
@@ -214,7 +220,7 @@ export async function generateBlogMetadata(props: {
   }
 
   const imageMetaData = getImageMetadata(
-    blogConstants.urls.getBlogOgImageUrl(),
+    urlUtils.getBlogOgImageUrl(),
     blogConstants
   );
 
@@ -223,14 +229,14 @@ export async function generateBlogMetadata(props: {
     title: blogConstants.blogTitle,
     description: blogConstants.blogDescription,
     openGraph: {
-      url: blogConstants.urls.blogBase,
+      url: urlUtils.getBlogUrl(),
       images: imageMetaData,
     },
     twitter: {
       images: imageMetaData,
     },
     alternates: {
-      canonical: blogConstants.urls.blogBase,
+      canonical: urlUtils.getBlogUrl(),
     },
   });
 }
