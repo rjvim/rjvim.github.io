@@ -9,13 +9,13 @@ export interface BlogConfig {
    * Base URL for the blog (e.g., "/blog")
    */
   blogBase: string;
-  
+
   /**
    * Base URL for blog OG images (e.g., "blog-og")
    * If not provided, defaults to blogBase-og
    */
   blogOgImageBase?: string;
-  
+
   /**
    * Number of posts to display per page
    */
@@ -55,11 +55,11 @@ export interface BlogConstants {
 
 export interface PostCardProps {
   post: NonNullable<BlogPost>;
-  components?: BlogComponents;
+  configuration?: BlogConfiguration;
 }
 
-// Define BlogComponents as an interface that extends Record<string, any>
-export interface BlogComponents extends Record<string, any> {
+// Define BlogConfiguration as an interface that extends Record<string, any>
+export interface BlogConfiguration extends Record<string, any> {
   GridBackground?: React.ComponentType<{ maxWidthClass?: string }>;
   PostCard?: React.ComponentType<PostCardProps>;
   Button?: React.ComponentType<any>;
@@ -74,7 +74,7 @@ export interface BlogComponents extends Record<string, any> {
     enabled: boolean;
     component: React.ReactNode;
   };
-  
+
   /**
    * Blog configuration for URLs and pagination
    */

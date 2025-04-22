@@ -2,23 +2,23 @@ import React from "react";
 import Link from "next/link";
 import { getSeriesInfo } from "./utils";
 import { cn } from "./utils";
-import { BlogComponents } from "./types";
+import { BlogConfiguration } from "./types";
 import { createUrlUtils } from "./url-utils";
 
 interface SeriesComponentProps {
   seriesName: string;
   currentPart: number;
   posts: any[];
-  components?: BlogComponents;
+  configuration?: BlogConfiguration;
 }
 
 export function SeriesPopoverContent({
   seriesName,
   currentPart,
   posts,
-  components,
+  configuration,
 }: SeriesComponentProps) {
-  const classNames = components?.cn || cn;
+  const classNames = configuration?.cn || cn;
   const seriesInfo = getSeriesInfo(seriesName, posts);
   if (!seriesInfo) return null;
 
@@ -29,7 +29,11 @@ export function SeriesPopoverContent({
       <div className="mb-2 font-medium text-gray-900 dark:text-white">
         Part {currentPart} of {totalParts} in series:{" "}
         <Link
-          href={components?.config ? createUrlUtils(components.config).getSeriesUrl(seriesName) : `/blog/series/${seriesName}`}
+          href={
+            configuration?.config
+              ? createUrlUtils(configuration.config).getSeriesUrl(seriesName)
+              : `/blog/series/${seriesName}`
+          }
           className="text-blue-600 dark:text-blue-400 hover:underline"
         >
           {title}
@@ -71,10 +75,10 @@ export function SeriesInfo({
   seriesName,
   currentPart,
   posts,
-  components,
+  configuration,
 }: SeriesComponentProps) {
-  // Use components.cn if available, otherwise use the imported cn
-  const classNames = components?.cn || cn;
+  // Use configuration.cn if available, otherwise use the imported cn
+  const classNames = configuration?.cn || cn;
   const seriesInfo = getSeriesInfo(seriesName, posts);
   if (!seriesInfo) return null;
 
@@ -85,7 +89,11 @@ export function SeriesInfo({
       <div className="mb-2 font-medium text-gray-900 dark:text-white">
         Part {currentPart} of {totalParts} in series:{" "}
         <Link
-          href={components?.config ? createUrlUtils(components.config).getSeriesUrl(seriesName) : `/blog/series/${seriesName}`}
+          href={
+            configuration?.config
+              ? createUrlUtils(configuration.config).getSeriesUrl(seriesName)
+              : `/blog/series/${seriesName}`
+          }
           className="text-blue-600 dark:text-blue-400 hover:underline"
         >
           {title}

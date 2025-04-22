@@ -2,12 +2,12 @@ import React from "react";
 import Link from "next/link";
 import { getPostsBySeries } from "./utils";
 import { BookOpen } from "lucide-react";
-import { BlogComponents } from "./types";
+import { BlogConfiguration } from "./types";
 import { slot } from "./shared";
 
 interface SeriesListProps {
   seriesSlug: string;
-  components?: BlogComponents;
+  configuration?: BlogConfiguration;
   posts?: any[];
   getSortedByDatePosts?: any;
   getSeriesBySlug: (slug: string) => any;
@@ -15,7 +15,7 @@ interface SeriesListProps {
 
 export function SeriesList({
   seriesSlug,
-  components = {},
+  configuration = {},
   posts = [],
   getSeriesBySlug,
 }: SeriesListProps) {
@@ -28,11 +28,11 @@ export function SeriesList({
 
   return (
     <div className="container px-4 py-8 lg:py-12 lg:px-6">
-      {slot(components?.backgroundPattern, null)}
+      {slot(configuration?.backgroundPattern, null)}
       <div className="relative">
         <div className="flex flex-col md:flex-row gap-8 mb-8 md:items-center items-start">
-          {components.Book && (
-            <components.Book
+          {configuration.Book && (
+            <configuration.Book
               color="#3b82f6"
               depth={6}
               width={150}
@@ -46,7 +46,7 @@ export function SeriesList({
                 <h3 className="font-semibold text-sm">{seriesInfo.label}</h3>
                 <div className="text-xs">{posts.length} Parts</div>
               </div>
-            </components.Book>
+            </configuration.Book>
           )}
           <div className="flex flex-col justify-center">
             <h1 className="text-4xl font-bold mb-3 text-gray-900 dark:text-white leading-tight">

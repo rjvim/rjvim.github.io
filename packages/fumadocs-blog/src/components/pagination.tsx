@@ -1,19 +1,19 @@
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { BlogComponents } from "./types";
+import { BlogConfiguration } from "./types";
 
 export type PaginationProps = {
   currentPage: number;
   totalPages: number;
   basePath: string;
-  components?: BlogComponents;
+  configuration?: BlogConfiguration;
 };
 
 export function Pagination({
   currentPage,
   totalPages,
   basePath,
-  components = { config: { blogBase: "/blog", pageSize: 5 } },
+  configuration = { config: { blogBase: "/blog", pageSize: 5 } },
 }: PaginationProps) {
   const pageIndex = currentPage - 1;
 
@@ -21,12 +21,12 @@ export function Pagination({
     return null;
   }
 
-  if (!components.Button) return null;
+  if (!configuration.Button) return null;
 
   return (
     <div className="flex justify-center mt-8 space-x-4">
       <div className="flex items-center gap-2">
-        <components.Button
+        <configuration.Button
           variant="outline"
           size="sm"
           disabled={pageIndex === 0}
@@ -48,13 +48,13 @@ export function Pagination({
               Previous
             </>
           )}
-        </components.Button>
+        </configuration.Button>
 
         <div className="text-sm text-muted-foreground">
           Page {pageIndex + 1} of {totalPages}
         </div>
 
-        <components.Button
+        <configuration.Button
           variant="outline"
           size="sm"
           disabled={pageIndex + 1 >= totalPages}
@@ -71,7 +71,7 @@ export function Pagination({
               <ChevronRight className="h-4 w-4 ml-1" />
             </>
           )}
-        </components.Button>
+        </configuration.Button>
       </div>
     </div>
   );

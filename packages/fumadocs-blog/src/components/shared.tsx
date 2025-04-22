@@ -24,14 +24,14 @@ export function slots<Comp extends Record<string, ReactNode>>(
   obj:
     | {
         enabled?: boolean;
-        components?: Comp;
+        configuration?: Comp;
       }
     | undefined,
   def: ReactNode
 ): ReactNode {
   if (obj?.enabled === false) return;
-  if (obj?.components?.[variant] !== undefined)
-    return <Slot>{obj.components[variant]}</Slot>;
+  if (obj?.configuration?.[variant] !== undefined)
+    return <Slot>{obj.configuration[variant]}</Slot>;
 
   return def;
 }

@@ -5,14 +5,14 @@ import {
   DocsDescription,
   DocsTitle,
 } from "fumadocs-ui/page";
-import { BlogComponents } from "./types";
+import { BlogConfiguration } from "./types";
 
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import { Calendar, BookOpen } from "lucide-react";
 import Link from "next/link";
 import { cn } from "./utils";
 
-// Popover and Badge components come from components context
+// Popover and Badge configuration come from configuration context
 import { SeriesPopoverContent } from "./series-info";
 import { getSeriesInfo } from "./utils";
 import { slot } from "./shared";
@@ -23,7 +23,7 @@ interface SinglePostProps {
   category?: string;
   lastUpdate?: Date;
   tags: string[];
-  components?: BlogComponents;
+  configuration?: BlogConfiguration;
   getCategoryBySlug: (slug: string) => any;
   mdxComponents: any;
   posts?: any[];
@@ -31,7 +31,7 @@ interface SinglePostProps {
 
 export function SinglePost({
   page,
-  components = { config: { blogBase: "/blog", pageSize: 5 } },
+  configuration = { config: { blogBase: "/blog", pageSize: 5 } },
   category,
   lastUpdate,
   tags,
@@ -39,14 +39,14 @@ export function SinglePost({
   mdxComponents,
   posts = [],
 }: SinglePostProps) {
-  // Use components.cn if available, otherwise use the imported cn
-  const classNames = components?.cn || cn;
+  // Use configuration.cn if available, otherwise use the imported cn
+  const classNames = configuration?.cn || cn;
   const MDX = page.data.body;
 
   return (
     <>
       <div className="relative container px-4 py-8 lg:py-12 lg:px-6 text-left">
-        {slot(components?.backgroundPattern, null)}
+        {slot(configuration?.backgroundPattern, null)}
 
         {category && (
           <div className="mb-4 text-gray-600 dark:text-gray-400 text-sm font-medium">
@@ -56,7 +56,15 @@ export function SinglePost({
                   React.createElement(getCategoryBySlug(category).icon, {
                     className: "h-4 w-4",
                   })}
-                <Link href={components?.config ? createUrlUtils(components.config).getCategoryUrl(category) : `/blog/${category}`}>
+                <Link
+                  href={
+                    configuration?.config
+                      ? createUrlUtils(configuration.config).getCategoryUrl(
+                          category
+                        )
+                      : `/blog/${category}`
+                  }
+                >
                   {getCategoryBySlug(category).label}
                 </Link>
               </span>
@@ -76,35 +84,35 @@ export function SinglePost({
 
           {page.data.series &&
             page.data.seriesPart &&
-            components.Popover &&
-            components.PopoverTrigger &&
-            components.PopoverContent &&
-            components.Badge &&
-            components.Button && (
-              <components.Popover>
-                <components.PopoverTrigger asChild>
-                  <components.Button
+            configuration.Popover &&
+            configuration.PopoverTrigger &&
+            configuration.PopoverContent &&
+            configuration.Badge &&
+            configuration.Button && (
+              <configuration.Popover>
+                <configuration.PopoverTrigger asChild>
+                  <configuration.Button
                     size="icon"
                     variant="ghost"
                     className="relative ml-1 bg-foreground/5"
                     aria-label="View series information"
                   >
                     <BookOpen className="size-5" aria-hidden="true" />
-                    <components.Badge className="absolute -top-2 left-full min-w-5 -translate-x-1/2 px-1 text-xs">
+                    <configuration.Badge className="absolute -top-2 left-full min-w-5 -translate-x-1/2 px-1 text-xs">
                       {page.data.seriesPart}/
                       {getSeriesInfo(page.data.series, posts)?.totalParts || 0}
-                    </components.Badge>
-                  </components.Button>
-                </components.PopoverTrigger>
-                <components.PopoverContent className="w-80 p-0">
+                    </configuration.Badge>
+                  </configuration.Button>
+                </configuration.PopoverTrigger>
+                <configuration.PopoverContent className="w-80 p-0">
                   <SeriesPopoverContent
                     seriesName={page.data.series}
                     currentPart={page.data.seriesPart}
                     posts={posts}
-                    components={components}
+                    configuration={configuration}
                   />
-                </components.PopoverContent>
-              </components.Popover>
+                </configuration.PopoverContent>
+              </configuration.Popover>
             )}
         </DocsTitle>
         <DocsDescription className="text-left mt-3 dark:text-gray-300">
@@ -137,7 +145,7 @@ export function SinglePost({
           ),
         }}
       >
-        {slot(components?.backgroundPattern, null)}
+        {slot(configuration?.backgroundPattern, null)}
 
         <div className="grid grid-cols-4">
           <DocsPage
@@ -158,7 +166,7 @@ export function SinglePost({
             }}
           >
             <DocsBody>
-              <MDX components={mdxComponents} />
+              <MDX configuration={mdxComponents} />
             </DocsBody>
           </DocsPage>
         </div>

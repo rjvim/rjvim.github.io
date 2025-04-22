@@ -7,7 +7,7 @@ import {
 import {
   createBlogMetadata,
   blogConstants,
-  getBlogComponents,
+  getBlogConfiguration,
 } from "@/blog-components";
 import { getCategoryBySlug } from "@/blog-components";
 import { getSeriesBySlug } from "@/blog-components";
@@ -28,7 +28,7 @@ export default async function Page(props: {
       getCategoryBySlug={getCategoryBySlug}
       getSeriesBySlug={getSeriesBySlug}
       mdxComponents={getMDXComponents()}
-      components={getBlogComponents()}
+      configuration={getBlogConfiguration()}
       includeDrafts={process.env.NODE_ENV !== "production"}
     />
   );

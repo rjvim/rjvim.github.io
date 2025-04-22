@@ -14,14 +14,14 @@ import {
   getCategorySlug,
   getPageNumber,
 } from "./page-type";
-import { type BlogComponents } from "./types";
+import { type BlogConfiguration } from "./types";
 import { getSortedByDatePosts } from "./utils";
 
 interface BlogWrapperProps {
   params: { slug?: string[] };
   blogSource: ReturnType<typeof loader>;
   posts: any[];
-  components: BlogComponents;
+  configuration: BlogConfiguration;
   getCategoryBySlug: (slug: string) => any;
   getSeriesBySlug: (slug: string) => any;
   mdxComponents: any;
@@ -32,7 +32,7 @@ export async function BlogWrapper({
   params,
   blogSource,
   posts,
-  components,
+  configuration,
   getCategoryBySlug,
   getSeriesBySlug,
   mdxComponents,
@@ -42,7 +42,9 @@ export async function BlogWrapper({
 
   // Handle blog root page
   if (isBlogRootPage(params)) {
-    return <BlogList page={1} components={components} posts={sortedPosts} />;
+    return (
+      <BlogList page={1} configuration={configuration} posts={sortedPosts} />
+    );
   }
 
   // Handle series page
@@ -51,7 +53,7 @@ export async function BlogWrapper({
     return (
       <SeriesList
         seriesSlug={seriesSlug}
-        components={components}
+        configuration={configuration}
         posts={sortedPosts}
         getSeriesBySlug={getSeriesBySlug}
       />
@@ -64,7 +66,7 @@ export async function BlogWrapper({
     return (
       <CategoryBlogList
         category={category}
-        components={components}
+        configuration={configuration}
         posts={sortedPosts}
         getCategoryBySlug={getCategoryBySlug}
       />
@@ -76,7 +78,7 @@ export async function BlogWrapper({
     return (
       <BlogList
         page={getPageNumber(params)}
-        components={components}
+        configuration={configuration}
         posts={sortedPosts}
       />
     );
@@ -94,7 +96,7 @@ export async function BlogWrapper({
       <CategoryBlogList
         category={category}
         page={getPageNumber(params)}
-        components={components}
+        configuration={configuration}
         posts={sortedPosts}
         getCategoryBySlug={getCategoryBySlug}
       />
@@ -118,7 +120,7 @@ export async function BlogWrapper({
         category={category}
         lastUpdate={lastUpdate}
         tags={tags}
-        components={components}
+        configuration={configuration}
         getCategoryBySlug={getCategoryBySlug}
         mdxComponents={mdxComponents}
         posts={sortedPosts}

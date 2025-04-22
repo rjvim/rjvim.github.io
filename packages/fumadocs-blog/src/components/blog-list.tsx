@@ -1,5 +1,5 @@
 import { PostList } from "./post-list";
-import { BlogComponents, type BlogPost } from "./types";
+import { BlogConfiguration, type BlogPost } from "./types";
 import { getSortedByDatePosts } from "./utils";
 import { createUrlUtils } from "./url-utils";
 
@@ -8,13 +8,13 @@ export function RecentPosts({
   heading = "Recent Posts",
   description,
   recentPostsLimit = 3,
-  components,
+  configuration,
 }: {
   posts: BlogPost[];
   heading?: string;
   description?: string;
   recentPostsLimit?: number;
-  components?: BlogComponents;
+  configuration?: BlogConfiguration;
 }) {
   const sortedPosts = getSortedByDatePosts(posts);
   const displayPosts = sortedPosts.slice(0, recentPostsLimit);
@@ -28,7 +28,7 @@ export function RecentPosts({
       disablePagination={true}
       heading={heading}
       description={description}
-      components={components}
+      configuration={configuration}
     />
   );
 }
@@ -36,24 +36,24 @@ export function RecentPosts({
 export function BlogList({
   page = 1,
   disablePagination = false,
-  components,
+  configuration,
   posts,
   heading,
   description,
 }: {
   page?: number;
   disablePagination?: boolean;
-  components?: BlogComponents;
+  configuration?: BlogConfiguration;
   posts: BlogPost[];
   heading?: string;
   description?: string;
 }) {
-  const pageSize = components?.config?.pageSize || 5;
+  const pageSize = configuration?.config?.pageSize || 5;
   const displayPosts = posts.slice((page - 1) * pageSize, page * pageSize);
   const totalPages = Math.ceil(posts.length / pageSize);
 
-  const urlUtils = components?.config
-    ? createUrlUtils(components.config)
+  const urlUtils = configuration?.config
+    ? createUrlUtils(configuration.config)
     : null;
   const basePath = urlUtils?.getBlogUrl() || "/blog";
 
@@ -63,7 +63,7 @@ export function BlogList({
       currentPage={page}
       totalPages={totalPages}
       disablePagination={disablePagination}
-      components={components}
+      configuration={configuration}
       heading={heading}
       description={description}
       basePath={basePath}
@@ -75,18 +75,18 @@ export function CategoryBlogList({
   category,
   page = 1,
   disablePagination = false,
-  components,
+  configuration,
   posts,
   getCategoryBySlug,
 }: {
   category: string;
   page?: number;
   disablePagination?: boolean;
-  components?: BlogComponents;
+  configuration?: BlogConfiguration;
   posts: BlogPost[];
   getCategoryBySlug: (slug: string) => any;
 }) {
-  const pageSize = components?.config?.pageSize || 5;
+  const pageSize = configuration?.config?.pageSize || 5;
   const categoryInfo = getCategoryBySlug(category);
   const filteredPosts = posts.filter(
     (post) => post.slugs && post.slugs[0] === category
@@ -97,8 +97,8 @@ export function CategoryBlogList({
   );
   const totalPages = Math.ceil(filteredPosts.length / pageSize);
 
-  const urlUtils = components?.config
-    ? createUrlUtils(components.config)
+  const urlUtils = configuration?.config
+    ? createUrlUtils(configuration.config)
     : null;
   const basePath = urlUtils?.getCategoryUrl(category) || `/blog/${category}`;
 
@@ -111,7 +111,7 @@ export function CategoryBlogList({
       description={categoryInfo.description}
       basePath={basePath}
       disablePagination={disablePagination}
-      components={components}
+      configuration={configuration}
     />
   );
 }

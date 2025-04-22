@@ -1,6 +1,6 @@
 import { Pagination } from "./pagination";
 import { DocsTitle, DocsDescription } from "fumadocs-ui/page";
-import { BlogComponents, type BlogPost } from "./types";
+import { BlogConfiguration, type BlogPost } from "./types";
 import { slot } from "./shared";
 
 export type PostListProps = {
@@ -11,7 +11,7 @@ export type PostListProps = {
   description?: string;
   basePath?: string;
   disablePagination?: boolean;
-  components?: BlogComponents;
+  configuration?: BlogConfiguration;
 };
 
 export function PostList({
@@ -22,14 +22,14 @@ export function PostList({
   description = "Discover the latest insights and tutorials about modern web development, UI design, and component-driven architecture.",
   basePath = "/blog",
   disablePagination = false,
-  components,
+  configuration,
 }: PostListProps) {
   // PostCard is now imported directly
 
   return (
     <>
       <section className="relative container px-4 py-8 lg:py-12 lg:px-6 text-left bg-zinc-50/50 dark:bg-zinc-900/50">
-        {slot(components?.backgroundPattern, null)}
+        {slot(configuration?.backgroundPattern, null)}
 
         <div className="text-center">
           <DocsTitle className="dark:text-white capitalize">
@@ -42,19 +42,19 @@ export function PostList({
       </section>
 
       <section className="relative container px-4 py-8 lg:py-12 lg:px-6 text-left">
-        {slot(components?.backgroundPattern, null)}
+        {slot(configuration?.backgroundPattern, null)}
         <div className="grid gap-y-10 sm:grid-cols-12 sm:gap-y-12 md:gap-y-16 lg:gap-y-20">
           {posts
             .filter(
               (post): post is NonNullable<typeof post> => post !== undefined
             )
             .map((post) => {
-              if (components?.PostCard) {
+              if (configuration?.PostCard) {
                 return (
-                  <components.PostCard
+                  <configuration.PostCard
                     key={post.url}
                     post={post}
-                    components={components}
+                    configuration={configuration}
                   />
                 );
               }
@@ -66,7 +66,7 @@ export function PostList({
             currentPage={currentPage}
             totalPages={totalPages}
             basePath={basePath}
-            components={components}
+            configuration={configuration}
           />
         )}
       </section>

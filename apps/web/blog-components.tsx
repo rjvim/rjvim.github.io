@@ -10,7 +10,10 @@ import {
 import { Badge } from "@repo/shadverse/components/badge";
 import { Book } from "@repo/shadverse/components/ui/book";
 import { Card } from "@repo/shadverse/components/card";
-import type { BlogConstants, BlogComponents } from "@repo/fumadocs-blog/blog";
+import type {
+  BlogConstants,
+  BlogConfiguration,
+} from "@repo/fumadocs-blog/blog";
 import { PostCard } from "@repo/fumadocs-blog/blog";
 import {
   Brain,
@@ -103,7 +106,7 @@ export function createBlogMetadata(
   };
 }
 
-export function getBlogComponents(): BlogComponents {
+export function getBlogConfiguration(): BlogConfiguration {
   return {
     PostCard: PostCard,
     backgroundPattern: {
@@ -126,7 +129,7 @@ export function getBlogComponents(): BlogComponents {
   };
 }
 
-export const useBlogComponents = getBlogComponents;
+export const useBlogConfiguration = getBlogConfiguration;
 
 // Moved from lib/categories.ts
 export const getCategoryBySlug = (slug: string) => {

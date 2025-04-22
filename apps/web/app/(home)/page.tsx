@@ -2,7 +2,7 @@ import Hero from "@/components/hero";
 import { GridBackground } from "@repo/ui/components/grid-background";
 import { getBlogPosts } from "@/lib/source";
 import { RecentPosts } from "@repo/fumadocs-blog/blog";
-import { getBlogComponents } from "@/blog-components";
+import { getBlogConfiguration } from "@/blog-components";
 
 export default function HomePage() {
   return (
@@ -17,7 +17,7 @@ export default function HomePage() {
         </div>
 
         <RecentPosts
-          components={getBlogComponents()}
+          configuration={getBlogConfiguration()}
           posts={getBlogPosts()}
           heading="Recent Posts"
           description="The recently published"
