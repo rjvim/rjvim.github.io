@@ -5,7 +5,6 @@ export * from "./components/blog-static-params";
 export * from "./components/blog-wrapper";
 export * from "./components/page-type";
 export * from "./components/pagination";
-export * from "./components/post-card-2";
 export * from "./components/post-card";
 export * from "./components/post-list";
 export * from "./components/series-info";
