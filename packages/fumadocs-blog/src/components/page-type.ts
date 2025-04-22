@@ -55,7 +55,7 @@ export function isPaginatedCategoryPage(params: { slug?: string[] }): boolean {
 /**
  * Checks if the current route is a blog post page
  */
-export function isBlogPostPage(params: { slug?: string[] }): boolean {
+export function isSinglePostPage(params: { slug?: string[] }): boolean {
   return (
     !!params.slug &&
     params.slug.length === 2 &&
@@ -68,7 +68,12 @@ export function isBlogPostPage(params: { slug?: string[] }): boolean {
  * Gets the series slug from params if it's a series page
  */
 export function getSeriesSlug(params: { slug?: string[] }): string | null {
-  if (isSeriesPage(params) && params.slug && params.slug.length > 1 && params.slug[1]) {
+  if (
+    isSeriesPage(params) &&
+    params.slug &&
+    params.slug.length > 1 &&
+    params.slug[1]
+  ) {
     return params.slug[1];
   }
   return null;
@@ -78,7 +83,12 @@ export function getSeriesSlug(params: { slug?: string[] }): string | null {
  * Gets the category slug from params if it's a category page
  */
 export function getCategorySlug(params: { slug?: string[] }): string {
-  if (isCategoryPage(params) && params.slug && params.slug.length > 0 && params.slug[0]) {
+  if (
+    isCategoryPage(params) &&
+    params.slug &&
+    params.slug.length > 0 &&
+    params.slug[0]
+  ) {
     return params.slug[0];
   }
   return "";
@@ -91,7 +101,11 @@ export function getPageNumber(params: { slug?: string[] }): number {
   if (isPaginatedBlogPage(params) && params.slug && params.slug.length > 1) {
     return Number(params.slug[1]);
   }
-  if (isPaginatedCategoryPage(params) && params.slug && params.slug.length > 2) {
+  if (
+    isPaginatedCategoryPage(params) &&
+    params.slug &&
+    params.slug.length > 2
+  ) {
     return Number(params.slug[2]);
   }
   return 1;

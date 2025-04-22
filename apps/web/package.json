@@ -16,9 +16,10 @@
   },
   "dependencies": {
     "@next/third-parties": "^15.3.0",
+    "@radix-ui/react-slot": "^1.2.0",
+    "@repo/fumadocs-blog": "workspace:*",
     "@repo/shadverse": "workspace:*",
     "@repo/ui": "workspace:*",
-    "@repo/fumadocs-blog": "workspace:*",
     "@shikijs/transformers": "^3.2.2",
     "@tailwindcss/postcss": "^4.1.4",
     "@types/mdx": "^2.0.13",

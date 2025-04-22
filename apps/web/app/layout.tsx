@@ -39,8 +39,8 @@ export default function RootLayout({
       <head>
         <script
           crossOrigin="anonymous"
-          src="//cdn.jsdelivr.net/npm/meta-scan@0.12.1/dist/auto.global.js"
-          data-auto-enable={"false"}
+          src="//cdn.jsdelivr.net/npm/meta-scan@0.15.0/dist/auto.global.js"
+          data-auto-enable={"true"}
         />
       </head>
       <body
