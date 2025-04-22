@@ -28,7 +28,7 @@ import { SocialIcons } from "@repo/ui/components/social-icons";
 // Blog text constants that can be customized
 export const blogConstants = {
   // General
-  blogTitle: "rjv.im",
+  blogTitle: "Blog",
   blogDescription: "Articles and thoughts",
 
   // Series
