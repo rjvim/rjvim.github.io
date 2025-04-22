@@ -208,7 +208,6 @@ export const getCategoryBySlug = (slug: string) => {
   );
 };
 
-// Moved from lib/series.ts
 export const getSeriesBySlug = (slug: string) => {
   const series = {
     x: {
