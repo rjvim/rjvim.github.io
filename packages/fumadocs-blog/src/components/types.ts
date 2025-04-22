@@ -1,4 +1,5 @@
 import React from "react";
+import type { Metadata } from "next";
 
 // Define a type for blog posts that matches the structure used in the app
 export type BlogPost = {
@@ -34,4 +35,11 @@ export interface BlogComponents extends Record<string, any> {
     enabled: boolean;
     component: React.ReactNode;
   };
+}
+
+export interface MetadataImageResult {
+  getImageMeta: (slugs: string[]) => { alt: string; url: string };
+  withImage: (slugs: string[], metadata?: Metadata) => Metadata;
+  generateParams: () => { slug: string[] }[];
+  createAPI: (handler: any) => any;
 }

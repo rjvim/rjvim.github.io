@@ -11,14 +11,7 @@ import {
   getSeriesSlug,
   getCategorySlug,
 } from "./page-type";
-
-// Define the interface for the return type of createMetadataImage
-interface MetadataImageResult {
-  getImageMeta: (slugs: string[]) => { alt: string; url: string };
-  withImage: (slugs: string[], metadata?: Metadata) => Metadata;
-  generateParams: () => { slug: string[] }[];
-  createAPI: (handler: any) => any;
-}
+import { MetadataImageResult } from "./types";
 
 // Helper function to generate image metadata for OpenGraph and Twitter
 function getImageMetadata(url: string, blogConstants: any) {
