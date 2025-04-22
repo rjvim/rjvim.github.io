@@ -32,12 +32,8 @@ export function BlogList({
   posts: any[];
 }) {
   const pageSize = 5;
-  const sortedPosts = getSortedByDatePosts(posts);
-  const displayPosts = sortedPosts.slice(
-    (page - 1) * pageSize,
-    page * pageSize
-  );
-  const totalPages = Math.ceil(sortedPosts.length / pageSize);
+  const displayPosts = posts.slice((page - 1) * pageSize, page * pageSize);
+  const totalPages = Math.ceil(posts.length / pageSize);
 
   return (
     <PostList
@@ -67,8 +63,7 @@ export function CategoryBlogList({
 }) {
   const pageSize = 5;
   const categoryInfo = getCategoryBySlug(category);
-  const sortedPosts = getSortedByDatePosts(posts);
-  const filteredPosts = sortedPosts.filter(
+  const filteredPosts = posts.filter(
     (post) => post.slugs && post.slugs[0] === category
   );
   const displayPosts = filteredPosts.slice(

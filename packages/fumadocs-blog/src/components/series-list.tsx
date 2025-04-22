@@ -17,22 +17,14 @@ export function SeriesList({
   seriesSlug,
   components = {},
   posts = [],
-  getSortedByDatePosts,
   getSeriesBySlug,
 }: SeriesListProps) {
   const seriesInfo = getSeriesBySlug(seriesSlug);
-  const seriesPosts =
-    posts.length > 0
-      ? posts
-          .filter((post) => post.data.series === seriesSlug)
-          .sort((a, b) => {
-            // Sort by seriesPart if available, otherwise by date
-            if (a.data.seriesPart && b.data.seriesPart) {
-              return a.data.seriesPart - b.data.seriesPart;
-            }
-            return a.data.date.getTime() - b.data.date.getTime();
-          })
-      : getPostsBySeries(seriesSlug, getSortedByDatePosts);
+  const seriesPosts = posts
+    .filter((post) => post.data.series === seriesSlug)
+    .sort((a, b) => {
+      return a.data.seriesPart - b.data.seriesPart;
+    });
 
   return (
     <div className="container px-4 py-8 lg:py-12 lg:px-6">

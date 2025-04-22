@@ -60,7 +60,10 @@ export const blogConstants = {
     getBlogUrl: () => "/blog",
     getSeriesUrl: (seriesSlug: string) => `/blog/series/${seriesSlug}`,
     getCategoryUrl: (category: string) => `/blog/${category}`,
-    getBlogOgImageUrl: (category: string) => `/blog-og/${category}/image.png`,
+    getCategoryOgImageUrl: (category: string) =>
+      `/blog-og/${category}/image.png`,
+    getSeriesOgImageUrl: (series: string) =>
+      `/blog-og/series/${series}/image.png`,
   },
 
   // Image settings

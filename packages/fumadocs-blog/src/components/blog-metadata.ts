@@ -85,18 +85,34 @@ export async function generateBlogMetadata(props: {
 
     const canonicalUrl = blogConstants.urls.getSeriesUrl(seriesSlug);
 
-    return createBlogMetadata({
+    const metadata = createBlogMetadata({
       title: `${series.label} - ${blogConstants.seriesSuffix}`,
       description:
         series.description ||
         blogConstants.seriesDefaultDescription(series.label),
       openGraph: {
         url: canonicalUrl,
+        images: {
+          alt: blogConstants.images.altText,
+          url: blogConstants.urls.getSeriesOgImageUrl(seriesSlug),
+          width: blogConstants.images.ogImageDimensions.width,
+          height: blogConstants.images.ogImageDimensions.height,
+        },
+      },
+      twitter: {
+        images: {
+          alt: blogConstants.images.altText,
+          url: blogConstants.urls.getSeriesOgImageUrl(seriesSlug),
+          width: blogConstants.images.ogImageDimensions.width,
+          height: blogConstants.images.ogImageDimensions.height,
+        },
       },
       alternates: {
         canonical: canonicalUrl,
       },
     });
+
+    return metadata;
   }
 
   // Handle category page
@@ -128,7 +144,7 @@ export async function generateBlogMetadata(props: {
         url: canonicalUrl,
         images: {
           alt: blogConstants.images.altText,
-          url: blogConstants.urls.getBlogOgImageUrl(category),
+          url: blogConstants.urls.getCategoryOgImageUrl(category),
           width: blogConstants.images.ogImageDimensions.width,
           height: blogConstants.images.ogImageDimensions.height,
         },
@@ -136,7 +152,7 @@ export async function generateBlogMetadata(props: {
       twitter: {
         images: {
           alt: blogConstants.images.altText,
-          url: blogConstants.urls.getBlogOgImageUrl(category),
+          url: blogConstants.urls.getCategoryOgImageUrl(category),
           width: blogConstants.images.ogImageDimensions.width,
           height: blogConstants.images.ogImageDimensions.height,
         },

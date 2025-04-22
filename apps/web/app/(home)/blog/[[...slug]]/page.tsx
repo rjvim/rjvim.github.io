@@ -29,6 +29,7 @@ export default async function Page(props: {
       getSeriesBySlug={getSeriesBySlug}
       mdxComponents={getMDXComponents()}
       components={getBlogComponents()}
+      includeDrafts={process.env.NODE_ENV !== "production"}
     />
   );
 }

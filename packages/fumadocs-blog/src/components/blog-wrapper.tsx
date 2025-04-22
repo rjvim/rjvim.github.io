@@ -15,6 +15,7 @@ import {
   getPageNumber,
 } from "./page-type";
 import { type BlogComponents } from "./types";
+import { getSortedByDatePosts } from "./utils";
 
 interface BlogWrapperProps {
   params: { slug?: string[] };
@@ -24,6 +25,7 @@ interface BlogWrapperProps {
   getCategoryBySlug: (slug: string) => any;
   getSeriesBySlug: (slug: string) => any;
   mdxComponents: any;
+  includeDrafts: boolean;
 }
 
 export async function BlogWrapper({
@@ -34,10 +36,13 @@ export async function BlogWrapper({
   getCategoryBySlug,
   getSeriesBySlug,
   mdxComponents,
+  includeDrafts,
 }: BlogWrapperProps) {
+  const sortedPosts = getSortedByDatePosts(posts, includeDrafts);
+
   // Handle blog root page
   if (isBlogRootPage(params)) {
-    return <BlogList page={1} components={components} posts={posts} />;
+    return <BlogList page={1} components={components} posts={sortedPosts} />;
   }
 
   // Handle series page
@@ -47,7 +52,7 @@ export async function BlogWrapper({
       <SeriesList
         seriesSlug={seriesSlug}
         components={components}
-        posts={posts}
+        posts={sortedPosts}
         getSeriesBySlug={getSeriesBySlug}
       />
     );
@@ -60,7 +65,7 @@ export async function BlogWrapper({
       <CategoryBlogList
         category={category}
         components={components}
-        posts={posts}
+        posts={sortedPosts}
         getCategoryBySlug={getCategoryBySlug}
       />
     );
@@ -72,7 +77,7 @@ export async function BlogWrapper({
       <BlogList
         page={getPageNumber(params)}
         components={components}
-        posts={posts}
+        posts={sortedPosts}
       />
     );
   }
@@ -90,7 +95,7 @@ export async function BlogWrapper({
         category={category}
         page={getPageNumber(params)}
         components={components}
-        posts={posts}
+        posts={sortedPosts}
         getCategoryBySlug={getCategoryBySlug}
       />
     );
@@ -116,6 +121,7 @@ export async function BlogWrapper({
         components={components}
         getCategoryBySlug={getCategoryBySlug}
         mdxComponents={mdxComponents}
+        posts={sortedPosts}
       />
     );
   }
