@@ -9,7 +9,7 @@ import {
   isCategoryPage,
   isPaginatedBlogPage,
   isPaginatedCategoryPage,
-  isBlogPostPage,
+  isSinglePostPage,
   getSeriesSlug,
   getCategorySlug,
   getPageNumber,
@@ -97,7 +97,7 @@ export async function BlogWrapper({
   }
 
   // Handle blog post page
-  if (isBlogPostPage(params)) {
+  if (isSinglePostPage(params)) {
     const page = blogSource.getPage(params.slug);
     const category = params.slug?.[0] || undefined;
 

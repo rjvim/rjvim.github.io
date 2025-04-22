@@ -1,7 +1,7 @@
 import type { loader } from "fumadocs-core/source";
 import { notFound } from "next/navigation";
 import { BlogList, CategoryBlogList } from "./blog-list";
-import { BlogPost } from "./blog-post";
+import { SinglePost } from "./single-post";
 import { SeriesList } from "./series-list";
 import {
   isBlogRootPage,
@@ -9,11 +9,11 @@ import {
   isCategoryPage,
   isPaginatedBlogPage,
   isPaginatedCategoryPage,
-  isBlogPostPage,
+  isSinglePostPage,
   getSeriesSlug,
   getCategorySlug,
   getPageNumber,
-} from "@repo/fumadocs-blog/blog";
+} from "./page-type";
 import { type BlogComponents } from "./types";
 
 interface BlogWrapperProps {
@@ -97,7 +97,7 @@ export async function BlogWrapper({
   }
 
   // Handle blog post page
-  if (isBlogPostPage(params)) {
+  if (isSinglePostPage(params)) {
     const page = blogSource.getPage(params.slug);
     const category = params.slug?.[0] || undefined;
 
@@ -108,7 +108,7 @@ export async function BlogWrapper({
     const tags = page?.data.tags ?? [];
 
     return (
-      <BlogPost
+      <SinglePost
         page={page}
         category={category}
         lastUpdate={lastUpdate}

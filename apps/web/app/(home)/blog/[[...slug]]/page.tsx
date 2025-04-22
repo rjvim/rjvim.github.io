@@ -1,6 +1,9 @@
 import { blogSource, getBlogPosts } from "@/lib/source";
-import { BlogWrapper } from "@/app/(home)/blog/[[...slug]]/(components)/blog-wrapper";
-import { generateBlogMetadata } from "@/app/(home)/blog/[[...slug]]/(components)/blog-metadata";
+import {
+  BlogWrapper,
+  generateBlogMetadata,
+  generateBlogStaticParams,
+} from "@repo/fumadocs-blog/blog";
 import {
   createBlogMetadata,
   blogConstants,
@@ -10,7 +13,6 @@ import { getCategoryBySlug } from "@/blog-components";
 import { getSeriesBySlug } from "@/blog-components";
 import { getMDXComponents } from "@/mdx-components";
 import type { Metadata } from "next";
-import { generateBlogStaticParams } from "@/app/(home)/blog/[[...slug]]/(components)/blog-static-params";
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;

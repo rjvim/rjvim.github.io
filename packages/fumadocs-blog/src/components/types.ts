@@ -1,5 +1,3 @@
-import { PostCard2 } from "./post-card-2";
-import type { MDXComponents } from "mdx/types";
 import React from "react";
 
 // Define a type for blog posts that matches the structure used in the app

@@ -7,10 +7,10 @@ import {
   isCategoryPage,
   isPaginatedBlogPage,
   isPaginatedCategoryPage,
-  isBlogPostPage,
+  isSinglePostPage,
   getSeriesSlug,
   getCategorySlug,
-} from "@repo/fumadocs-blog/blog";
+} from "./page-type";
 
 // Define the interface for the return type of createMetadataImage
 interface MetadataImageResult {
@@ -36,7 +36,7 @@ export async function generateBlogMetadata(props: {
     getCategoryBySlug,
     getSeriesBySlug,
   } = props;
-  
+
   // Create metadata image handler using the provided blogSource
   const blogsMetaImage = createMetadataImage({
     imageRoute: "/blog-posts-og",
@@ -58,7 +58,7 @@ export async function generateBlogMetadata(props: {
   }
 
   // Handle blog post page
-  if (isBlogPostPage(params)) {
+  if (isSinglePostPage(params)) {
     const page = blogSource.getPage(params.slug);
     if (!page) notFound();
 
