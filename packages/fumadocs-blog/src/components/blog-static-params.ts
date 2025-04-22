@@ -118,3 +118,25 @@ export function generateSeriesPathParams(posts: BlogPost[]) {
     slug: ["series", seriesName],
   }));
 }
+
+/**
+ * Generates static parameters for OG image routes
+ * Creates image routes by adding image.png to each existing slug array
+ */
+export async function generateOgImageStaticParams(
+  blogSource: any,
+  posts: BlogPost[]
+) {
+  // Get all the regular params first
+  const params = await generateAllParams(blogSource, posts, true);
+
+  // Create image routes by adding image.png to each existing slug array
+  const imageRoutes = params.map((param) => {
+    if (param.slug && param.slug.length > 0) {
+      return { slug: [...param.slug, "image.png"] };
+    }
+    return { slug: ["image.png"] };
+  });
+
+  return imageRoutes;
+}

@@ -1,6 +1,6 @@
 import { generateOGImage } from "fumadocs-ui/og";
 import {
-  generateAllParams,
+  generateOgImageStaticParams,
   generateOGImageMetadata,
 } from "@repo/fumadocs-blog/blog";
 import {
@@ -37,18 +37,10 @@ export async function GET(
 
 export async function generateStaticParams() {
   const posts = getBlogPosts();
-
-  const params = await generateAllParams(blogSource, posts, true);
-
-  // Create image routes by adding image.png to each existing slug array
-  const imageRoutes = params.map((param) => {
-    if (param.slug && param.slug.length > 0) {
-      return { slug: [...param.slug, "image.png"] };
-    }
-    return { slug: ["image.png"] };
-  });
-
+  
+  const imageRoutes = await generateOgImageStaticParams(blogSource, posts);
+  
   console.log("imageRoutes", imageRoutes);
-
+  
   return imageRoutes;
 }
