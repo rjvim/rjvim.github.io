@@ -17,7 +17,7 @@ import {
   getCategorySlug,
   getPageNumber,
 } from "@repo/fumadocs-blog/blog";
-import { getBlogComponents, type BlogComponents } from "./types";
+import { type BlogComponents } from "./types";
 
 interface BlogWrapperProps {
   params: { slug?: string[] };
