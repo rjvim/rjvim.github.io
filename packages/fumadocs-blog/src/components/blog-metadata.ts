@@ -20,6 +20,16 @@ interface MetadataImageResult {
   createAPI: (handler: any) => any;
 }
 
+// Helper function to generate image metadata for OpenGraph and Twitter
+function getImageMetadata(url: string, blogConstants: any) {
+  return {
+    alt: blogConstants.images.altText,
+    url,
+    width: blogConstants.images.ogImageDimensions.width,
+    height: blogConstants.images.ogImageDimensions.height,
+  };
+}
+
 export async function generateBlogMetadata(props: {
   params: { slug?: string[] };
   createBlogMetadata: (override: Metadata) => Metadata;
@@ -92,20 +102,10 @@ export async function generateBlogMetadata(props: {
         blogConstants.seriesDefaultDescription(series.label),
       openGraph: {
         url: canonicalUrl,
-        images: {
-          alt: blogConstants.images.altText,
-          url: blogConstants.urls.getSeriesOgImageUrl(seriesSlug),
-          width: blogConstants.images.ogImageDimensions.width,
-          height: blogConstants.images.ogImageDimensions.height,
-        },
+        images: getImageMetadata(blogConstants.urls.getSeriesOgImageUrl(seriesSlug), blogConstants),
       },
       twitter: {
-        images: {
-          alt: blogConstants.images.altText,
-          url: blogConstants.urls.getSeriesOgImageUrl(seriesSlug),
-          width: blogConstants.images.ogImageDimensions.width,
-          height: blogConstants.images.ogImageDimensions.height,
-        },
+        images: getImageMetadata(blogConstants.urls.getSeriesOgImageUrl(seriesSlug), blogConstants),
       },
       alternates: {
         canonical: canonicalUrl,
@@ -142,20 +142,10 @@ export async function generateBlogMetadata(props: {
         blogConstants.categoryDefaultDescription(categoryInfo.label),
       openGraph: {
         url: canonicalUrl,
-        images: {
-          alt: blogConstants.images.altText,
-          url: blogConstants.urls.getCategoryOgImageUrl(category),
-          width: blogConstants.images.ogImageDimensions.width,
-          height: blogConstants.images.ogImageDimensions.height,
-        },
+        images: getImageMetadata(blogConstants.urls.getCategoryOgImageUrl(category), blogConstants),
       },
       twitter: {
-        images: {
-          alt: blogConstants.images.altText,
-          url: blogConstants.urls.getCategoryOgImageUrl(category),
-          width: blogConstants.images.ogImageDimensions.width,
-          height: blogConstants.images.ogImageDimensions.height,
-        },
+        images: getImageMetadata(blogConstants.urls.getCategoryOgImageUrl(category), blogConstants),
       },
       alternates: {
         canonical: canonicalUrl,
