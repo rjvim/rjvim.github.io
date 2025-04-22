@@ -2,12 +2,14 @@ import React from "react";
 import Link from "next/link";
 import { getSeriesInfo } from "./utils";
 import { cn } from "./utils";
+import { BlogComponents } from "./types";
+import { createUrlUtils } from "./url-utils";
 
 interface SeriesComponentProps {
   seriesName: string;
   currentPart: number;
   posts: any[];
-  components?: { cn?: (...inputs: any[]) => string };
+  components?: BlogComponents;
 }
 
 export function SeriesPopoverContent({
@@ -27,12 +29,11 @@ export function SeriesPopoverContent({
       <div className="mb-2 font-medium text-gray-900 dark:text-white">
         Part {currentPart} of {totalParts} in series:{" "}
         <Link
-          href={`/blog/series/${seriesName}`}
+          href={components?.config ? createUrlUtils(components.config).getSeriesUrl(seriesName) : `/blog/series/${seriesName}`}
           className="text-blue-600 dark:text-blue-400 hover:underline"
         >
           {title}
         </Link>
-        {/* TODO: basePath should be passed from blog-components */}
       </div>
       <div className="space-y-1">
         {seriesPosts.map((post, index) => (
@@ -84,12 +85,11 @@ export function SeriesInfo({
       <div className="mb-2 font-medium text-gray-900 dark:text-white">
         Part {currentPart} of {totalParts} in series:{" "}
         <Link
-          href={`/blog/series/${seriesName}`}
+          href={components?.config ? createUrlUtils(components.config).getSeriesUrl(seriesName) : `/blog/series/${seriesName}`}
           className="text-blue-600 dark:text-blue-400 hover:underline"
         >
           {title}
         </Link>
-        {/* TODO: basePath should be passed from blog-components */}
       </div>
       <div className="space-y-1">
         {seriesPosts.map((post, index) => (

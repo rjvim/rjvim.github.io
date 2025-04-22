@@ -1,14 +1,24 @@
 import { PostList } from "./post-list";
 import { BlogComponents, type BlogPost } from "./types";
 import { getSortedByDatePosts } from "./utils";
+import { createUrlUtils } from "./url-utils";
 
-export function RecentPosts({ posts }: { posts: BlogPost[] }) {
-  const recentPostsPageSize = 3;
+export function RecentPosts({
+  posts,
+  heading = "Recent Posts",
+  description,
+  recentPostsLimit = 3,
+  components,
+}: {
+  posts: BlogPost[];
+  heading?: string;
+  description?: string;
+  recentPostsLimit?: number;
+  components?: BlogComponents;
+}) {
   const sortedPosts = getSortedByDatePosts(posts);
-  const displayPosts = sortedPosts.slice(0, recentPostsPageSize);
+  const displayPosts = sortedPosts.slice(0, recentPostsLimit);
   const totalPages = 1;
-
-  // TODO: heading and description should be accepted from props, without any defaults.
 
   return (
     <PostList
@@ -16,8 +26,9 @@ export function RecentPosts({ posts }: { posts: BlogPost[] }) {
       currentPage={1}
       totalPages={totalPages}
       disablePagination={true}
-      heading="Recent Posts"
-      description="Check out my latest thoughts, tutorials, and insights on web development and design."
+      heading={heading}
+      description={description}
+      components={components}
     />
   );
 }
@@ -27,16 +38,22 @@ export function BlogList({
   disablePagination = false,
   components,
   posts,
+  heading,
+  description,
 }: {
   page?: number;
   disablePagination?: boolean;
-  components?: any;
-  posts: any[];
+  components?: BlogComponents;
+  posts: BlogPost[];
+  heading?: string;
+  description?: string;
 }) {
-  // TODO: pageSize should be coming from blog-components and then passed as prop
-  const pageSize = 5;
+  const pageSize = components?.config?.pageSize || 5;
   const displayPosts = posts.slice((page - 1) * pageSize, page * pageSize);
   const totalPages = Math.ceil(posts.length / pageSize);
+  
+  const urlUtils = components?.config ? createUrlUtils(components.config) : null;
+  const basePath = urlUtils?.getBlogUrl() || "/blog";
 
   return (
     <PostList
@@ -45,6 +62,9 @@ export function BlogList({
       totalPages={totalPages}
       disablePagination={disablePagination}
       components={components}
+      heading={heading}
+      description={description}
+      basePath={basePath}
     />
   );
 }
@@ -61,12 +81,10 @@ export function CategoryBlogList({
   page?: number;
   disablePagination?: boolean;
   components?: BlogComponents;
-  posts: any[];
+  posts: BlogPost[];
   getCategoryBySlug: (slug: string) => any;
 }) {
-  // TODO: pageSize should be coming from blog-components and then passed as prop
-
-  const pageSize = 5;
+  const pageSize = components?.config?.pageSize || 5;
   const categoryInfo = getCategoryBySlug(category);
   const filteredPosts = posts.filter(
     (post) => post.slugs && post.slugs[0] === category
@@ -76,6 +94,9 @@ export function CategoryBlogList({
     page * pageSize
   );
   const totalPages = Math.ceil(filteredPosts.length / pageSize);
+  
+  const urlUtils = components?.config ? createUrlUtils(components.config) : null;
+  const basePath = urlUtils?.getCategoryUrl(category) || `/blog/${category}`;
 
   return (
     <PostList
@@ -84,7 +105,7 @@ export function CategoryBlogList({
       totalPages={totalPages}
       heading={categoryInfo.label}
       description={categoryInfo.description}
-      basePath={`/blog/${category}`}
+      basePath={basePath}
       disablePagination={disablePagination}
       components={components}
     />

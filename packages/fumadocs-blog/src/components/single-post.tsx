@@ -16,6 +16,7 @@ import { cn } from "./utils";
 import { SeriesPopoverContent } from "./series-info";
 import { getSeriesInfo } from "./utils";
 import { slot } from "./shared";
+import { createUrlUtils } from "./url-utils";
 
 interface SinglePostProps {
   page: any;
@@ -30,7 +31,7 @@ interface SinglePostProps {
 
 export function SinglePost({
   page,
-  components = {},
+  components = { config: { blogBase: "/blog", pageSize: 5 } },
   category,
   lastUpdate,
   tags,
@@ -55,10 +56,9 @@ export function SinglePost({
                   React.createElement(getCategoryBySlug(category).icon, {
                     className: "h-4 w-4",
                   })}
-                <Link href={`/blog/${category}`}>
+                <Link href={components?.config ? createUrlUtils(components.config).getCategoryUrl(category) : `/blog/${category}`}>
                   {getCategoryBySlug(category).label}
                 </Link>
-                {/* TODO: basePath should be passed from blog-components */}
               </span>
               <span className="inline-flex items-center gap-1.5">
                 <Calendar className="h-4 w-4" />

@@ -13,7 +13,7 @@ export function Pagination({
   currentPage,
   totalPages,
   basePath,
-  components = {},
+  components = { config: { blogBase: "/blog", pageSize: 5 } },
 }: PaginationProps) {
   const pageIndex = currentPage - 1;
 

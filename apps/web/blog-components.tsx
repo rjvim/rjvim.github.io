@@ -131,6 +131,10 @@ export function getBlogComponents(): BlogComponents {
     Book,
     Card,
     cn,
+    config: {
+      blogBase: blogConstants.urls.blogBase,
+      pageSize: 5
+    }
   };
 }
 
