@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import { blogsMetaImage } from "@/lib/metadata-image";
 import type { Metadata } from "next";
+import { createMetadataImage } from "fumadocs-core/server";
 import {
   isBlogRootPage,
   isSeriesPage,
@@ -11,6 +11,14 @@ import {
   getSeriesSlug,
   getCategorySlug,
 } from "@repo/fumadocs-blog/blog";
+
+// Define the interface for the return type of createMetadataImage
+interface MetadataImageResult {
+  getImageMeta: (slugs: string[]) => { alt: string; url: string };
+  withImage: (slugs: string[], metadata?: Metadata) => Metadata;
+  generateParams: () => { slug: string[] }[];
+  createAPI: (handler: any) => any;
+}
 
 export async function generateBlogMetadata(props: {
   params: { slug?: string[] };
@@ -28,6 +36,12 @@ export async function generateBlogMetadata(props: {
     getCategoryBySlug,
     getSeriesBySlug,
   } = props;
+  
+  // Create metadata image handler using the provided blogSource
+  const blogsMetaImage = createMetadataImage({
+    imageRoute: "/blog-posts-og",
+    source: blogSource,
+  }) as MetadataImageResult;
 
   // Default for root blog page or when slug is undefined
   if (isBlogRootPage(params)) {
