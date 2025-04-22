@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import { getPostsBySeries } from "./utils";
-// Book component comes from components context
 import { BookOpen } from "lucide-react";
 import { BlogComponents } from "./types";
 import { slot } from "./shared";
