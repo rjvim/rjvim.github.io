@@ -48,7 +48,10 @@ export const blogConstants = {
 
     // URL Generators
     getBlogUrl: () => "/blog",
+    getBlogPostUrl: (slug: string) => `/blog/${slug}`,
     getBlogOgImageUrl: () => "/blog-og/image.png",
+    getBlogPostOgImageUrl: (slug: string[]) =>
+      `/blog-og/${slug.join("/")}/image.png`,
     getSeriesUrl: (seriesSlug: string) => `/blog/series/${seriesSlug}`,
     getCategoryUrl: (category: string) => `/blog/${category}`,
     getCategoryOgImageUrl: (category: string) =>
@@ -133,8 +136,8 @@ export function getBlogComponents(): BlogComponents {
     cn,
     config: {
       blogBase: blogConstants.urls.blogBase,
-      pageSize: 5
-    }
+      pageSize: 5,
+    },
   };
 }
 

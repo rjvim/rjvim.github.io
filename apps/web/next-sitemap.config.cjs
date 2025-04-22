@@ -36,6 +36,7 @@ function customIgnoreFunction(path) {
     "opengraph-image-",
     "blog-1",
     "docs-og",
+    "blog-og",
     "blog-posts-og",
     "posts",
   ];

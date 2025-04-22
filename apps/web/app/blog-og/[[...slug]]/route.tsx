@@ -38,7 +38,7 @@ export async function GET(
 export async function generateStaticParams() {
   const posts = getBlogPosts();
 
-  const params = await generateAllParams(blogSource, posts, false);
+  const params = await generateAllParams(blogSource, posts, true);
 
   // Create image routes by adding image.png to each existing slug array
   const imageRoutes = params.map((param) => {
@@ -48,7 +48,7 @@ export async function generateStaticParams() {
     return { slug: ["image.png"] };
   });
 
-  // console.log("imageRoutes", imageRoutes);
+  console.log("imageRoutes", imageRoutes);
 
   return imageRoutes;
 }

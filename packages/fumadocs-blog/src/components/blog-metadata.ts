@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { createMetadataImage } from "fumadocs-core/server";
 import {
   isBlogRootPage,
   isSeriesPage,
@@ -11,7 +10,6 @@ import {
   getSeriesSlug,
   getCategorySlug,
 } from "./page-type";
-import { MetadataImageResult } from "./types";
 
 // Helper function to generate image metadata for OpenGraph and Twitter
 function getImageMetadata(url: string, blogConstants: any) {
@@ -39,12 +37,6 @@ export async function generateBlogMetadata(props: {
     getCategoryBySlug,
     getSeriesBySlug,
   } = props;
-
-  // Create metadata image handler using the provided blogSource
-  const blogsMetaImage = createMetadataImage({
-    imageRoute: "/blog-posts-og",
-    source: blogSource,
-  }) as MetadataImageResult;
 
   // Default for root blog page or when slug is undefined
   if (isBlogRootPage(params)) {
@@ -74,20 +66,25 @@ export async function generateBlogMetadata(props: {
     const page = blogSource.getPage(params.slug);
     if (!page) notFound();
 
-    const metadata = createBlogMetadata(
-      blogsMetaImage.withImage(page.slugs, {
-        title: page.data.title,
-        description: page.data.description,
-        openGraph: {
-          url: page.url,
-        },
-        alternates: {
-          canonical: page.url,
-        },
-      })
+    const imageMetaData = getImageMetadata(
+      blogConstants.urls.getBlogPostOgImageUrl(params.slug),
+      blogConstants
     );
 
-    return metadata;
+    return createBlogMetadata({
+      title: page.data.title,
+      description: page.data.description,
+      openGraph: {
+        url: page.url,
+        images: imageMetaData,
+      },
+      twitter: {
+        images: imageMetaData,
+      },
+      alternates: {
+        canonical: page.url,
+      },
+    });
   }
 
   // Handle series page
