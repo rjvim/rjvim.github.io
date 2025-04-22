@@ -6,8 +6,8 @@ import {
   blogConstants,
   getBlogComponents,
 } from "@/blog-components";
-import { getCategoryBySlug } from "@/lib/categories";
-import { getSeriesBySlug } from "@/lib/series";
+import { getCategoryBySlug } from "@/blog-components";
+import { getSeriesBySlug } from "@/blog-components";
 import { getMDXComponents } from "@/mdx-components";
 import type { Metadata } from "next";
 import { generateBlogStaticParams } from "@/app/(home)/blog/[[...slug]]/(components)/blog-static-params";
@@ -24,6 +24,7 @@ export default async function Page(props: {
       blogSource={blogSource}
       posts={posts}
       getCategoryBySlug={getCategoryBySlug}
+      getSeriesBySlug={getSeriesBySlug}
       mdxComponents={getMDXComponents()}
       components={getBlogComponents()}
     />

@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import { getSeriesBySlug } from "@/lib/series";
 import { getPostsBySeries } from "./utils";
 // Book component comes from components context
 import { BookOpen } from "lucide-react";
@@ -12,6 +11,7 @@ interface SeriesListProps {
   components?: BlogComponents;
   posts?: any[];
   getSortedByDatePosts?: any;
+  getSeriesBySlug: (slug: string) => any;
 }
 
 export function SeriesList({
@@ -19,6 +19,7 @@ export function SeriesList({
   components = {},
   posts = [],
   getSortedByDatePosts,
+  getSeriesBySlug,
 }: SeriesListProps) {
   const seriesInfo = getSeriesBySlug(seriesSlug);
   const seriesPosts =
