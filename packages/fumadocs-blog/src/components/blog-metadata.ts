@@ -111,9 +111,7 @@ export async function generateBlogMetadata(props: {
 
     const metadata = createBlogMetadata({
       title: `${series.label}`,
-      description:
-        series.description ||
-        blogConstants.seriesDefaultDescription(series.label),
+      description: series.description,
       openGraph: {
         url: canonicalUrl,
         images: imageMetaData,
@@ -156,9 +154,7 @@ export async function generateBlogMetadata(props: {
 
     const metadata = createBlogMetadata({
       title: `${categoryInfo.label}`,
-      description:
-        categoryInfo.description ||
-        blogConstants.categoryDefaultDescription(categoryInfo.label),
+      description: categoryInfo.description,
       openGraph: {
         url: canonicalUrl,
         images: imageMetaData,

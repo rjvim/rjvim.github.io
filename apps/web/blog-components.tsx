@@ -31,14 +31,6 @@ export const blogConstants = {
   blogTitle: "Blog",
   blogDescription: "Articles and thoughts",
 
-  // Series
-  seriesDefaultDescription: (seriesLabel: string) =>
-    `Articles in the ${seriesLabel} series`,
-
-  // Category
-  categoryDefaultDescription: (categoryLabel: string) =>
-    `Articles in the ${categoryLabel} category`,
-
   // Pagination
   paginationTitle: (page: number) => `Blog - Page ${page}`,
   paginationDescription: (page: number) =>

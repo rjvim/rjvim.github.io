@@ -1,4 +1,3 @@
-// import { generateOGImage } from "@/components/og-image";
 import { generateOGImage } from "fumadocs-ui/og";
 import {
   generateAllParams,
