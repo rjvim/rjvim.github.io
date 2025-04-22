@@ -24,7 +24,7 @@ function getImageMetadata(url: string, blogConstants: any) {
 
 export async function generateBlogMetadata(props: {
   params: { slug?: string[] };
-  createBlogMetadata: (override: Metadata) => Metadata;
+  createBlogMetadata: (override: Metadata, blogConstants: any) => Metadata;
   blogConstants: any;
   blogSource: any;
   getCategoryBySlug: (slug: string) => any;
@@ -65,7 +65,7 @@ export async function generateBlogMetadata(props: {
       alternates: {
         canonical: urlUtils.getBlogUrl(),
       },
-    });
+    }, blogConstants);
   }
 
   // Handle blog post page
@@ -91,7 +91,7 @@ export async function generateBlogMetadata(props: {
       alternates: {
         canonical: page.url,
       },
-    });
+    }, blogConstants);
   }
 
   // Handle series page
@@ -119,7 +119,7 @@ export async function generateBlogMetadata(props: {
       alternates: {
         canonical: canonicalUrl,
       },
-    });
+    }, blogConstants);
 
     return metadata;
   }
@@ -137,7 +137,7 @@ export async function generateBlogMetadata(props: {
         alternates: {
           canonical: blogConstants.urls.blogBase,
         },
-      });
+      }, blogConstants);
     }
 
     const canonicalUrl = urlUtils.getCategoryUrl(category);
@@ -161,7 +161,7 @@ export async function generateBlogMetadata(props: {
       alternates: {
         canonical: canonicalUrl,
       },
-    });
+    }, blogConstants);
 
     return metadata;
   }
@@ -189,7 +189,7 @@ export async function generateBlogMetadata(props: {
       alternates: {
         canonical: canonicalUrl,
       },
-    });
+    }, blogConstants);
   }
 
   // Handle paginated category page
@@ -216,7 +216,7 @@ export async function generateBlogMetadata(props: {
       alternates: {
         canonical: canonicalUrl,
       },
-    });
+    }, blogConstants);
   }
 
   const imageMetaData = getImageMetadata(
@@ -238,5 +238,5 @@ export async function generateBlogMetadata(props: {
     alternates: {
       canonical: urlUtils.getBlogUrl(),
     },
-  });
+  }, blogConstants);
 }

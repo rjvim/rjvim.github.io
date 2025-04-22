@@ -10,7 +10,7 @@ import {
 import { Badge } from "@repo/shadverse/components/badge";
 import { Book } from "@repo/shadverse/components/ui/book";
 import { Card } from "@repo/shadverse/components/card";
-import type { BlogComponents } from "@repo/fumadocs-blog/blog";
+import type { BlogConstants, BlogComponents } from "@repo/fumadocs-blog/blog";
 import { PostCard } from "@repo/fumadocs-blog/blog";
 import {
   Brain,
@@ -26,11 +26,14 @@ import {
 import { SocialIcons } from "@repo/ui/components/social-icons";
 
 // Blog text constants that can be customized
-export const blogConstants = {
+
+export const blogConstants: BlogConstants = {
   // General
   blogTitle: "Blog",
   blogDescription: "Articles and thoughts",
-
+  siteName: "rjv.im",
+  defaultAuthorName: "Rajiv",
+  xUsername: "@rjv_im",
   // Pagination
   paginationTitle: (page: number) => `Blog - Page ${page}`,
   paginationDescription: (page: number) =>
@@ -39,33 +42,39 @@ export const blogConstants = {
     `${category.charAt(0).toUpperCase() + category.slice(1)} - Page ${page}`,
   categoryPaginationDescription: (category: string, page: number) =>
     `Articles in the ${category} category - Page ${page}`,
-
   // URLs
   blogBase: "/blog",
   blogOgImageBase: "blog-og",
+  pageSize: 5,
 };
 
-export function createBlogMetadata(override: Metadata): Metadata {
+export function createBlogMetadata(
+  override: Metadata,
+  blogConstants: BlogConstants
+): Metadata {
+  // Derive values from the core properties
+  const siteUrl = `https://${blogConstants.siteName}`;
+  const author = {
+    name: blogConstants.defaultAuthorName,
+    url: siteUrl,
+  };
+  const creator = blogConstants.defaultAuthorName;
+
   return {
     ...override,
-    authors: [
-      {
-        name: "Rajiv",
-        url: "https://rjv.im",
-      },
-    ],
-    creator: "Rajiv",
+    authors: [author],
+    creator: creator,
     openGraph: {
       title: override.title ?? undefined,
       description: override.description ?? undefined,
-      url: "https://rjv.im",
-      siteName: "rjv.im",
+      url: siteUrl,
+      siteName: blogConstants.siteName,
       ...override.openGraph,
     },
     twitter: {
       card: "summary_large_image",
-      site: "@rjv_im",
-      creator: "@rjv_im",
+      site: blogConstants.xUsername,
+      creator: blogConstants.xUsername,
       title: override.title ?? undefined,
       description: override.description ?? undefined,
       ...override.twitter,

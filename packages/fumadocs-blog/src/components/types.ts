@@ -35,6 +35,24 @@ export type BlogPost = {
   [key: string]: any;
 };
 
+export interface BlogConstants {
+  blogTitle: string;
+  blogDescription: string;
+  siteName: string;
+  siteUrl?: string;
+  defaultAuthorName: string;
+  author?: { name: string; url: string };
+  creator?: string;
+  xUsername: string;
+  paginationTitle: (page: number) => string;
+  paginationDescription: (page: number) => string;
+  categoryPaginationTitle: (category: string, page: number) => string;
+  categoryPaginationDescription: (category: string, page: number) => string;
+  blogBase: string;
+  blogOgImageBase: string;
+  pageSize: number;
+}
+
 export interface PostCardProps {
   post: NonNullable<BlogPost>;
   components?: BlogComponents;
