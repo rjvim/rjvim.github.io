@@ -8,7 +8,7 @@ image: https://shadcnblocks.com/images/block/placeholder-5.svg
 draft: true
 ---
 
-I was using docusaraurus for my blog before and I was not satisfied, I think the itch was to have more control - particularly from styling or features perspective. What features would you want on your blog? I went for following:
+What features would you want on your blog? I went for following:
 
 ## Features
 
@@ -19,19 +19,22 @@ I was using docusaraurus for my blog before and I was not satisfied, I think the
 
 ### Other Features
 
-- [x] A Blog Post (Duh!)
-- [x] List of Posts with Pagination (More Duh!)
+- [x] A Blog Post
+- [x] List of Posts with Pagination
 - [x] Categories
-- [ ] Tags
-- [x] Sitemap
+- [x] Series
+- [ ] Tags (WIP)
 - [x] Metadata with Social Images
 - [x] Static (I am repeating for effect)
 
 ## Setup
 
-Now how do we setup? The typical setup docs of fuma docs cover instructions for a docs site. There is a blog though which guides with some basic setup - Think of this post and this entire repo as an extension to it.
+FumaDocs official docs has an article on how to setup a blog: [Setup a Blog](https://fumadocs.vercel.app/blog/make-a-blog). Using that as foundation I have built my blog with above features.
 
-If you just want to get to the part where you want to use it for your blog, just clone the current repo, you will get the exact same site you are currently on! But if you want setup something similar on your existing nextjs site, you can follow along.
+You can go about this in two ways:
+
+- Clone the current repo
+- Follow the steps below to add to your existing nextjs site
 
 ### Install and Configure Fuma Docs
 
@@ -41,29 +44,38 @@ If you just want to get to the part where you want to use it for your blog, just
 
 ### Install Fuma Docs
 
+You need a working setup of Fuma Docs. If you don't have one, you can create one using the following command:
+
 ```package-install
 pnpm create fumadocs-app
 ```
 
-Or maybe you configured fumadocs manually.
+Or you can configure fumadocs [manually](https://fumadocs.vercel.app/docs/ui/manual-installation)
 
 At this point you should have basic setup ready with files: source.config.ts and lib/source.ts
 
-```package-install
-fumadocs-ui fumadocs-core fumadocs-mdx @types/mdx @shikijs/transformers fumadocs-docgen fumadocs-twoslash katex rehype-katex remark-math shiki twoslash zod
-```
+### Setup ShadCN Components
 
-The above installs more packages than installation guide of fumadocs, but we will configure them later.
-
-Setup ShadCN
+If you are already have shadcn setup, you don't need to run the following command.
 
 ```bash
 pnpm dlx shadcn@latest init
 ```
 
+We need following components:
+
+- button
+- popover
+- badge
+- card
+
+You can add above just with following:
+
 ```bash
 pnpm dlx shadcn@latest add button popover badge card
 ```
+
+We also need a **book** icon component which we use while showing series:
 
 ```bash
 pnpm dlx shadcn@latest add "https://21st.dev/r/designali-in/book"
@@ -151,6 +163,7 @@ Add all of above features for a blog would need multiple files to be configured,
 
 ```bash
 npx giget gh:rjvim/rjvim.github.io/packages/fumadocs-blog/src fumadocs-blog --force
+@import "../fumadocs-blog/styles/globals.css";
 ```
 
 ```bash
@@ -326,6 +339,73 @@ export const getSeriesBySlug = (slug: string) => {
 };
 ```
 
+Add following sample post
+
+````mdx title="content/blog/idea/zero-trust-security.mdx"
+---
+title: Zero Trust Security
+description: Why modern security architectures assume breach and verify everything
+author: lina
+date: 2025-03-22
+tags: [security, zero trust, cybersecurity, enterprise]
+image: https://shadcnblocks.com/images/block/placeholder-5.svg
+---
+
+# Zero Trust Security
+
+Traditional security models operated on the principle of "trust but verify" and focused on perimeter defense. Zero Trust flips this paradigm with a simple principle: never trust, always verify.
+
+## Core Principles
+
+Zero Trust is built on several foundational ideas:
+
+### Assume Breach
+
+Zero Trust architectures operate under the assumption that attackers are already present within the network.
+
+### Verify Explicitly
+
+Every access request must be fully authenticated, authorized, and encrypted:
+
+1. Strong identity verification for all users
+2. Device health validation
+3. Just-in-time and just-enough access
+4. Context-aware policies
+
+## Implementation Strategies
+
+Moving to Zero Trust requires systematic changes:
+
+### Identity as the Control Plane
+
+Modern security centers on identity rather than network location:
+
+```yaml
+# Example access policy
+resources:
+  - id: financial-dashboard
+    access_rules:
+      - condition:
+          user:
+            groups: ["finance-team"]
+            authentication:
+              mfa: required
+          device:
+            compliance: verified
+            encryption: enabled
+          context:
+            location: approved
+            risk_score: low
+        permission: allow
+```
+````
+
+### Micro-Segmentation
+
+Network security shifts from perimeter-based to fine-grained segmentation between workloads.
+
+````
+
 </Step>
 
 <Step>
@@ -342,7 +422,7 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     ...components,
   };
 }
-```
+````
 
 </Step>
 
