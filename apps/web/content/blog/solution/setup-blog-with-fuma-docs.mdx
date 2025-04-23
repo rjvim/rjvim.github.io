@@ -16,9 +16,6 @@ What features would you want on your blog? I went for following:
 - [x] MDX Support: I code frontend too, so I need something where I can embed React Components
 - [x] Search
 - [x] Table of Contents: The clerk style
-
-### Other Features
-
 - [x] A Blog Post
 - [x] List of Posts with Pagination
 - [x] Categories
@@ -54,6 +51,10 @@ Or you can configure fumadocs [manually](https://fumadocs.vercel.app/docs/ui/man
 
 At this point you should have basic setup ready with files: source.config.ts and lib/source.ts
 
+</Step>
+
+<Step>
+
 ### Setup ShadCN Components
 
 If you are already have shadcn setup, you don't need to run the following command.
@@ -87,13 +88,13 @@ pnpm dlx shadcn@latest add "https://21st.dev/r/designali-in/book"
 
 ### Define a Collection for Blog
 
-We are going to install zod as we are going to use it add frontmatter schema.
+Install zod as we are going to use it add frontmatter schema.
 
 ```package-install
 zod
 ```
 
-Now define a collection for blog
+Now define a collection for blog, add following:
 
 ```ts title="source.config.ts"
 import {
@@ -157,30 +158,67 @@ export type BlogPost = ReturnType<typeof getBlogPost>;
 
 <Step>
 
-### Copy fumadocs-blog folder
+### Add fumadocs-blog components
 
-Add all of above features for a blog would need multiple files to be configured, so we will copy the `fumadocs-blog` folder from this repo.
+We have multiple features so instead of adding files one by one, we will copy entire folders using giget command.
+
+**Add all the required components**
 
 ```bash
 npx giget gh:rjvim/rjvim.github.io/packages/fumadocs-blog/src fumadocs-blog --force
-@import "../fumadocs-blog/styles/globals.css";
 ```
+
+**Add /blog route page**
 
 ```bash
 npx giget gh:rjvim/rjvim.github.io/apps/web/app/\(home\)/blog app/\(home\)/blog --force
+```
+
+**Add /blog-og route page**
+
+```bash
+npx giget gh:rjvim/rjvim.github.io/apps/web/app/blog-og app/blog-og --force
+```
+
+**Correct the imports**
+
+_The original components are built to work with a monorepo, so we need to correct the imports._
+
+Run the following commands:
+
+```bash
 sed -i '' 's|@repo/fumadocs-blog/blog|@/fumadocs-blog|g' 'app/(home)/blog/[[...slug]]/page.tsx'
 ```
 
 ```bash
-npx giget gh:rjvim/rjvim.github.io/apps/web/app/blog-og app/blog-og --force
 sed -i '' 's|@repo/fumadocs-blog/blog|@/fumadocs-blog|g' 'app/blog-og/[[...slug]]/route.tsx'
 ```
 
-```bash
-npx giget gh:rjvim/rjvim.github.io/apps/web/blog-components.tsx / --force
+**Add styles to global.css**
+
+```css title="global.css"
+@import "../fumadocs-blog/styles/globals.css";
 ```
 
-```tsx title="blog-components.tsx"
+</Step>
+
+<Step>
+
+### Configure the blog
+
+If fumadocs-blog was an npm package, all the above steps would be handled by that. Now, we need to configure the blog. Blog configuration drives following:
+
+- Metadata
+- Components
+- Categories
+- Series
+- Others
+
+_I will document a detailed guide, but as of now the following should give majority of the idea_
+
+Add the following file in your repo at root path, we import this using `@/blog-configuration`.
+
+```tsx title="blog-configuration.tsx"
 import type { Metadata } from "next/types";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -339,9 +377,17 @@ export const getSeriesBySlug = (slug: string) => {
 };
 ```
 
-Add following sample post
+</Step>
 
-````mdx title="content/blog/idea/zero-trust-security.mdx"
+<Step>
+
+### Add following sample post
+
+Add the sample .mdx so that we can test if everything is working fine. Add it to `content/blog/idea/zero-trust-security.mdx`
+
+Few things to note: "idea" is the category of the blog, "zero-trust-security" would the url of the blog.
+
+```mdx title="content/blog/idea/zero-trust-security.mdx"
 ---
 title: Zero Trust Security
 description: Why modern security architectures assume breach and verify everything
@@ -380,131 +426,39 @@ Moving to Zero Trust requires systematic changes:
 
 Modern security centers on identity rather than network location:
 
-```yaml
-# Example access policy
-resources:
-  - id: financial-dashboard
-    access_rules:
-      - condition:
-          user:
-            groups: ["finance-team"]
-            authentication:
-              mfa: required
-          device:
-            compliance: verified
-            encryption: enabled
-          context:
-            location: approved
-            risk_score: low
-        permission: allow
-```
-````
-
 ### Micro-Segmentation
 
 Network security shifts from perimeter-based to fine-grained segmentation between workloads.
-
-````
-
-</Step>
-
-<Step>
-
-### Add mdx-components
-
-```tsx title="mdx-components.tsx"
-import defaultMdxComponents from "fumadocs-ui/mdx";
-import type { MDXComponents } from "mdx/types";
-
-export function getMDXComponents(components?: MDXComponents): MDXComponents {
-  return {
-    ...defaultMdxComponents,
-    ...components,
-  };
-}
-````
-
-</Step>
-
-<Step>
-
-### Configure next.config.mjs
-
-_Yes, it's .mjs_
-
-Remember we are building a static blog, so we need to set "export"
-
-```ts title="next.config.mjs"
-import { createMDX } from "fumadocs-mdx/next";
-
-const withMDX = createMDX();
-
-/** @type {import('next').NextConfig} */
-const config = {
-  reactStrictMode: true,
-  output: "export",
-  images: { unoptimized: true },
-};
-
-export default withMDX(config);
 ```
 
 </Step>
 
 <Step>
 
-### Configure RootProvider
+### Test the blog
 
-```tsx title="app/layout.tsx"
-import { RootProvider } from "fumadocs-ui/provider";
+If you open `http://localhost:3000/blog` you see list of posts, at this point only 1. You can add more, edit the content and take it for a drive. The pagination size is 5, so after 5 posts, you would see paginator.
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <RootProvider
-      search={{
-        options: {
-          type: "static",
-        },
-      }}
-    >
-      {children}
-    </RootProvider>
-  );
-}
+You can open the blog detail page and observe few details like tags, series, categories, etc.,
+
+If you want a post to be part of a series, you need to add following frontmatter to the .mdx file:
+
+```mdx
+series: "x"
+seriesPart: 1
 ```
 
 </Step>
-
-<Step>
-
-### Add source.config.ts
-
-Here we declare `dir: "content/blog",` which is the directory where our markdown files are located.
-
-<include lang="ts" meta='title="source.config.ts"'>
-  ../../../source.config.ts
-</include>
-
-</Step>
-
-<Step>
-
-### Add source.ts
-
-The meat of the solution. Here we are using `loader` to create a source for our blog.
-
-<include lang="ts" meta='title="source.ts"'>
-  ../../../lib/source.ts
-</include>  
-</Step>
-
-<Step>
-### Copy helper library for blog
-
-</Step>
-
 </Steps>
+
+## Future
+
+This development is driven to enable myself and the products I am working on. I have following things in pipeline:
+
+- Newsletter Subscription (But how to it for a static site?)
+- Tags
+- Make other components overridable so that you can style it better
+- Make this a clonable template
+- The biggest problem I personally have with templates is once you clone and start changing it, updating them is not easy. So, you are off-track from the first second. So, I am inclining towards a monorepo where I can hit the balance between open code and update like a package.
+
+Anything else hit me up on [Twitter](https://x.com/rjv_im), follow along for more updates.

@@ -7,7 +7,7 @@ import {
   blogConstants,
   getCategoryBySlug,
   getSeriesBySlug,
-} from "@/blog-components";
+} from "@/blog-configuration";
 import { blogSource, getBlogPosts } from "@/lib/source";
 
 export const contentType = "image/png";
@@ -37,10 +37,10 @@ export async function GET(
 
 export async function generateStaticParams() {
   const posts = getBlogPosts();
-  
+
   const imageRoutes = await generateOgImageStaticParams(blogSource, posts);
-  
+
   console.log("imageRoutes", imageRoutes);
-  
+
   return imageRoutes;
 }

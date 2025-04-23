@@ -8,9 +8,9 @@ import {
   createBlogMetadata,
   blogConstants,
   getBlogConfiguration,
-} from "@/blog-components";
-import { getCategoryBySlug } from "@/blog-components";
-import { getSeriesBySlug } from "@/blog-components";
+} from "@/blog-configuration";
+import { getCategoryBySlug } from "@/blog-configuration";
+import { getSeriesBySlug } from "@/blog-configuration";
 import { getMDXComponents } from "@/mdx-components";
 import type { Metadata } from "next";
 

@@ -2,7 +2,7 @@ import Hero from "@/components/hero";
 import { GridBackground } from "@repo/ui/components/grid-background";
 import { getBlogPosts } from "@/lib/source";
 import { RecentPosts } from "@repo/fumadocs-blog/blog";
-import { getBlogConfiguration } from "@/blog-components";
+import { getBlogConfiguration } from "@/blog-configuration";
 
 export default function HomePage() {
   return (
