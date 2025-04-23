@@ -38,10 +38,10 @@ export default function Hero() {
         <div className="flex gap-8 py-20 lg:py-40 items-center justify-center flex-col">
           <div>
             <Announcement>
-              <AnnouncementTag>Latest Component</AnnouncementTag>
-              <Link href="blog/solution/github-code-block">
+              <AnnouncementTag>Latest</AnnouncementTag>
+              <Link href="blog/solution/setup-blog-with-fuma-docs">
                 <AnnouncementTitle>
-                  GithubCodeBlock Component
+                  Setup a Blog using FumaDocs
                   <ArrowUpRightIcon
                     size={16}
                     className="shrink-0 text-muted-foreground"
