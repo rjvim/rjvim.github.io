@@ -8,30 +8,30 @@ image: https://shadcnblocks.com/images/block/placeholder-5.svg
 draft: true
 ---
 
-What features would you want on your blog? I went for following:
+What features would you want on your blog? Here are the ones I chose:
 
 ## Features
 
-- [x] Static Site which I can publish to Github Pages
-- [x] MDX Support: I code frontend too, so I need something where I can embed React Components
+- [x] Static site that can be published to GitHub Pages
+- [x] MDX support: I work on frontend code, so I need to embed React components in my posts
 - [x] Search
-- [x] Table of Contents: The clerk style
+- [x] Table of contents (Clerk style)
 - [x] A Blog Post
 - [x] List of Posts with Pagination
 - [x] Categories
 - [x] Series
 - [ ] Tags (WIP)
 - [x] Metadata with Social Images
-- [x] Static (I am repeating for effect)
+- [x] Static (yes, repeating for emphasis)
 
 ## Setup
 
-FumaDocs official docs has an article on how to setup a blog: [Setup a Blog](https://fumadocs.vercel.app/blog/make-a-blog). Using that as foundation I have built my blog with above features.
+The official FumaDocs documentation has an article on setting up a blog: [Setup a Blog](https://fumadocs.vercel.app/blog/make-a-blog). Using that as a foundation, I built my blog with the features above.
 
-You can go about this in two ways:
+You can proceed in two ways:
 
 - Clone the current repo
-- Follow the steps below to add to your existing nextjs site
+- Follow the steps below to add these features to your existing Next.js site
 
 ### Install and Configure Fuma Docs
 
@@ -41,15 +41,15 @@ You can go about this in two ways:
 
 ### Install Fuma Docs
 
-You need a working setup of Fuma Docs. If you don't have one, you can create one using the following command:
+You need a working Fuma Docs setup. If you don't have one, create it using the following command:
 
 ```package-install
 pnpm create fumadocs-app
 ```
 
-Or you can configure fumadocs [manually](https://fumadocs.vercel.app/docs/ui/manual-installation)
+Or you can configure FumaDocs [manually](https://fumadocs.vercel.app/docs/ui/manual-installation).
 
-At this point you should have basic setup ready with files: source.config.ts and lib/source.ts
+At this point, you should have a basic setup ready with the files: `source.config.ts` and `lib/source.ts`.
 
 </Step>
 
@@ -57,26 +57,26 @@ At this point you should have basic setup ready with files: source.config.ts and
 
 ### Setup ShadCN Components
 
-If you are already have shadcn setup, you don't need to run the following command.
+If you already have shadcn set up, you don't need to run the following command.
 
 ```bash
 pnpm dlx shadcn@latest init
 ```
 
-We need following components:
+We need the following components:
 
 - button
 - popover
 - badge
 - card
 
-You can add above just with following:
+You can add all of the above with:
 
 ```bash
 pnpm dlx shadcn@latest add button popover badge card
 ```
 
-We also need a **book** icon component which we use while showing series:
+We also need a **book** icon component, which is used when displaying series:
 
 ```bash
 pnpm dlx shadcn@latest add "https://21st.dev/r/designali-in/book"
@@ -88,13 +88,13 @@ pnpm dlx shadcn@latest add "https://21st.dev/r/designali-in/book"
 
 ### Define a Collection for Blog
 
-Install zod as we are going to use it add frontmatter schema.
+Install `zod` as we will use it to add a frontmatter schema.
 
 ```package-install
 zod
 ```
 
-Now define a collection for blog, add following:
+Now define a collection for the blog. Add the following:
 
 ```ts title="source.config.ts"
 import {
@@ -133,7 +133,7 @@ export const blog = defineCollections({
 });
 ```
 
-Add following to lib/source.ts
+Add the following to `lib/source.ts`:
 
 ```ts title="lib/source.ts"
 import { docs, blog } from "@/.source";
@@ -160,7 +160,7 @@ export type BlogPost = ReturnType<typeof getBlogPost>;
 
 ### Add fumadocs-blog components
 
-We have multiple features so instead of adding files one by one, we will copy entire folders using giget command.
+There are multiple features, so instead of adding files one by one, we'll copy entire folders using the giget command.
 
 **Add all the required components**
 
@@ -383,9 +383,9 @@ export const getSeriesBySlug = (slug: string) => {
 
 ### Add following sample post
 
-Add the sample .mdx so that we can test if everything is working fine. Add it to `content/blog/idea/zero-trust-security.mdx`
+Add the sample `.mdx` file below to test if everything is working. Place it at `content/blog/idea/zero-trust-security.mdx`.
 
-Few things to note: "idea" is the category of the blog, "zero-trust-security" would the url of the blog.
+A few things to note: "idea" is the category of the blog, and "zero-trust-security" will be the URL of the blog post.
 
 ```mdx title="content/blog/idea/zero-trust-security.mdx"
 ---
@@ -437,14 +437,14 @@ Network security shifts from perimeter-based to fine-grained segmentation betwee
 
 ### Test the blog
 
-If you open `http://localhost:3000/blog` you see list of posts, at this point only 1. You can add more, edit the content and take it for a drive. The pagination size is 5, so after 5 posts, you would see paginator.
+If you open `http://localhost:3000/blog`, you'll see a list of posts—at this point, only one. You can add more, edit the content, and try it out. The pagination size is 5, so after 5 posts you'll see a paginator.
 
-You can open the blog detail page and observe few details like tags, series, categories, etc.,
+You can open a blog detail page and see details like tags, series, categories, etc.
 
-If you want a post to be part of a series, you need to add following frontmatter to the .mdx file:
+If you want a post to be part of a series, add the following frontmatter to the `.mdx` file:
 
 ```mdx
-series: "x"
+series: building-react-component-library
 seriesPart: 1
 ```
 
@@ -453,12 +453,12 @@ seriesPart: 1
 
 ## Future
 
-This development is driven to enable myself and the products I am working on. I have following things in pipeline:
+This development is driven by my needs and the products I'm working on. Here are a few things in the pipeline:
 
-- Newsletter Subscription (But how to it for a static site?)
+- Newsletter subscription (But how do you do it for a static site?)
 - Tags
-- Make other components overridable so that you can style it better
+- Make other components overridable so you can style them better
 - Make this a clonable template
-- The biggest problem I personally have with templates is once you clone and start changing it, updating them is not easy. So, you are off-track from the first second. So, I am inclining towards a monorepo where I can hit the balance between open code and update like a package.
+- The biggest problem I have with templates is that once you clone and start changing them, updating is not easy. You're off-track from the first second. So, I'm leaning towards a monorepo where I can balance open code and updates like a package.
 
-Anything else hit me up on [Twitter](https://x.com/rjv_im), follow along for more updates.
+Anything else? Hit me up on [Twitter](https://x.com/rjv_im) and follow for more updates.
