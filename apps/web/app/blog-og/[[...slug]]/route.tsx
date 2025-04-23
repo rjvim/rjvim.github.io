@@ -30,7 +30,7 @@ export async function GET(
 
   return generateOGImage({
     title: metadata.title,
-    description: metadata.description,
+    // description: metadata.description,
     site: "rjv.im",
   });
 }
