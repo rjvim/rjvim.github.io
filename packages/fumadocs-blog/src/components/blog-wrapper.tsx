@@ -110,7 +110,7 @@ export async function BlogWrapper({
 
     if (!page) notFound();
 
-    const lastModified = page?.data.lastModified;
+    const lastModified = page?.data.date;
     const lastUpdate = lastModified ? new Date(lastModified) : undefined;
     const tags = page?.data.tags ?? [];
 

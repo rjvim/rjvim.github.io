@@ -1,0 +1,430 @@
+---
+title: Setup a Blog with NextJS & Fuma Docs
+description: A guide to build a blog using Fuma Docs
+date: 2025-04-16
+author: rajiv
+tags: [tutorial, social-media, x-twitter, component]
+image: https://shadcnblocks.com/images/block/placeholder-5.svg
+draft: true
+---
+
+I was using docusaraurus for my blog before and I was not satisfied, I think the itch was to have more control - particularly from styling or features perspective. What features would you want on your blog? I went for following:
+
+## Features
+
+- [x] Static Site which I can publish to Github Pages
+- [x] MDX Support: I code frontend too, so I need something where I can embed React Components
+- [x] Search
+- [x] Table of Contents: The clerk style
+
+### Other Features
+
+- [x] A Blog Post (Duh!)
+- [x] List of Posts with Pagination (More Duh!)
+- [x] Categories
+- [ ] Tags
+- [x] Sitemap
+- [x] Metadata with Social Images
+- [x] Static (I am repeating for effect)
+
+## Setup
+
+Now how do we setup? The typical setup docs of fuma docs cover instructions for a docs site. There is a blog though which guides with some basic setup - Think of this post and this entire repo as an extension to it.
+
+If you just want to get to the part where you want to use it for your blog, just clone the current repo, you will get the exact same site you are currently on! But if you want setup something similar on your existing nextjs site, you can follow along.
+
+### Install and Configure Fuma Docs
+
+<Steps>
+
+<Step>
+
+### Install Fuma Docs
+
+```package-install
+pnpm create fumadocs-app
+```
+
+Or maybe you configured fumadocs manually.
+
+At this point you should have basic setup ready with files: source.config.ts and lib/source.ts
+
+```package-install
+fumadocs-ui fumadocs-core fumadocs-mdx @types/mdx @shikijs/transformers fumadocs-docgen fumadocs-twoslash katex rehype-katex remark-math shiki twoslash zod
+```
+
+The above installs more packages than installation guide of fumadocs, but we will configure them later.
+
+Setup ShadCN
+
+```bash
+pnpm dlx shadcn@latest init
+```
+
+```bash
+pnpm dlx shadcn@latest add button popover badge card
+```
+
+```bash
+pnpm dlx shadcn@latest add "https://21st.dev/r/designali-in/book"
+```
+
+</Step>
+
+<Step>
+
+### Define a Collection for Blog
+
+We are going to install zod as we are going to use it add frontmatter schema.
+
+```package-install
+zod
+```
+
+Now define a collection for blog
+
+```ts title="source.config.ts"
+import {
+  defineDocs,
+  defineConfig,
+  defineCollections,
+  frontmatterSchema,
+} from "fumadocs-mdx/config";
+import { z } from "zod";
+
+export const blog = defineCollections({
+  type: "doc",
+  dir: "content/blog",
+  schema: frontmatterSchema.extend({
+    author: z.string(),
+    date: z
+      .string()
+      .or(z.date())
+      .transform((value, context) => {
+        try {
+          return new Date(value);
+        } catch {
+          context.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "Invalid date",
+          });
+          return z.NEVER;
+        }
+      }),
+    tags: z.array(z.string()).optional(),
+    image: z.string().optional(),
+    draft: z.boolean().optional().default(false),
+    series: z.string().optional(),
+    seriesPart: z.number().optional(),
+  }),
+});
+```
+
+Add following to lib/source.ts
+
+```ts title="lib/source.ts"
+import { docs, blog } from "@/.source";
+import { loader } from "fumadocs-core/source";
+import { createMDXSource } from "fumadocs-mdx";
+
+export const blogSource = loader({
+  baseUrl: "/blog",
+  source: createMDXSource(blog),
+});
+
+export const {
+  getPage: getBlogPost,
+  getPages: getBlogPosts,
+  pageTree: pageBlogTree,
+} = blogSource;
+
+export type BlogPost = ReturnType<typeof getBlogPost>;
+```
+
+</Step>
+
+<Step>
+
+### Copy fumadocs-blog folder
+
+Add all of above features for a blog would need multiple files to be configured, so we will copy the `fumadocs-blog` folder from this repo.
+
+```bash
+npx giget gh:rjvim/rjvim.github.io/packages/fumadocs-blog/src fumadocs-blog --force
+```
+
+```bash
+npx giget gh:rjvim/rjvim.github.io/apps/web/app/\(home\)/blog app/\(home\)/blog --force
+sed -i '' 's|@repo/fumadocs-blog/blog|@/fumadocs-blog|g' 'app/(home)/blog/[[...slug]]/page.tsx'
+```
+
+```bash
+npx giget gh:rjvim/rjvim.github.io/apps/web/app/blog-og app/blog-og --force
+sed -i '' 's|@repo/fumadocs-blog/blog|@/fumadocs-blog|g' 'app/blog-og/[[...slug]]/route.tsx'
+```
+
+```bash
+npx giget gh:rjvim/rjvim.github.io/apps/web/blog-components.tsx / --force
+```
+
+```tsx title="blog-components.tsx"
+import type { Metadata } from "next/types";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Badge } from "@/components/ui/badge";
+import { Book } from "@/components/ui/book";
+import { Card } from "@/components/ui/card";
+import type { BlogConstants, BlogConfiguration } from "@/fumadocs-blog";
+import { PostCard } from "@/fumadocs-blog";
+import {
+  Brain,
+  Book as LucideBook,
+  Code,
+  Cog,
+  Lightbulb,
+  Megaphone,
+  Rocket,
+  Users,
+  Wrench,
+  BookIcon,
+} from "lucide-react";
+
+// Blog text constants that can be customized
+
+export const blogConstants: BlogConstants = {
+  // General
+  blogTitle: "Blog",
+  blogDescription: "Articles and thoughts",
+  siteName: "myblog.com",
+  defaultAuthorName: "My Name",
+  xUsername: "@my_x_username",
+  // Pagination
+  paginationTitle: (page: number) => `Blog - Page ${page}`,
+  paginationDescription: (page: number) =>
+    `Articles and thoughts - Page ${page}`,
+  categoryPaginationTitle: (category: string, page: number) =>
+    `${category.charAt(0).toUpperCase() + category.slice(1)} - Page ${page}`,
+  categoryPaginationDescription: (category: string, page: number) =>
+    `Articles in the ${category} category - Page ${page}`,
+  // URLs
+  blogBase: "/blog",
+  blogOgImageBase: "blog-og",
+  pageSize: 5,
+};
+
+export function createBlogMetadata(
+  override: Metadata,
+  blogConstants: BlogConstants
+): Metadata {
+  // Derive values from the core properties
+  const siteUrl = `https://${blogConstants.siteName}`;
+  const author = {
+    name: blogConstants.defaultAuthorName,
+    url: siteUrl,
+  };
+  const creator = blogConstants.defaultAuthorName;
+
+  return {
+    ...override,
+    authors: [author],
+    creator: creator,
+    openGraph: {
+      title: override.title ?? undefined,
+      description: override.description ?? undefined,
+      url: siteUrl,
+      siteName: blogConstants.siteName,
+      ...override.openGraph,
+    },
+    twitter: {
+      card: "summary_large_image",
+      site: blogConstants.xUsername,
+      creator: blogConstants.xUsername,
+      title: override.title ?? undefined,
+      description: override.description ?? undefined,
+      ...override.twitter,
+    },
+    alternates: {
+      canonical: "/",
+      types: {
+        "application/rss+xml": "/api/rss.xml",
+      },
+      ...override.alternates,
+    },
+  };
+}
+
+export function getBlogConfiguration(): BlogConfiguration {
+  return {
+    PostCard: PostCard,
+    Button,
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+    Badge,
+    Book,
+    Card,
+    cn,
+    config: {
+      blogBase: blogConstants.blogBase,
+      blogOgImageBase: blogConstants.blogOgImageBase,
+      pageSize: 5,
+    },
+  };
+}
+
+export const useBlogConfiguration = getBlogConfiguration;
+
+// Moved from lib/categories.ts
+export const getCategoryBySlug = (slug: string) => {
+  const categories = {
+    idea: {
+      label: "Idea",
+      icon: Brain,
+      description:
+        "Exploratory thoughts and wild concepts for Teurons and beyond.",
+    },
+    opinions: {
+      label: "Opinions",
+      icon: Megaphone,
+      description:
+        "Subjective, wild, gut-hunch takes—less informed, out-of-box rants.",
+    },
+  };
+
+  return (
+    categories[slug as keyof typeof categories] || {
+      label: slug.toString().replace(/-/g, " ").toLowerCase(),
+      icon: BookIcon,
+    }
+  );
+};
+
+export const getSeriesBySlug = (slug: string) => {
+  const series = {
+    x: {
+      label: "Series X",
+      icon: LucideBook,
+      description: "A Sample Series",
+    },
+    // Add more series here as needed
+  };
+
+  return (
+    series[slug as keyof typeof series] || {
+      label: slug.charAt(0).toUpperCase() + slug.slice(1),
+      icon: LucideBook,
+      description: `Articles in the ${
+        slug.charAt(0).toUpperCase() + slug.slice(1)
+      } series.`,
+    }
+  );
+};
+```
+
+</Step>
+
+<Step>
+
+### Add mdx-components
+
+```tsx title="mdx-components.tsx"
+import defaultMdxComponents from "fumadocs-ui/mdx";
+import type { MDXComponents } from "mdx/types";
+
+export function getMDXComponents(components?: MDXComponents): MDXComponents {
+  return {
+    ...defaultMdxComponents,
+    ...components,
+  };
+}
+```
+
+</Step>
+
+<Step>
+
+### Configure next.config.mjs
+
+_Yes, it's .mjs_
+
+Remember we are building a static blog, so we need to set "export"
+
+```ts title="next.config.mjs"
+import { createMDX } from "fumadocs-mdx/next";
+
+const withMDX = createMDX();
+
+/** @type {import('next').NextConfig} */
+const config = {
+  reactStrictMode: true,
+  output: "export",
+  images: { unoptimized: true },
+};
+
+export default withMDX(config);
+```
+
+</Step>
+
+<Step>
+
+### Configure RootProvider
+
+```tsx title="app/layout.tsx"
+import { RootProvider } from "fumadocs-ui/provider";
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <RootProvider
+      search={{
+        options: {
+          type: "static",
+        },
+      }}
+    >
+      {children}
+    </RootProvider>
+  );
+}
+```
+
+</Step>
+
+<Step>
+
+### Add source.config.ts
+
+Here we declare `dir: "content/blog",` which is the directory where our markdown files are located.
+
+<include lang="ts" meta='title="source.config.ts"'>
+  ../../../source.config.ts
+</include>
+
+</Step>
+
+<Step>
+
+### Add source.ts
+
+The meat of the solution. Here we are using `loader` to create a source for our blog.
+
+<include lang="ts" meta='title="source.ts"'>
+  ../../../lib/source.ts
+</include>  
+</Step>
+
+<Step>
+### Copy helper library for blog
+
+</Step>
+
+</Steps>
