@@ -1,0 +1,222 @@
+---
+title: "Schema-Driven UX: Building User Interfaces from Data Models"
+description: "A practical guide for developers, designers and product teams to rapidly prototype functional interfaces based on data relationships"
+date: 2025-04-30
+author: rajiv
+tags:
+  [
+    data-modeling,
+    ui-patterns,
+    crud-interfaces,
+    product-development,
+    mvp-design,
+    schema-driven-ux,
+  ]
+image: https://shadcnblocks.com/images/block/placeholder-5.svg
+draft: true
+---
+
+When designing data-driven applications, the foundation starts with entities like restaurants in a collection. The simplest viable interface typically presents these entities as a **table**, with each row representing one entity alongside search and filter capabilities. Selecting an entity reveals its detailed attributes and related data. This article explores these foundational patterns, providing a systematic approach for cross-functional teams to rapidly develop functional interfaces directly from data models, ensuring both technical viability and user-centered design.
+
+## What is Data Modelling?
+
+Data modelling involves creating a conceptual representation of data, defining its structure, constraints, and relationships to ensure organization and accessibility.
+
+**Key Terms**
+
+- **Data**: A collection of information (e.g., a list of restaurants).
+- **Entity**: A single piece of information (e.g., one restaurant). Each entity typically has a **unique identifier** to distinguish it within the system.
+- **Data Attributes**: The specific properties of an entity (e.g., name, address, price for a restaurant or menu item).
+
+For example, a restaurant (entity) has a menu, represented as a list of items with attributes like name, price, and description. The relationship between a restaurant and its menu is **one-to-many**, as one restaurant can have multiple menu items.
+
+## Query & Mutation
+
+A UI serves as an interface to manage data through two operations:
+
+### Query [!toc]
+
+Reading data, such as retrieving a restaurant and its menu. Queries focus on displaying data without altering it.
+
+### Mutation [!toc]
+
+Writing data to the database, including:
+
+- **Creating** a new entity.
+- **Updating** an existing entity.
+- **Deleting** an entity.
+
+Forms for mutations should be minimal, capturing only essential attributes to simplify validation and reduce errors. Avoid collecting excessive data, as it increases the risk of bugs and may require a "draft" state, which is a secondary consideration.
+
+## Data Query
+
+Data queries retrieve information from the database without modifying it, prioritizing a robust UX for reading data. Since reading is more frequent than writing in new products (read > write), the focus is on delivering an intuitive, feature-rich interface for exploring data collections.
+
+### Common Features [!toc]
+
+Irrespective of the presentation pattern, the following features enhance data exploration:
+
+- **Filtering**: Apply filters on attributes (e.g., cuisine type, location) with nested filters for complex queries (e.g., restaurants in a city with specific ratings).
+- **Search**: Use a global search bar to query across attributes, with autocomplete and highlighted matches for efficiency.
+- **Data Attributes Customization**: Show/hide data attributes, reorder them via drag-and-drop, and adjust display preferences.
+- **Saved Views**: Save filter, search, and attribute configurations as presets for quick reuse.
+- **Responsive Feedback**: Provide real-time updates on query results and clear indicators for applied filters or search terms.
+
+### Table Pattern: Flat Presentation [!toc]
+
+Display data in a table, with each row representing an entity (e.g., a restaurant) and columns showing attributes (e.g., name, address). Ideal for comparison-focused exploration.
+
+**Pattern-Specific Features**:
+
+- **Sortable Columns**: Sort data by clicking column headers (e.g., sort by name or rating).
+- **Pagination/Scrolling**: Support pagination or infinite scrolling for large datasets.
+
+### List Pattern: Grouped Presentation [!toc]
+
+Present data as a list, with grouping by attributes (e.g., restaurants grouped by city or cuisine). Ideal for hierarchical or categorized exploration.
+
+**Pattern-Specific Features**:
+
+- **Collapsible Groups**: Expand/collapse groups for focused browsing.
+- **Group-Level Actions**: Apply filters or searches within specific groups (e.g., filter restaurants in one city).
+
+### Recommended Approach [!toc]
+
+Leverage the **table pattern** for flat, comparison-driven data exploration and the **list pattern** for categorized, hierarchical data. Apply common features—filtering, search, data attributes customization, and saved views—to both patterns to ensure a consistent, efficient UX. This maximizes readability and usability, aligning with the read-heavy nature of new products.
+
+## Entity Query
+
+Entity queries retrieve a single entity (e.g., a restaurant) and its attributes, emphasizing clear presentation of relationships for intuitive exploration.
+
+### Detail Page Presentation [!toc]
+
+Display the entity's core attributes (e.g., name, address, unique identifier) on a detail page with a clean layout, using headings for clarity.
+
+**Features**:
+
+- **Section Navigation**: Organize attributes into section (e.g., "Overview," "Details") for quick access and provide a table of contents for easy navigation.
+
+### Presenting Relationships [!toc]
+
+Show relationships (e.g., a restaurant's menu) in a table or list within a dedicated section or tab, detailing related entities (e.g., menu items with name, price, description).
+
+**Features**:
+
+- **Collapsible Sections**: Hide/show related data via accordions to reduce clutter.
+- **Nested Queries**: Filter within relationships (e.g., menu items by price range).
+- **Relationship Navigation**: Use links or buttons to access related entities (e.g., view cuisine details) or expand secondary relationships (e.g., reviews).
+- **Data Attributes Customization**: Show/hide or reorder attributes in relationship tables, with adjustable display preferences.
+
+### Recommended Approach [!toc]
+
+Present the entity on a **detail page** with core attributes in a clean, tabbed layout, incorporating data attributes customization. For relationships, use a balanced approach—show critical or smaller datasets directly on the page in collapsible sections, while providing links to dedicated pages for more complex relationships. Include entity-specific filtering in navigation links to maintain context. This ensures an intuitive, read-focused UX for exploring entities and their relationships.
+
+## Create Mutation
+
+Data creation can occur in various ways, each impacting the UX differently. Below are common scenarios:
+
+### Scenario 1: Creating a Single Entity [!toc]
+
+A single restaurant is created using a form with minimal fields (e.g., name, address). This approach simplifies validation and ensures data integrity. A button to add a menu appears after creation, keeping the UX straightforward.
+
+### Scenario 2: Creating Entities in Bulk [!toc]
+
+Multiple restaurants are created at once, often via a file upload or batch input. This requires robust validation to prevent errors, which can complicate the UX. Feedback must clearly indicate successes or failures.
+
+### Scenario 3: Creating Entities with Relationships [!toc]
+
+A restaurant and its menu are created simultaneously. This increases complexity, as both the restaurant and menu items require validation. For example, creating cuisines alongside the restaurant adds further challenges. This approach risks overwhelming the user.
+
+### How to Create Relationships of an Existing Entity [!toc]
+
+After creating an entity, provide clear pathways to establish its relationships. From the entity's detail page, offer options to add related items (e.g., menu items for a restaurant) through modals or dedicated pages, depending on complexity. For simpler relationships, use modals to minimize context switching—users remain on the detail page while adding related items. For more complex relationships requiring extensive forms, consider dedicated pages with a streamlined workflow.
+
+When implementing this approach:
+
+- Include a prominent "Add [Relationship]" button in the relevant section of the detail page
+- For modal-based creation, keep forms minimal and focused on essential attributes
+- For page-based creation, include clear navigation back to the parent entity
+- Pre-fill the parent entity's identifier to maintain the relationship context
+
+This sequential approach maintains simplicity while ensuring proper relationship management.
+
+### Recommended Approach [!toc]
+
+The simplest and most effective method is **creating a single entity with minimal data**. For instance, create a restaurant first, then provide an option to add its menu. This minimizes validation issues and maintains a clear, user-friendly interface. For relationship creation, prefer modals for simple forms and dedicated pages for complex ones, always keeping the interface focused and minimal.
+
+## Update Mutation
+
+Updating an existing entity involves modifying its attributes or relationships. Below are common scenarios:
+
+### Scenario 1: Updating a Single Entity [!toc]
+
+A restaurant's details (e.g., name, address) are updated via a form pre-filled with existing data. Minimal fields simplify validation, and clear feedback confirms the update, maintaining a straightforward UX.
+
+### Scenario 2: Updating Entities in Bulk [!toc]
+
+Multiple restaurants are updated at once, often through a batch process or file upload. This requires careful validation to avoid errors, and the UX must provide detailed feedback on which updates succeeded or failed.
+
+### Scenario 3: Updating Entities with Relationships [!toc]
+
+A restaurant's details and its menu are updated simultaneously. This increases complexity, as both the restaurant and menu items must be validated. For example, updating a restaurant's cuisine alongside its menu adds further challenges. This approach can confuse users if not carefully designed.
+
+### Recommended Approach [!toc]
+
+The simplest method is **updating a single entity with minimal data**. For instance, update the restaurant's details first, then provide an option to modify its menu. This reduces validation complexity and ensures a clear, user-friendly interface.
+
+## Delete Mutation
+
+Deleting an entity removes it from the database. Below are common scenarios and suggestions for where deletions should be initiated:
+
+### Scenario 1: Deleting a Single Entity [!toc]
+
+A single restaurant is deleted, typically after user confirmation (e.g., a dialog box). The UX should clearly indicate success or failure, keeping the process simple and intuitive.  
+**Suggested Location**: Initiate deletion from the **detail page** of the restaurant, where users can review its data before confirming. Alternatively, allow deletion from the **table** view via a "Delete" button or icon in the restaurant's row, with a confirmation prompt to prevent errors.
+
+### Scenario 2: Deleting Entities in Bulk [!toc]
+
+Multiple restaurants are deleted at once, often through a batch selection. This requires robust validation to prevent accidental deletions, and the UX must provide clear feedback on which entities were removed.  
+**Suggested Location**: Perform bulk deletions from the **table** view, where users can select multiple rows using checkboxes and trigger deletion with a single action. A confirmation dialog should summarize the selected entities.
+
+### Scenario 3: Deleting Entities with Relationships [!toc]
+
+A restaurant and its menu are deleted together. This is complex, as relationships (e.g., menu items) must also be removed. For example, deleting a restaurant with associated cuisines adds further considerations. This approach risks errors if not handled carefully.  
+**Suggested Location**: Initiate from the **detail page**, where users can see the restaurant's relationships (e.g., menu) and understand the full scope of the deletion. A confirmation dialog should explicitly mention the deletion of related data.
+
+### Recommended Approach [!toc]
+
+The simplest method is **deleting a single entity** from the **detail page**, ensuring its relationships (e.g., menu) are also removed cleanly. This minimizes errors and maintains an intuitive UX. For bulk deletions, use the **table** view with clear feedback and confirmation.
+
+## Keeping UX Simple [!toc]
+
+Avoid creating, updating, or deleting multiple entities or relationships simultaneously, as this complicates validation and feedback. For example, don't manage a restaurant, its menu, and cuisines at once. Instead, handle one entity at a time, offering options to manage relationships afterward. This sequential approach ensures a clean, intuitive UX.
+
+## Conclusion
+
+Data modelling bridges technical and product design by structuring data for intuitive UX/UI. Use minimal forms, manage single entities first, and handle relationships later to maintain simplicity. Enhance read-heavy workflows with robust query interfaces, ensuring a functional, user-friendly experience.
+
+## Data Operations & UI Patterns Summary
+
+| Data Operation              | Primary UI Pattern        | Secondary UI Pattern    | Key Features                                                                                                     | Best Practices                                                                                                                                                               |
+| --------------------------- | ------------------------- | ----------------------- | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Data Query (Collection)** | Table                     | List with grouping      | Filtering, Search, Sortable columns, Pagination, Data attributes customization, Saved views                      | Use tables for comparison-focused exploration, Use lists for hierarchical/categorized data, Prioritize read-heavy workflows                                                  |
+| **Entity Query (Single)**   | Detail page with sections | Tabbed interface        | Section navigation, Collapsible sections, Nested queries, Relationship navigation, Data attributes customization | Show core attributes prominently, Show small relationships on same page, Link to dedicated pages for complex relationships, Use query params for filtering relationship data |
+| **Create Mutation**         | Simple form               | Modal or wizard         | Minimal fields, Clear validation, Feedback indicators, Sequential creation flow                                  | Create single entity first, Add relationships afterward, Use modals for simple relationship creation, Use dedicated pages for complex forms                                  |
+| **Update Mutation**         | Pre-filled form           | Inline editing          | Existing data pre-populated, Validation, Success/failure feedback, Change tracking                               | Update single entity at a time, Separate relationship updates, Minimize fields to reduce validation complexity                                                               |
+| **Delete Mutation**         | Confirmation dialog       | Bulk selection in table | Clear warnings, Relationship impact display, Success/failure feedback, Undo option (when possible)               | Delete from detail page for single entities, Delete from table for bulk operations, Explicitly show impact on relationships                                                  |
+| **Relationship Creation**   | Modal                     | Dedicated page          | Parent entity context, Minimal form fields, Quick access from detail page                                        | Use modals for simple relationships, Use dedicated pages for complex forms, Maintain parent entity context                                                                   |
+
+## Essential Primitive Components for Schema-Driven UX
+
+| Component                 | Key Features                                                                        | Data Operations                                                             | Where to Use                                                              |
+| ------------------------- | ----------------------------------------------------------------------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| **Table Component**       | Sortable columns, pagination, row selection, compact/detailed views, inline actions | Data Query, Entity Query, Delete Mutation (bulk)                            | Collections of entities, relationships, nested data display               |
+| **List Component**        | Grouping, collapsible sections, nested actions, hierarchical display                | Data Query, Entity Query                                                    | Hierarchical data, categorized information, simpler relationship displays |
+| **Filter Component**      | Multiple filter types, saved filters, clear indicators                              | Data Query, Entity Query                                                    | Attached to tables and lists for filtering collections or relationships   |
+| **Search Component**      | Autocomplete, result highlighting, search history                                   | Data Query, Entity Query                                                    | Global search and within-collection searching                             |
+| **Form Component**        | Validation, field types, responsive layout, error handling, conditional fields      | Create Mutation, Update Mutation                                            | All data creation and editing operations                                  |
+| **Dialog Component**      | Various sizes, focus trapping, confirmation actions, form hosting                   | Create Mutation, Update Mutation, Delete Mutation                           | Confirmations, simple data entry, relationship management                 |
+| **Page Layout Component** | Section navigation, tabs, responsive layout, action buttons, breadcrumbs            | Entity Query, Data Query                                                    | Primary content organization for both collections and single entities     |
+| **Action Component**      | Buttons, menus, permission-based visibility, contextual options                     | Create Mutation, Update Mutation, Delete Mutation                           | Triggering operations throughout the interface                            |
+| **Feedback Component**    | Success/error states, toast messages, inline validation, loading indicators         | Create Mutation, Update Mutation, Delete Mutation, Data Query, Entity Query | User feedback during and after operations                                 |
+| **Empty State Component** | Messaging, primary action buttons, contextual guidance                              | Data Query, Entity Query                                                    | Collections with no data, relationship sections with no items             |
