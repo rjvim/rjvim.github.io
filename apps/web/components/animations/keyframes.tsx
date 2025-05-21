@@ -11,12 +11,9 @@ export default function KeyframesBox() {
 
       <motion.div
         className="bg-blue-500 h-20 w-20"
-        initial={{ x: 200 }}
-        animate={{ x: [200, 0] }}
-        transition={{
-          duration: 1,
-          ease: "easeInOut",
-        }}
+        initial={{ x: -100 }}
+        animate={{ x: 0 }}
+        transition={{ type: "spring" }}
       >
         With Motion
       </motion.div>
