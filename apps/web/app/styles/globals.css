@@ -34,3 +34,16 @@
 @import "./theme-transition.css";
 
 @import "@repo/fumadocs-blog/globals.css";
+
+/* Keyframe animation for the move effect */
+@keyframes move {
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Animation utility class */
+.animate-move {
+  animation: move 0.6s ease-out forwards;
+  will-change: transform;
+}

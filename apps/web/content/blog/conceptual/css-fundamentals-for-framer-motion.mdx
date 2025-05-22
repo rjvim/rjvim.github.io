@@ -1,7 +1,7 @@
 ---
 title: "CSS Fundamentals for Framer Motion"
 description: "Learn CSS animation concepts and how to implement them using both Tailwind CSS and Framer Motion. A practical guide for web developers."
-date: 2025-05-16
+date: 2025-05-22
 author: rajiv
 tags: [framer-motion, css, animations, tailwind, web-development]
 image: https://shadcnblocks.com/images/block/placeholder-5.svg
@@ -121,15 +121,23 @@ Framer Motion allows you to set the transform origin directly in the animation p
 
 ## 6. Keyframes
 
-Keyframes allow for more complex animations by defining multiple steps in the animation sequence.
+Keyframes allow for more complex animations by defining multiple steps in the animation sequence. Here we demonstrate three different animation approaches:
+
+1. **CSS Animation** - Using Tailwind's built-in animations
+2. **Framer Motion (Page Load)** - Animation that runs immediately when the component mounts
+3. **Framer Motion (On View)** - Animation that triggers when the element comes into the viewport
 
 #### With Tailwind
 
-For keyframe animations in Tailwind, you would typically define custom animations in your `tailwind.config.js` file. Since we haven't defined any custom keyframes in this project, we'll focus on the Framer Motion implementation which provides a more straightforward way to handle complex animations. However, in a typical Tailwind setup, you would define a custom animation in your config and then apply it using the `animate-*` utility class.
+For the CSS animation, we define a custom keyframe animation in our global CSS and apply it using Tailwind's `animate-*` utility. The animation moves the element from left to right using the `move` animation.
 
 #### With Framer Motion
 
-Framer Motion simplifies keyframe animations with the `animate` prop, allowing you to define an array of values.
+Framer Motion provides two main approaches for keyframe animations:
+
+- **Page Load Animation**: The animation starts automatically when the component mounts. The element is initially positioned off-screen (`x: -100`) and animates to its final position (`x: 0`) with a spring effect.
+
+- **On View Animation**: The animation triggers only when the element comes into the viewport. This is achieved using the `useInView` hook from Framer Motion, which detects when the element is visible and triggers the animation.
 
 <CodeDisplay component={<KeyframesBox />}>
   <include lang="tsx" meta={{ title: "keyframes.tsx" }}>
