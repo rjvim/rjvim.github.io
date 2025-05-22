@@ -42,6 +42,7 @@
     "postcss": "^8.5.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-live": "^4.1.8",
     "react-social-media-embed": "^2.5.18",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
