@@ -131,6 +131,32 @@ Keyframes allow for more complex animations by defining multiple steps in the an
 
 For the CSS animation, we define a custom keyframe animation in our global CSS and apply it using Tailwind's `animate-*` utility. The animation moves the element from left to right using the `move` animation.
 
+```css
+/* Keyframe animation for the move effect */
+@keyframes move {
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Animation utility class */
+.animate-move {
+  animation: move 0.6s ease-out forwards;
+  will-change: transform;
+}
+```
+
+In your component, you would use it like this:
+
+```tsx
+<div
+  className="h-20 w-20 bg-blue-500 animate-move"
+  style={{ transform: "translateX(-100px)" }}
+>
+  With CSS
+</div>
+```
+
 #### With Framer Motion
 
 Framer Motion provides two main approaches for keyframe animations:
