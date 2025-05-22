@@ -1,11 +1,20 @@
 ---
 title: "CSS Fundamentals for Framer Motion"
-description: "A comprehensive guide for leadership, product teams, and engineers on understanding the key aspects of bringing internet products to market"
+description: "Learn CSS animation concepts and how to implement them using both Tailwind CSS and Framer Motion. A practical guide for web developers."
 date: 2025-05-16
 author: rajiv
-tags: [framer-motion, css, animations]
+tags: [framer-motion, css, animations, tailwind, web-development]
 image: https://shadcnblocks.com/images/block/placeholder-5.svg
 draft: true
+---
+
+Animations are a crucial part of modern web development, enhancing user experience and making interfaces more intuitive. In this guide, we'll explore fundamental animation concepts and implement them using two popular approaches:
+
+1. **Tailwind CSS** - For quick, utility-first animations
+2. **Framer Motion** - For more complex, declarative animations
+
+By understanding both methods, you'll be equipped to choose the right tool for your animation needs, whether you need simple transitions or complex interactive animations.
+
 ---
 
 import Opacity from "../../../components/animations/opacity.tsx";
@@ -15,50 +24,115 @@ import RotateBox from "../../../components/animations/rotate.tsx";
 import TransformOriginBox from "../../../components/animations/transform-origin.tsx";
 import KeyframesBox from "../../../components/animations/keyframes.tsx";
 
-## Opacity
+## 1. Opacity
+
+Opacity controls the transparency of an element, where 0 is completely transparent and 1 is fully opaque. This is a fundamental CSS property for creating fade effects.
+
+#### With Tailwind
+
+In Tailwind CSS, we can animate opacity using the `opacity` and `transition` utilities. The `transition` class specifies which property to animate, the duration, and the timing function. For example, we use `opacity-100` for full opacity, `hover:opacity-50` for the hover state, and `transition-opacity duration-700 ease-out` to control the transition.
+
+#### With Framer Motion
+
+Framer Motion provides a more declarative way to handle animations. The same effect can be achieved using:
+
+- `initial`: Sets the starting state
+- `animate`: Defines the animation
+- `whileHover`: Handles hover states
+- `transition`: Controls the animation timing
 
 <CodeDisplay component={<Opacity />}>
-  <include lang="tsx" meta='title="opacity.tsx"'>
+  <include lang="tsx" meta={{ title: "opacity.tsx" }}>
     ../../../components/animations/opacity.tsx
   </include>
 </CodeDisplay>
 
-## Translate
+## 2. Translate
+
+Translation moves an element from one position to another without affecting the document flow. It's commonly used for sliding and moving elements.
+
+#### With Tailwind
+
+For translation in Tailwind, we use the `translate-x-*` utilities. The `hover:translate-x-[50px]` class moves the element on hover, and `transition-transform duration-700 ease-out` ensures a smooth animation. The `transform` class enables the transform property.
+
+#### With Framer Motion
+
+Framer Motion simplifies this with the `x` property and provides more control over the animation states.
 
 <CodeDisplay component={<TranslateBox />}>
-  <include lang="tsx" meta='title="translate.tsx"'>
+  <include lang="tsx" meta={{ title: "translate.tsx" }}>
     ../../../components/animations/translate.tsx
   </include>
 </CodeDisplay>
 
-## Scale(x, y): For Resizing Elements
+## 3. Scale
+
+Scaling changes the size of an element. It's useful for creating zoom effects and visual feedback.
+
+#### With Tailwind
+
+In Tailwind, scaling is achieved using the `scale-*` utilities. The `hover:scale-150` class scales the element to 1.5x its size on hover, while `transition-transform duration-300 ease-out` controls the animation. The `transform` class is required to enable the transform property.
+
+#### With Framer Motion
+
+Framer Motion provides a more intuitive way to handle scaling with the `scale` property.
 
 <CodeDisplay component={<Scale />}>
-  <include lang="tsx" meta='title="scale.tsx"'>
+  <include lang="tsx" meta={{ title: "scale.tsx" }}>
     ../../../components/animations/scale.tsx
   </include>
 </CodeDisplay>
 
-## Rotate: For Rotating Elements
+## 4. Rotate
+
+Rotation spins an element around its transform origin. It's great for creating spinning and turning effects.
+
+#### With Tailwind
+
+Rotation in Tailwind is done using the `rotate-*` utilities. The `hover:rotate-45` class rotates the element 45 degrees on hover. The `transition-transform duration-300 ease-out` class ensures a smooth rotation animation. The `transform` class is needed to enable the transform property.
+
+#### With Framer Motion
+
+Framer Motion simplifies rotation with the `rotate` property, which can be used in the animation states.
 
 <CodeDisplay component={<RotateBox />}>
-  <include lang="tsx" meta='title="rotate.tsx"'>
+  <include lang="tsx" meta={{ title: "rotate.tsx" }}>
     ../../../components/animations/rotate.tsx
   </include>
 </CodeDisplay>
 
-## Transform Origin: For Controlling the Origin of Transformations
+## 5. Transform Origin
+
+Transform origin changes the point around which transformations like rotate and scale are applied.
+
+#### With Tailwind
+
+Tailwind provides `origin-*` utilities to set the transform origin. The `origin-top-left` class sets the transform origin to the top-left corner. Combined with `hover:scale-150` and `transition-transform duration-300 ease-out`, this creates a scaling effect that originates from the top-left corner. The `transform` class is required to enable the transform property.
+
+#### With Framer Motion
+
+Framer Motion allows you to set the transform origin directly in the animation properties.
 
 <CodeDisplay component={<TransformOriginBox />}>
-  <include lang="tsx" meta='title="transform-origin.tsx"'>
+  <include lang="tsx" meta={{ title: "transform-origin.tsx" }}>
     ../../../components/animations/transform-origin.tsx
   </include>
 </CodeDisplay>
 
-## Keyframes: For Creating Custom Animations
+## 6. Keyframes
+
+Keyframes allow for more complex animations by defining multiple steps in the animation sequence.
+
+#### With Tailwind
+
+For keyframe animations in Tailwind, you would typically define custom animations in your `tailwind.config.js` file. Since we haven't defined any custom keyframes in this project, we'll focus on the Framer Motion implementation which provides a more straightforward way to handle complex animations. However, in a typical Tailwind setup, you would define a custom animation in your config and then apply it using the `animate-*` utility class.
+
+#### With Framer Motion
+
+Framer Motion simplifies keyframe animations with the `animate` prop, allowing you to define an array of values.
 
 <CodeDisplay component={<KeyframesBox />}>
-  <include lang="tsx" meta='title="keyframes.tsx"'>
+  <include lang="tsx" meta={{ title: "keyframes.tsx" }}>
     ../../../components/animations/keyframes.tsx
   </include>
 </CodeDisplay>

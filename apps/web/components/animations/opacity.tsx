@@ -8,7 +8,7 @@ const boxClasses =
 
 export default function Opacity() {
   return (
-    <div className="flex gap-4">
+    <div className="flex flex-col gap-4">
       <div
         className={cn(
           boxClasses,
