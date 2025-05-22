@@ -9,31 +9,56 @@ draft: true
 ---
 
 import Opacity from "../../../components/animations/opacity.tsx";
+import TranslateBox from "../../../components/animations/translate.tsx";
+import Scale from "../../../components/animations/scale.tsx";
+import RotateBox from "../../../components/animations/rotate.tsx";
+import TransformOriginBox from "../../../components/animations/transform-origin.tsx";
+import KeyframesBox from "../../../components/animations/keyframes.tsx";
 
 ## Opacity
 
-<Opacity />
-
-<include lang="tsx" meta='title="opacity.tsx"'>
-  ../../../components/animations/opacity.tsx
-</include>
+<CodeDisplay component={<Opacity />}>
+  <include lang="tsx" meta='title="opacity.tsx"'>
+    ../../../components/animations/opacity.tsx
+  </include>
+</CodeDisplay>
 
 ## Translate
 
-<TranslateBox />
+<CodeDisplay component={<TranslateBox />}>
+  <include lang="tsx" meta='title="translate.tsx"'>
+    ../../../components/animations/translate.tsx
+  </include>
+</CodeDisplay>
 
 ## Scale(x, y): For Resizing Elements
 
-<Scale />
+<CodeDisplay component={<Scale />}>
+  <include lang="tsx" meta='title="scale.tsx"'>
+    ../../../components/animations/scale.tsx
+  </include>
+</CodeDisplay>
 
 ## Rotate: For Rotating Elements
 
-<RotateBox />
+<CodeDisplay component={<RotateBox />}>
+  <include lang="tsx" meta='title="rotate.tsx"'>
+    ../../../components/animations/rotate.tsx
+  </include>
+</CodeDisplay>
 
 ## Transform Origin: For Controlling the Origin of Transformations
 
-<TransformOriginBox />
+<CodeDisplay component={<TransformOriginBox />}>
+  <include lang="tsx" meta='title="transform-origin.tsx"'>
+    ../../../components/animations/transform-origin.tsx
+  </include>
+</CodeDisplay>
 
 ## Keyframes: For Creating Custom Animations
 
-<KeyframesBox />
+<CodeDisplay component={<KeyframesBox />}>
+  <include lang="tsx" meta='title="keyframes.tsx"'>
+    ../../../components/animations/keyframes.tsx
+  </include>
+</CodeDisplay>
