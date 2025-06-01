@@ -12,14 +12,14 @@
     "@tanstack/react-router": "^1.120.13",
     "@tanstack/react-router-devtools": "^1.120.13",
     "@tanstack/react-start": "^1.120.13",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "vinxi": "0.5.3"
   },
   "devDependencies": {
     "@types/node": "^22.5.4",
-    "@types/react": "^19.0.8",
-    "@types/react-dom": "^19.0.3",
+    "@types/react": "^19.1.6",
+    "@types/react-dom": "^19.1.5",
     "typescript": "^5.7.2"
   }
 }
