@@ -6,12 +6,20 @@ export default defineConfig({
   server: {
     hooks: {
       "prerender:routes": async (routes) => {
-        const { docsSource } = await import("./lib/source");
+        const { docsSource, blogSource } = await import("./lib/source");
         const pages = docsSource.getPages();
+        const blogs = blogSource.getPages();
 
         for (const page of pages) {
           routes.add(page.url);
         }
+
+        for (const blog of blogs) {
+          console.log(blog.url);
+          // routes.add(blog.url);
+        }
+
+        console.log("routes ---", routes);
       },
     },
     prerender: {

@@ -1,0 +1,87 @@
+---
+title: Adding category to my blog
+description: locospec is implemented using Fuma Docs and this article is about my trials and tribulations implementing category to my blog posts
+author: rajiv
+date: 2025-04-02
+tags: [fuma-docs, static sites, website, blog]
+draft: true
+---
+
+## Problem
+
+Fuma Docs is a tool to add documentation using MDX in NextJS. I loved the UX/UI it gave out of the box, particularly the table of contents.
+
+It doesn't support "blog" out of the box, and since it's a framework which also provides parsing for MDX files, I used it to build my blog.
+
+I made multiple attempts at it, and this article is about the trials and tribulations of implementing category functionality on Fuma Docs.
+
+## Attempt 1: Using Frontmatter
+
+I added `category` to frontmatter like the following:
+
+```md
+---
+title: Open Source Sustainability
+description: Exploring the challenges and solutions for maintaining healthy open source ecosystems
+author: rajiv
+date: 2025-03-12
+category: tech
+---
+```
+
+I extended the frontmatter in `source.config.ts` to support `category`.
+
+```ts
+export const blog = defineCollections({
+  type: "doc",
+  dir: "content/blog",
+  schema: frontmatterSchema.extend({
+    category: z.string(),
+  }),
+});
+```
+
+I then added a route `app/(home)/blog/[category]/[slug]/page.tsx` and needed to generate these URLs as static params.
+
+```tsx
+export function generateStaticParams(): { category: string; slug: string }[] {
+  return blogSource.getPages().map((page) => ({
+    category: page.data.category,
+    slug: page.slugs[0] || "",
+  }));
+}
+```
+
+And finally:
+
+```tsx
+export default async function Page(props: {
+  params: Promise<{ category: string; slug: string }>;
+}) {
+  const params = await props.params;
+  const page = getPostsByCategoryAndSlug(params.category, params.slug);
+  // Rest of the code
+}
+```
+
+## Attempt 2: Using Folders
+
+In fact, this is how Fuma Docs implements documentation out of the box. You can create folders of any depth - but all I needed was 2 levels.
+
+Realizing that I could just use folders was a face-palm moment, because the above attempt was the definition of overkill - I didn't spend enough time to understand how Docs handles this!
+
+So, now it's as simple as:
+
+```tsx
+export default async function Page(props: {
+  params: Promise<{ slug?: string[] }>;
+}) {
+  const params = await props.params;
+  const page = blogSource.getPage(params.slug);
+  // Rest of the code
+}
+
+export async function generateStaticParams() {
+  return blogSource.generateParams();
+}
+```
