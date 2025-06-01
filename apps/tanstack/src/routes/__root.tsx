@@ -1,29 +1,31 @@
-import * as React from 'react'
+import * as React from "react";
 import {
   HeadContent,
   Outlet,
   Scripts,
   createRootRoute,
-} from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
+} from "@tanstack/react-router";
+import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import appCss from "../app.css?url";
 
 export const Route = createRootRoute({
   head: () => ({
     meta: [
       {
-        charSet: 'utf-8',
+        charSet: "utf-8",
       },
       {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1',
+        name: "viewport",
+        content: "width=device-width, initial-scale=1",
       },
       {
-        title: 'TanStack Start Starter',
+        title: "TanStack Start Starter",
       },
     ],
+    links: [{ rel: "stylesheet", href: appCss }],
   }),
   component: RootComponent,
-})
+});
 
 function RootComponent() {
   return (
@@ -31,7 +33,7 @@ function RootComponent() {
       <Outlet />
       <TanStackRouterDevtools />
     </RootDocument>
-  )
+  );
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
@@ -45,5 +47,5 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <Scripts />
       </body>
     </html>
-  )
+  );
 }
