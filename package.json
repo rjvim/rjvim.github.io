@@ -15,7 +15,11 @@
     "tanstack:dev": "turbo run dev --filter=tanstack",
     "tanstack:build": "turbo run build --filter=tanstack",
     "tanstack:start": "turbo run start --filter=tanstack",
-    "tanstack:serve": "turbo run serve --filter=tanstack"
+    "tanstack:serve": "turbo run serve --filter=tanstack",
+    "tan-blog:dev": "turbo run dev --filter=tan-blog",
+    "tan-blog:build": "turbo run build --filter=tan-blog",
+    "tan-blog:start": "turbo run start --filter=tan-blog",
+    "tan-blog:serve": "turbo run serve --filter=tan-blog"
   },
   "devDependencies": {
     "prettier": "^3.5.3",
