@@ -8,7 +8,7 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
-    "update-common-packages": "pnpm update fumadocs-core fumadocs-mdx fumadocs-ui next tailwindcss tw-animate-css react react-dom lucide-react better-auth @tailwindcss/postcss @types/mdx postcss kysely @types/react @types/react-dom zod tailwind-merge --recursive --latest",
+    "update-common-packages": "pnpm update fumadocs-core fumadocs-mdx fumadocs-ui next tailwindcss tw-animate-css react react-dom lucide-react better-auth @tailwindcss/postcss @types/mdx postcss kysely @types/react @types/react-dom zod tailwind-merge @tanstack/react-router @tanstack/react-start --recursive --latest",
     "web:dev": "turbo run dev --filter=web",
     "web:build": "turbo run build --filter=web",
     "web:serve": "turbo run serve --filter=web"
