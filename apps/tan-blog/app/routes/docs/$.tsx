@@ -1,23 +1,23 @@
-import { createFileRoute, notFound } from '@tanstack/react-router';
-import { DocsLayout } from 'fumadocs-ui/layouts/docs';
-import { source } from '@/lib/source';
+import { createFileRoute, notFound } from "@tanstack/react-router";
+import { DocsLayout } from "fumadocs-ui/layouts/docs";
+import { docsSource } from "@/lib/source";
 import {
   DocsBody,
   DocsDescription,
   DocsPage,
   DocsTitle,
-} from 'fumadocs-ui/page';
-import { executeMdxSync } from '@fumadocs/mdx-remote/client';
-import defaultMdxComponents from 'fumadocs-ui/mdx';
-import { createServerFn } from '@tanstack/react-start';
-import type { PageTree } from 'fumadocs-core/server';
-import { createCompiler } from '@fumadocs/mdx-remote';
-import * as path from 'node:path';
+} from "fumadocs-ui/page";
+import { executeMdxSync } from "@fumadocs/mdx-remote/client";
+import defaultMdxComponents from "fumadocs-ui/mdx";
+import { createServerFn } from "@tanstack/react-start";
+import type { PageTree } from "fumadocs-core/server";
+import { createCompiler } from "@fumadocs/mdx-remote";
+import * as path from "node:path";
 
-export const Route = createFileRoute('/docs/$')({
+export const Route = createFileRoute("/docs/$")({
   component: Page,
   async loader({ params }) {
-    const slugs = (params._splat ?? '').split('/');
+    const slugs = (params._splat ?? "").split("/");
 
     return loader({ data: slugs });
   },
@@ -28,21 +28,21 @@ const compiler = createCompiler({
 });
 
 const loader = createServerFn({
-  method: 'GET',
+  method: "GET",
 })
   .validator((slugs: string[]) => slugs)
   .handler(async ({ data: slugs }) => {
-    const page = source.getPage(slugs);
+    const page = docsSource.getPage(slugs);
     if (!page) throw notFound();
 
     const { content, ...rest } = page.data;
     const compiled = await compiler.compileFile({
-      path: path.resolve('content/docs', page.file.path),
+      path: path.resolve("content/docs", page.file.path),
       value: content,
     });
 
     return {
-      tree: source.pageTree as object,
+      tree: docsSource.pageTree as object,
       ...rest,
       compiled: compiled.toString(),
     };
@@ -55,7 +55,7 @@ function Page() {
   return (
     <DocsLayout
       nav={{
-        title: 'Tanstack Start',
+        title: "Tanstack Start",
       }}
       tree={tree as PageTree.Root}
     >

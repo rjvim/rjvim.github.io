@@ -4,40 +4,40 @@ import {
   type PageData,
   type Source,
   type VirtualFile,
-} from 'fumadocs-core/source';
-import matter from 'gray-matter';
-import * as path from 'node:path';
-import { globSync } from 'tinyglobby';
-import * as fs from 'node:fs';
+} from "fumadocs-core/source";
+import matter from "gray-matter";
+import * as path from "node:path";
+import { globSync } from "tinyglobby";
+import * as fs from "node:fs";
 
-let files: [string, string][];
+let docFiles: [string, string][];
 
-if (typeof import.meta.glob === 'function') {
-  files = Object.entries(
-    import.meta.glob<true, 'raw'>('/content/docs/**/*', {
+if (typeof import.meta.glob === "function") {
+  docFiles = Object.entries(
+    import.meta.glob<true, "raw">("/content/docs/**/*", {
       eager: true,
-      query: '?raw',
-      import: 'default',
-    }),
+      query: "?raw",
+      import: "default",
+    })
   );
 } else {
-  files = globSync('content/docs/**/*').map((file) => {
+  docFiles = globSync("content/docs/**/*").map((file) => {
     return [file, fs.readFileSync(file).toString()];
   });
 }
 
-const virtualFiles: VirtualFile[] = files.flatMap(([file, content]) => {
+const virtualDocFiles: VirtualFile[] = docFiles.flatMap(([file, content]) => {
   const ext = path.extname(file);
   const virtualPath = path.relative(
-    'content/docs',
-    path.join(process.cwd(), file),
+    "content/docs",
+    path.join(process.cwd(), file)
   );
 
-  if (ext === '.mdx' || ext === '.md') {
+  if (ext === ".mdx" || ext === ".md") {
     const parsed = matter(content);
 
     return {
-      type: 'page',
+      type: "page",
       path: virtualPath,
       data: {
         ...parsed.data,
@@ -46,9 +46,9 @@ const virtualFiles: VirtualFile[] = files.flatMap(([file, content]) => {
     };
   }
 
-  if (ext === '.json') {
+  if (ext === ".json") {
     return {
-      type: 'meta',
+      type: "meta",
       path: virtualPath,
       data: JSON.parse(content),
     };
@@ -57,14 +57,14 @@ const virtualFiles: VirtualFile[] = files.flatMap(([file, content]) => {
   return [];
 });
 
-export const source = loader({
+export const docsSource = loader({
   source: {
-    files: virtualFiles,
+    files: virtualDocFiles,
   } as Source<{
     pageData: PageData & {
       content: string;
     };
     metaData: MetaData;
   }>,
-  baseUrl: '/docs',
+  baseUrl: "/docs",
 });

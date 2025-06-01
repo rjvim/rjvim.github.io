@@ -1,13 +1,13 @@
-import { defineConfig } from '@tanstack/react-start/config';
-import tsConfigPaths from 'vite-tsconfig-paths';
-import tailwindcss from '@tailwindcss/vite';
+import { defineConfig } from "@tanstack/react-start/config";
+import tsConfigPaths from "vite-tsconfig-paths";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   server: {
     hooks: {
-      'prerender:routes': async (routes) => {
-        const { source } = await import('./lib/source');
-        const pages = source.getPages();
+      "prerender:routes": async (routes) => {
+        const { docsSource } = await import("./lib/source");
+        const pages = docsSource.getPages();
 
         for (const page of pages) {
           routes.add(page.url);
@@ -15,7 +15,7 @@ export default defineConfig({
       },
     },
     prerender: {
-      routes: ['/'],
+      routes: ["/"],
       crawlLinks: true,
     },
   },
@@ -23,10 +23,10 @@ export default defineConfig({
     build: {
       rollupOptions: {
         // Shiki results in a huge bundle because Rollup tries to bundle every language/theme
-        external: ['shiki'],
+        external: ["shiki"],
         // most React.js libraries now include 'use client'
         onwarn(warning, warn) {
-          if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
+          if (warning.code === "MODULE_LEVEL_DIRECTIVE") {
             return;
           }
           warn(warning);
@@ -35,7 +35,7 @@ export default defineConfig({
     },
     plugins: [
       tsConfigPaths({
-        projects: ['./tsconfig.json'],
+        projects: ["./tsconfig.json"],
       }),
       tailwindcss(),
     ],
