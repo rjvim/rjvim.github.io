@@ -2,7 +2,7 @@
 
 .blog {
   #nd-page {
-    @apply col-span-4 xl:col-span-3 order-last;
+    @apply w-full order-last;
   }
 
   #nd-toc {
@@ -10,6 +10,38 @@
     /* @apply mx-auto; */
     div {
       @apply pe-0;
+    }
+  }
+
+  @media (min-width: 80rem) {
+    #nd-page {
+      display: grid;
+      grid-template-columns: minmax(14rem, 18rem) minmax(0, 1fr);
+      gap: calc(var(--spacing) * 8);
+      max-width: var(--container-7xl);
+      padding-inline: calc(var(--spacing) * 6);
+    }
+
+    #nd-page > article {
+      grid-column: 2;
+      margin-inline: 0 !important;
+    }
+
+    #nd-toc {
+      position: sticky;
+      grid-column: 1;
+      grid-row: 1;
+      top: calc(var(--fd-nav-height) + var(--spacing) * 6);
+      align-self: start;
+      width: 100%;
+      height: calc(100vh - var(--fd-nav-height) - var(--spacing) * 8);
+      padding: 0;
+      inset-inline: auto !important;
+      bottom: auto;
+    }
+
+    #nd-toc > div {
+      width: 100%;
     }
   }
 }

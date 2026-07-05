@@ -140,36 +140,33 @@ export function SinglePost({
         sidebar={{ enabled: false, prefetch: false, tabs: false }}
         containerProps={{
           className: classNames(
-            "flex-row-reverse",
             "relative container [--fd-nav-height:calc(var(--spacing)*14)] md:[--fd-nav-height:57px]"
           ),
         }}
       >
         {slot(configuration?.backgroundPattern, null)}
 
-        <div className="grid grid-cols-4">
-          <DocsPage
-            toc={page.data.toc}
-            full={page.data.full}
-            lastUpdate={lastUpdate}
-            footer={{
-              enabled: false,
-            }}
-            tableOfContent={{
-              style: "clerk",
-              single: false,
-            }}
-            article={{
-              className: classNames(
-                "!m-[unset] max-w-none bg-zinc-50/50 dark:bg-zinc-900/50 py-8 md:py-12"
-              ),
-            }}
-          >
-            <DocsBody>
-              <MDX configuration={mdxComponents} />
-            </DocsBody>
-          </DocsPage>
-        </div>
+        <DocsPage
+          toc={page.data.toc}
+          full={page.data.full}
+          lastUpdate={lastUpdate}
+          footer={{
+            enabled: false,
+          }}
+          tableOfContent={{
+            style: "clerk",
+            single: false,
+          }}
+          article={{
+            className: classNames(
+              "!m-[unset] max-w-none bg-zinc-50/50 dark:bg-zinc-900/50 py-8 md:py-12"
+            ),
+          }}
+        >
+          <DocsBody>
+            <MDX configuration={mdxComponents} />
+          </DocsBody>
+        </DocsPage>
       </DocsLayout>
     </>
   );
