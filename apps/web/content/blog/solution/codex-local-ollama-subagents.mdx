@@ -1,21 +1,21 @@
 ---
-title: Use Local Qwen as Codex Subagents
-description: A practical setup for using GPT-5.5 as the orchestrator while local Ollama Qwen agents explore and edit the repo.
+title: Use Local Ollama Models as Codex Subagents
+description: A practical setup for using GPT-5.5 as the orchestrator while local Ollama agents like Qwen and Gemma explore and edit the repo.
 author: rajiv
 date: 2026-07-05
-tags: [codex, ollama, qwen, ai-coding, subagents]
+tags: [codex, ollama, qwen, gemma, ai-coding, subagents]
 category: solution
 draft: false
 ---
 
-# Use Local Qwen as Codex Subagents
+# Use Local Ollama Models as Codex Subagents
 
 The useful pattern is simple:
 
 ```text
 main Codex on GPT-5.5
--> local Qwen explorer agents for cheap repo reading
--> local Qwen worker agents for scoped mechanical edits
+-> local Qwen/Gemma explorer agents for cheap repo reading
+-> local Qwen/Gemma worker agents for scoped mechanical edits
 -> main Codex reviews, verifies, and commits
 ```
 
@@ -28,17 +28,17 @@ Large repositories are bad for AI coding when every task loads too much context.
 | Work | Best agent |
 |---|---|
 | Planning, risk calls, final review | main GPT-5.5 |
-| Read-only exploration | local Qwen explorer |
-| Scoped mechanical edits | local Qwen worker |
+| Read-only exploration | local Ollama explorer |
+| Scoped mechanical edits | local Ollama worker |
 | Fast parallel research when time matters | OpenAI mini explorer |
 
-Local Qwen saves tokens. It may not save wall-clock time if Ollama queues requests.
+Local Ollama models save tokens. They may not save wall-clock time if Ollama queues requests.
 
 ## Requirements
 
 - Codex CLI with subagents.
 - Ollama running locally.
-- A Qwen model installed, for example `qwen3:8b` and `qwen3.6:35b`.
+- Local models installed, for example `qwen3:8b`, `qwen3.6:35b`, and `gemma4:26b`.
 
 Check installed models:
 
@@ -54,7 +54,7 @@ ollama ps
 
 ## Create A Hybrid Codex Profile
 
-Create `~/.codex/hybrid-qwen.config.toml`:
+Create `~/.codex/hybrid-ollama.config.toml`:
 
 ```toml
 model = "gpt-5.5"
@@ -62,8 +62,8 @@ model_provider = "openai"
 model_reasoning_effort = "high"
 service_tier = "standard"
 
-[model_providers.ollama-qwen]
-name = "Ollama Qwen"
+[model_providers.ollama-local]
+name = "Ollama Local"
 base_url = "http://localhost:11434/v1/"
 wire_api = "responses"
 ```
@@ -73,7 +73,7 @@ This keeps the main Codex session on GPT-5.5, but exposes an Ollama provider for
 Launch it:
 
 ```bash
-codex --profile hybrid-qwen
+codex --profile hybrid-ollama
 ```
 
 ## Add A Local Qwen Explorer
@@ -84,7 +84,7 @@ Create `~/.codex/agents/qwen-explorer.toml`:
 name = "qwen-explorer"
 description = "Local Qwen read-only explorer for cheap repo/doc inspection."
 model = "qwen3:8b"
-model_provider = "ollama-qwen"
+model_provider = "ollama-local"
 model_reasoning_effort = "low"
 sandbox_mode = "read-only"
 
@@ -106,7 +106,7 @@ Create `~/.codex/agents/qwen-worker.toml`:
 name = "qwen-worker"
 description = "Local Qwen worker for tightly scoped mechanical edits."
 model = "qwen3.6:35b"
-model_provider = "ollama-qwen"
+model_provider = "ollama-local"
 model_reasoning_effort = "low"
 
 developer_instructions = """
@@ -120,6 +120,45 @@ Final answer must list changed files and any verification performed.
 ```
 
 Use the larger model for edits. Keep the scope narrow and make the main model review the result.
+
+## Add Local Gemma Agents
+
+Gemma gives you a second local model family for comparison. Create `~/.codex/agents/gemma-explorer.toml`:
+
+```toml
+name = "gemma-explorer"
+description = "Local Gemma read-only explorer for alternate repo/doc inspection."
+model = "gemma4:26b"
+model_provider = "ollama-local"
+model_reasoning_effort = "low"
+sandbox_mode = "read-only"
+
+developer_instructions = """
+You are a read-only explorer running on local Gemma through Ollama.
+Inspect only the files needed for the task.
+Do not edit files.
+Return concise findings with file paths.
+"""
+```
+
+Create `~/.codex/agents/gemma-worker.toml`:
+
+```toml
+name = "gemma-worker"
+description = "Local Gemma worker for tightly scoped mechanical edits."
+model = "gemma4:26b"
+model_provider = "ollama-local"
+model_reasoning_effort = "low"
+
+developer_instructions = """
+You are a scoped implementation worker running on local Gemma through Ollama.
+You are not alone in the codebase.
+Do not revert or overwrite unrelated user or agent changes.
+Edit only the files explicitly assigned in the task.
+Keep changes mechanical and small.
+Final answer must list changed files and any verification performed.
+"""
+```
 
 ## Run Ollama With Practical Limits
 
@@ -307,7 +346,67 @@ Clean up:
 rm .plans/codex-mixed-qwen-demo.md
 ```
 
-## POC 4: Qwen-Only Exploration For Token Savings
+## POC 4: OpenAI Mini + Qwen + Gemma
+
+This checks whether Codex can route one task to OpenAI mini, one to Qwen, and one to Gemma in the same fan-out.
+
+Prompt Codex:
+
+```text
+Demo mixed OpenAI + Qwen + Gemma subagents.
+
+You are main Codex on GPT-5.5.
+
+Spawn 3 subagents in parallel:
+
+1. Use a cheap OpenAI mini explorer, preferably gpt-5.4-mini.
+Task: read _docs/architecture/frontend.md only.
+Do not edit files.
+Return 5 concise bullets.
+
+2. Use qwen-explorer.
+Task: read _docs/architecture/backend.md only.
+Do not edit files.
+Return 5 concise bullets.
+
+3. Use gemma-explorer.
+Task: read _docs/architecture/multi-tenancy.md only.
+Do not edit files.
+Return 5 concise bullets.
+
+Wait for all 3 agents.
+
+Then main agent must show:
+- which agent/model/provider it selected for each task
+- all summaries
+- whether any files changed
+- whether main GPT-5.5 avoided reading the target docs directly
+
+Do not commit.
+```
+
+Expected result:
+
+```text
+gpt-5.4-mini explorer -> frontend summary
+qwen-explorer -> backend summary
+gemma-explorer -> multi-tenancy summary
+main GPT-5.5 -> only coordinates and summarizes
+```
+
+Actual result from the demo:
+
+| Area | Agent | Model | Provider |
+|---|---|---|---|
+| Frontend docs | explorer | `gpt-5.4-mini` | OpenAI |
+| Backend docs | `qwen-explorer` | `qwen3:8b` | `ollama-local` |
+| Multi-tenancy docs | `gemma-explorer` | `gemma4:26b` | `ollama-local` |
+
+The frontend explorer summarized the React + Inertia app structure, shared `domain-ui` components, form patterns, and styling conventions. The Qwen explorer summarized backend module structure, tenant safety, PostgreSQL, Laravel conventions, and Boost usage. The Gemma explorer summarized the shared-database tenancy model, `team_id + mode`, scoped queries/cache keys, CentralApp request-body tenant validation, and composite indexes.
+
+No files changed during the run. Main GPT-5.5 did not read the three target docs directly; it only received the subagent summaries.
+
+## POC 5: Qwen-Only Exploration For Token Savings
 
 After verifying mixed agents, run a Qwen-only exploration test. This is the POC that proves token savings for main GPT-5.5.
 
@@ -350,14 +449,14 @@ main GPT-5.5 only receives summaries
 
 This is the cleanest proof that local Qwen can keep exploration out of the main context.
 
-## Important Correction: Do Not Use The One-Shot Ollama Skill
+## Important Correction: Do Not Use A One-Shot Ollama Script
 
-If Codex says it will use a one-shot local Ollama delegation skill, stop it for this POC.
+If Codex says it will use a one-shot local Ollama script, stop it for this POC.
 
 Wrong path:
 
 ```text
-rjv-ollama-delegate
+one-shot Ollama script
 -> one prompt in
 -> one text response out
 -> no repo tools
@@ -369,19 +468,19 @@ Correct path:
 ```text
 Codex native subagents
 -> qwen-explorer / qwen-worker
--> model_provider = ollama-qwen
+-> model_provider = ollama-local
 -> repo tools available through Codex harness
 ```
 
 Use this correction prompt:
 
 ```text
-Do not use rjv-ollama-delegate.
+Do not use a one-shot Ollama script.
 
 Use Codex native subagents only.
 
 Spawn qwen-explorer subagents from ~/.codex/agents/qwen-explorer.toml.
-They must use model qwen3:8b through model_provider ollama-qwen.
+They must use model qwen3:8b through model_provider ollama-local.
 Each subagent should use repo tools to read its assigned doc and return bullets.
 
 Main agent must not read the target docs directly.
@@ -417,9 +516,10 @@ Run these in order:
 
 | Exercise | Goal | Expected proof |
 |---|---|---|
-| Hybrid profile launch | Main GPT-5.5 plus Ollama provider | Codex starts with `--profile hybrid-qwen`. |
+| Hybrid profile launch | Main GPT-5.5 plus Ollama provider | Codex starts with `--profile hybrid-ollama`. |
 | Four local Qwen agents | Native subagents can all use local Qwen | 2 explorers return summaries, 2 workers edit scoped files. |
 | Mixed mini + Qwen | OpenAI and local models can run in parallel | Mini reads, Qwen edits, main verifies. |
+| Mixed mini + Qwen + Gemma | Three model routes in one fan-out | Mini, Qwen, and Gemma each return separate summaries. |
 | Qwen-only exploration | Save main GPT-5.5 context/tokens | Main gets summaries only; docs are read by Qwen agents. |
 | Ollama tuning | Keep local agents stable | Logs show `Parallel:2`, `KvSize:65536`, and GPU offload. |
 
@@ -427,7 +527,7 @@ The best final setup is not "everything local" or "everything cloud." It is rout
 
 ```text
 speed-sensitive exploration -> OpenAI mini
-token-saving exploration -> qwen-explorer
-mechanical scoped edits -> qwen-worker
+token-saving exploration -> qwen-explorer or gemma-explorer
+mechanical scoped edits -> qwen-worker or gemma-worker
 final judgment -> main GPT-5.5
 ```

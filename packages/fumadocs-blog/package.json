@@ -13,9 +13,9 @@
   },
   "peerDependencies": {
     "@radix-ui/react-slot": "^1.2.0",
-    "fumadocs-core": "^15.2.7",
-    "fumadocs-ui": "^15.2.7",
-    "next": "^15.3.0"
+    "fumadocs-core": "^15.8.5",
+    "fumadocs-ui": "^15.8.5",
+    "next": "^15.5.20"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
@@ -23,17 +23,17 @@
     "@repo/typescript-config": "workspace:*",
     "@turbo/gen": "^2.5.0",
     "@types/node": "^22.14.0",
-    "@types/react": "19.1.2",
-    "@types/react-dom": "19.1.2",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
     "eslint": "^9.24.0",
     "typescript": "5.8.2"
   },
   "dependencies": {
     "clsx": "^2.1.1",
-    "fumadocs-mdx": "^11.6.0",
+    "fumadocs-mdx": "^11.10.1",
     "lucide-react": "^0.488.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
     "tailwind-merge": "^3.2.0"
   }
 }
