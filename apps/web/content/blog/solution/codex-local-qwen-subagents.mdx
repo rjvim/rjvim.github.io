@@ -1,0 +1,433 @@
+---
+title: Use Local Qwen as Codex Subagents
+description: A practical setup for using GPT-5.5 as the orchestrator while local Ollama Qwen agents explore and edit the repo.
+author: rajiv
+date: 2026-07-05
+tags: [codex, ollama, qwen, ai-coding, subagents]
+category: solution
+draft: false
+---
+
+# Use Local Qwen as Codex Subagents
+
+The useful pattern is simple:
+
+```text
+main Codex on GPT-5.5
+-> local Qwen explorer agents for cheap repo reading
+-> local Qwen worker agents for scoped mechanical edits
+-> main Codex reviews, verifies, and commits
+```
+
+This saves main-model context because the expensive model does not need to read every file. It only receives compact summaries and diffs from local agents.
+
+## What This Solves
+
+Large repositories are bad for AI coding when every task loads too much context. A better split:
+
+| Work | Best agent |
+|---|---|
+| Planning, risk calls, final review | main GPT-5.5 |
+| Read-only exploration | local Qwen explorer |
+| Scoped mechanical edits | local Qwen worker |
+| Fast parallel research when time matters | OpenAI mini explorer |
+
+Local Qwen saves tokens. It may not save wall-clock time if Ollama queues requests.
+
+## Requirements
+
+- Codex CLI with subagents.
+- Ollama running locally.
+- A Qwen model installed, for example `qwen3:8b` and `qwen3.6:35b`.
+
+Check installed models:
+
+```bash
+ollama list
+```
+
+Check loaded models:
+
+```bash
+ollama ps
+```
+
+## Create A Hybrid Codex Profile
+
+Create `~/.codex/hybrid-qwen.config.toml`:
+
+```toml
+model = "gpt-5.5"
+model_provider = "openai"
+model_reasoning_effort = "high"
+service_tier = "standard"
+
+[model_providers.ollama-qwen]
+name = "Ollama Qwen"
+base_url = "http://localhost:11434/v1/"
+wire_api = "responses"
+```
+
+This keeps the main Codex session on GPT-5.5, but exposes an Ollama provider for subagents.
+
+Launch it:
+
+```bash
+codex --profile hybrid-qwen
+```
+
+## Add A Local Qwen Explorer
+
+Create `~/.codex/agents/qwen-explorer.toml`:
+
+```toml
+name = "qwen-explorer"
+description = "Local Qwen read-only explorer for cheap repo/doc inspection."
+model = "qwen3:8b"
+model_provider = "ollama-qwen"
+model_reasoning_effort = "low"
+sandbox_mode = "read-only"
+
+developer_instructions = """
+You are a read-only explorer running on local Qwen through Ollama.
+Inspect only the files needed for the task.
+Do not edit files.
+Return concise findings with file paths.
+"""
+```
+
+Use the smaller local model for exploration. It is cheaper, loads faster, and is usually enough for summaries.
+
+## Add A Local Qwen Worker
+
+Create `~/.codex/agents/qwen-worker.toml`:
+
+```toml
+name = "qwen-worker"
+description = "Local Qwen worker for tightly scoped mechanical edits."
+model = "qwen3.6:35b"
+model_provider = "ollama-qwen"
+model_reasoning_effort = "low"
+
+developer_instructions = """
+You are a scoped implementation worker running on local Qwen through Ollama.
+You are not alone in the codebase.
+Do not revert or overwrite unrelated user or agent changes.
+Edit only the files explicitly assigned in the task.
+Keep changes mechanical and small.
+Final answer must list changed files and any verification performed.
+"""
+```
+
+Use the larger model for edits. Keep the scope narrow and make the main model review the result.
+
+## Run Ollama With Practical Limits
+
+The Ollama macOS app starts `ollama serve` in the background, but environment variables can be hard to verify. For a controlled coding session, quit the app and run the server from a terminal:
+
+```bash
+OLLAMA_NUM_PARALLEL=2 \
+OLLAMA_MAX_QUEUE=8 \
+OLLAMA_CONTEXT_LENGTH=32768 \
+OLLAMA_KEEP_ALIVE=30m \
+ollama serve
+```
+
+Useful settings:
+
+| Setting | Why |
+|---|---|
+| `OLLAMA_NUM_PARALLEL=2` | Allows two active requests; extra agents queue. |
+| `OLLAMA_MAX_QUEUE=8` | Lets Codex fan-out queue work instead of failing. |
+| `OLLAMA_CONTEXT_LENGTH=32768` | Avoids huge KV cache cost. |
+| `OLLAMA_KEEP_ALIVE=30m` | Keeps models loaded during a work session. |
+
+When the model loads, logs should show something like:
+
+```text
+Parallel:2
+KvSize:65536
+offloaded 37/37 layers to GPU
+```
+
+`KvSize:65536` is expected because it is `32768` context times `2` parallel slots.
+
+## POC 1: Qwen Explores, GPT-5.5 Stays Small
+
+Prompt Codex:
+
+```text
+POC: Qwen saves Codex tokens for exploration.
+
+You are main Codex on GPT-5.5.
+
+Spawn 3 qwen-explorer subagents in parallel. They must use local Qwen, not OpenAI models.
+
+Tasks:
+1. Explorer A: inspect _docs/architecture/frontend.md only. Return 5 bullets.
+2. Explorer B: inspect _docs/architecture/backend.md only. Return 5 bullets.
+3. Explorer C: inspect _docs/architecture/multi-tenancy.md only. Return 5 bullets.
+
+Do not edit files.
+Wait for all 3 agents.
+
+Then main agent must report:
+- agent/model/provider selected for each
+- elapsed time if visible
+- summaries
+- whether any OpenAI subagent was used
+- whether this saved main GPT-5.5 context/tokens by keeping doc reading off the main thread
+
+Do not commit.
+```
+
+Expected result:
+
+```text
+3 native Codex subagents
+all pinned to qwen-explorer
+all using local qwen3:8b through Ollama
+main GPT-5.5 only receives summaries
+```
+
+That proves token saving for repo exploration.
+
+## POC 2: Four Local Qwen Subagents
+
+This checks whether local Qwen can handle multiple native Codex subagents at once.
+
+Prompt Codex:
+
+```text
+Demo hybrid subagents.
+
+You are main Codex on GPT-5.5.
+
+Spawn 4 subagents in parallel:
+- 2 read-only explorers for docs
+- 2 scoped workers for demo file edits
+
+Routing:
+- For read-only exploration, prefer qwen-explorer.
+- For scoped mechanical edits, prefer qwen-worker.
+- Do not use GPT-5.5 subagents unless local Qwen agents are unavailable.
+
+Tasks:
+1. Explorer: read _docs/architecture/frontend.md only, return 5 bullets.
+2. Explorer: read _docs/architecture/backend.md only, return 5 bullets.
+3. Worker: edit only .plans/codex-qwen-demo-a.md, create if missing, add "Worker A Result" with 3 bullets.
+4. Worker: edit only .plans/codex-qwen-demo-b.md, create if missing, add "Worker B Result" with 3 bullets.
+
+Wait for all 4 agents.
+
+Then main agent must show:
+- which agent/model/provider it selected for each task
+- explorer summaries
+- changed files
+- verification commands run
+
+Do not commit.
+Do not edit any files except the two assigned demo plan files.
+Main agent coordinates and verifies after all agents return.
+```
+
+Expected result:
+
+```text
+main GPT-5.5
+-> qwen-explorer reads frontend docs
+-> qwen-explorer reads backend docs
+-> qwen-worker edits demo A
+-> qwen-worker edits demo B
+```
+
+This proves the routing works. It also shows the practical limit: local Ollama may queue the requests, so four local agents can be slower than expected.
+
+Clean up:
+
+```bash
+rm .plans/codex-qwen-demo-a.md .plans/codex-qwen-demo-b.md
+```
+
+## POC 3: Mixed OpenAI Mini + Local Qwen
+
+Sometimes speed matters more than local-only execution. In that case, use a cheap OpenAI mini explorer and a local Qwen worker in parallel:
+
+```text
+Demo mixed subagents.
+
+You are main Codex on GPT-5.5.
+
+Spawn 2 subagents in parallel:
+
+1. Use a cheap OpenAI mini explorer, preferably gpt-5.4-mini.
+Task: read _docs/architecture/multi-tenancy.md only.
+Do not edit files.
+Return 5 concise bullets about tenant-safety rules.
+
+2. Use qwen-worker.
+Task: edit only .plans/codex-mixed-qwen-demo.md.
+Create it if missing.
+Add a "Mixed Worker Result" section with 3 bullets.
+
+Wait for both agents.
+
+Then main agent must show:
+- which agent/model/provider it selected for each task
+- explorer summary
+- changed files
+- verification commands run
+
+Do not commit.
+Do not edit any files except .plans/codex-mixed-qwen-demo.md.
+```
+
+This tests a practical workflow:
+
+```text
+fast cloud mini for reading
+local Qwen for scoped writing
+main GPT-5.5 for review
+```
+
+Expected result:
+
+```text
+main GPT-5.5
+-> gpt-5.4-mini explorer reads docs quickly
+-> qwen-worker edits one scoped file locally
+-> main verifies both outputs
+```
+
+This is often the best daily workflow: use OpenAI mini where latency matters and Qwen where token saving matters.
+
+Clean up:
+
+```bash
+rm .plans/codex-mixed-qwen-demo.md
+```
+
+## POC 4: Qwen-Only Exploration For Token Savings
+
+After verifying mixed agents, run a Qwen-only exploration test. This is the POC that proves token savings for main GPT-5.5.
+
+Prompt Codex:
+
+```text
+POC: Qwen saves Codex tokens for exploration.
+
+You are main Codex on GPT-5.5.
+
+Spawn 3 qwen-explorer subagents in parallel. They must use local Qwen, not OpenAI models.
+
+Tasks:
+1. Explorer A: inspect _docs/architecture/frontend.md only. Return 5 bullets.
+2. Explorer B: inspect _docs/architecture/backend.md only. Return 5 bullets.
+3. Explorer C: inspect _docs/architecture/multi-tenancy.md only. Return 5 bullets.
+
+Do not edit files.
+Wait for all 3 agents.
+
+Then main agent must report:
+- agent/model/provider selected for each
+- elapsed time if visible
+- summaries
+- whether any OpenAI subagent was used
+- whether this saved main GPT-5.5 context/tokens by keeping doc reading off the main thread
+
+Do not commit.
+```
+
+Expected result:
+
+```text
+3 qwen-explorer agents
+all local qwen3:8b
+no OpenAI subagent
+no file edits
+main GPT-5.5 only receives summaries
+```
+
+This is the cleanest proof that local Qwen can keep exploration out of the main context.
+
+## Important Correction: Do Not Use The One-Shot Ollama Skill
+
+If Codex says it will use a one-shot local Ollama delegation skill, stop it for this POC.
+
+Wrong path:
+
+```text
+rjv-ollama-delegate
+-> one prompt in
+-> one text response out
+-> no repo tools
+-> no native subagent proof
+```
+
+Correct path:
+
+```text
+Codex native subagents
+-> qwen-explorer / qwen-worker
+-> model_provider = ollama-qwen
+-> repo tools available through Codex harness
+```
+
+Use this correction prompt:
+
+```text
+Do not use rjv-ollama-delegate.
+
+Use Codex native subagents only.
+
+Spawn qwen-explorer subagents from ~/.codex/agents/qwen-explorer.toml.
+They must use model qwen3:8b through model_provider ollama-qwen.
+Each subagent should use repo tools to read its assigned doc and return bullets.
+
+Main agent must not read the target docs directly.
+```
+
+## What We Learned
+
+- Codex native subagents can use custom local Qwen agents.
+- The main GPT-5.5 session can stay focused on orchestration and review.
+- Local Qwen is useful for exploration and mechanical edits.
+- Ollama may queue requests even when Codex spawns agents in parallel.
+- `OLLAMA_NUM_PARALLEL=2` is a good starting point on a single Apple GPU.
+- Do not let multiple workers edit the same files.
+- OpenAI mini and local Qwen can be used in the same fan-out.
+- Use Qwen for token saving and mini models for speed.
+
+## Good Default Workflow
+
+Use this split:
+
+```text
+main GPT-5.5
+-> qwen-explorer for cheap read-only context gathering
+-> qwen-worker for narrow edits
+-> main GPT-5.5 verifies diffs and tests
+```
+
+For risky changes, keep the final call with the main model. Local models are workers, not the reviewer of record.
+
+## Exercise Summary
+
+Run these in order:
+
+| Exercise | Goal | Expected proof |
+|---|---|---|
+| Hybrid profile launch | Main GPT-5.5 plus Ollama provider | Codex starts with `--profile hybrid-qwen`. |
+| Four local Qwen agents | Native subagents can all use local Qwen | 2 explorers return summaries, 2 workers edit scoped files. |
+| Mixed mini + Qwen | OpenAI and local models can run in parallel | Mini reads, Qwen edits, main verifies. |
+| Qwen-only exploration | Save main GPT-5.5 context/tokens | Main gets summaries only; docs are read by Qwen agents. |
+| Ollama tuning | Keep local agents stable | Logs show `Parallel:2`, `KvSize:65536`, and GPU offload. |
+
+The best final setup is not "everything local" or "everything cloud." It is routed:
+
+```text
+speed-sensitive exploration -> OpenAI mini
+token-saving exploration -> qwen-explorer
+mechanical scoped edits -> qwen-worker
+final judgment -> main GPT-5.5
+```
