@@ -1,6 +1,10 @@
 @source "../components/**/*.{ts,tsx}";
 
 .blog {
+  #nd-docs-layout {
+    margin-inline: auto !important;
+  }
+
   #nd-page {
     @apply w-full order-last;
   }
